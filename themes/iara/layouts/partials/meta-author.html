@@ -1,0 +1,14 @@
+{{- if isset $.Params "authors" -}}
+<span>
+{{- $len := len $.Params.authors -}}
+{{- range $idx, $author := $.Params.authors -}}
+  {{- with $.Site.GetPage "authors" -}}
+    {{- with .GetPage $author }}
+    <a href="{{ .Permalink }}" class="text-decoration-only-hover">{{ .Title }}</a><span class="text-muted">{{- if lt $idx (sub $len 2) -}}{{ i18n "delimit" }}{{ end }}{{- if eq $idx (sub $len 2) -}}{{ i18n "delimitLast" }}{{ end }}</span>
+    {{ end -}}
+  {{- end -}}
+{{- end -}}
+</span>
+{{- else if isset $.Params "author" -}}
+  <span>{{ $.Params.author }}</span>
+{{- end }}

@@ -1,0 +1,14 @@
+{{- with .Site.Params.Sidebar.Tags -}}
+{{ if .show -}}
+<div class="tags mt-4">
+  <h3 class="pb-2 border-bottom">{{ i18n "tags" }}</h3>
+  <ul class="list-unstyled tags">
+    {{- range $.Site.Taxonomies.tags }}
+    <li class="d-inline-block mb-1 mr-1">
+      <a href="{{ .Page.Permalink }}" class="tag-link">{{ .Page.Title }} {{ if $.Site.Params.Sidebar.Tags.count }} ({{ .Count }}){{ end }}</a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{- end }}
+{{- end -}}

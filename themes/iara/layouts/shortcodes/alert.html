@@ -1,0 +1,10 @@
+<div class="alert alert-{{ with .Params.color }}{{ . }}{{ else }}info{{ end }}" role="alert">
+  {{ with .Params.header }}<h4 class="alert-heading">{{ . | markdownify }}</h4>{{ end }}
+  {{ with .Params.footer }}
+  <p>{{ $.Params.text | markdownify }}</p>
+  <hr>
+  <p class="mb-0">{{ . | markdownify }}</p>
+  {{ else }}
+    {{ $.Params.text | markdownify }}
+  {{ end }}
+</div>

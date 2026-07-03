@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="h-100" {{with .Site.LanguageCode}}xml:lang="{{.}}" lang="{{.}}"{{end}}>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ hugo.Generator }}
+
+  {{ if .IsHome }}
+  <title>{{ .Site.Title }}</title>
+  {{ else }}
+  <title>{{ .Title }} &middot; {{ .Site.Title }}</title>
+  {{ end }}
+
+  {{- partial "preconnect.html" . -}}
+
+  {{- partial "styles/fonts.html" . -}}
+
+  {{- partial "styles/bootstrap.html" . -}}
+
+  {{- partial "styles/fontawesome.html" . -}}
+
+  {{- partial "custom/icons.html" . -}}
+
+  {{- partial "custom/styles.html" . -}}
+
+  {{- partial "seo/schema.html" . -}}
+
+  {{- partial "seo/opengraph.html" . -}}
+
+  {{- partial "seo/twitter.html" . -}}
+
+  {{- partial "seo/json-ld.html" . -}}
+
+  {{- partial "alternative-output.html" . -}}
+
+  {{- partial "scripts/tex.html" . -}}
+
+  {{- partial "scripts/ads.html" . -}}
+</head>
+<body class="d-flex flex-column h-100">
+  {{ partial "nav.html" . }}
+
+  <main>
+  {{ block "main" . -}}{{- end }}
+  </main>
+
+  {{- partial "search-modal.html" . -}}
+
+  {{- partial "footer.html" . -}}
+
+  {{- partial "scripts/jquery.html" . -}}
+
+  {{- partial "scripts/bootstrap.html" . -}}
+
+  {{- partial "custom/scripts.html" . -}}
+
+  {{- partial "scripts/fontawesome.html" . -}}
+
+  {{- partial "scripts/analytics.html" . -}}
+
+  {{- partial "scripts/addthis.html" . -}}
+</body>
+</html>

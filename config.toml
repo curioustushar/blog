@@ -1,0 +1,59 @@
+baseURL = "https://curioustushar.github.io/blog/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Tushar Gupta"
+theme = "iara"
+
+paginate = 10
+enableEmoji = true
+pygmentsUseClasses = true
+
+[params]
+description = "Tech enthusiast, Open source evangelist, Curious learner"
+MainSections = ["posts"]
+dateFormat = "Jan 2, 2006"
+copyright = "Tushar Gupta"
+builtWith = true
+
+[params.sidebar]
+show = false
+
+[params.search]
+enabled = false
+
+[[params.social]]
+icon = "fab fa-github"
+title = "GitHub"
+url = "https://github.com/curioustushar"
+
+[[params.social]]
+icon = "fab fa-twitter"
+title = "Twitter"
+url = "https://twitter.com/curioustushar"
+
+[menu]
+  [[menu.main]]
+  name = "Posts"
+  url = "/"
+  weight = 10
+
+  [[menu.main]]
+  name = "About"
+  url = "/about/"
+  weight = 20
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  author = "authors"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    noClasses = false
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

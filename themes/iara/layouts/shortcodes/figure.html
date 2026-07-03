@@ -1,0 +1,57 @@
+{{- $class := .Get "class" -}}
+{{- $link := .Get "link" -}}
+{{- $linkTarget := .Get "target" -}}
+{{- $linkRel := .Get "rel" -}}
+{{- $src := .Get "src" -}}
+{{- $width :=.Get "width" -}}
+{{- $height :=.Get "height" -}}
+{{- $attr :=.Get "attr" -}}
+{{- $attrlink :=.Get "attrlink" -}}
+{{- $caption :=.Get "caption" -}}
+{{- $alt :=.Get "alt" -}}
+{{- $title :=.Get "title" -}}
+{{- $res := .Page.Resources.GetMatch $src -}}
+<figure {{ with $class }}class="{{ . }}"{{ end }}>
+  {{- if $link -}}
+  <a href="{{ $link }}" {{ with $linkTarget }}target="{{ . }}"{{ end }} {{ with $linkRel }}rel="{{ . }}"{{ end }}>
+  {{- end }}
+  <img loading="lazy"
+    {{- with $res }}
+      {{- if (and $width $height) }}
+      src="{{ template "__figure_fit" (dict "im" $res "q" "" "f" "" "bg" "" "size" (printf "%sx%s" $width $height)) }}"
+      {{- else if $width }}
+      src="{{ template "__figure_resize" (dict "im" $res "q" "" "f" "" "bg" "" "size" (printf "%sx" $width)) }}"
+      {{- else if $height }}
+      src="{{ template "__figure_resize" (dict "im" $res "q" "" "f" "" "bg" "" "size" (printf "x%s" $height)) }}"
+      {{- else }}
+      src="{{ template "__figure_resize" (dict "im" $res "q" "" "f" "" "bg" "" "size" (printf "%dx%d" $res.Width $res.Height)) }}"
+      {{- end -}}
+    {{- else  }}
+      src="{{ $src }}"
+    {{- end -}}
+    {{- with $width }}
+      width="{{ . }}"
+    {{- end -}}
+    {{- with $height }}
+      height="{{ . }}"
+    {{- end -}}
+    {{- if or ($alt) ($caption) }}
+      alt="{{ with $alt }}{{ . }}{{ else }}{{ $caption | markdownify | plainify }}{{ end }}"
+    {{- end -}}
+  />
+  {{- if $link -}}
+  </a>
+  {{- end -}}
+  {{- if or (or $title $caption) ($attr) -}}
+  <figcaption>
+    {{ with $title }}
+    <h4>{{ . }}</h4>
+    {{- end -}}
+    {{- if or $caption $attr }}
+    <p>
+      {{ $caption | markdownify }}{{ with $attrlink }} <a href="{{ . }}">{{ end }}{{ $attr | markdownify }}{{ if $attrlink }}</a>{{ end }}
+    </p>
+    {{- end }}
+  </figcaption>
+  {{- end }}
+</figure>

@@ -1,0 +1,17 @@
+{{- define "main" -}}
+<section class="container taxonomy mt-3 mb-5">
+  <h1>Posts</h1>
+  <ul class="list-unstyled mt-3 mb-5">
+  {{- $posts := where .Site.RegularPages "Section" "posts" -}}
+  {{- range $posts.ByDate.Reverse -}}
+    <li class="my-2">
+      <div class="d-flex justify-content-between">
+        <a href="{{ .Permalink }}" class="col-8 col-md-9 p-0 text-decoration-only-hover text-truncate">{{ .Title }}</a>
+        {{- $dateFormat := $.Site.Params.dateFormat | default "Jan 2, 2006" -}}
+        <time class="post-list" datetime="{{ .Date.Format "2006-01-02T15:04:05Z0700" }}">{{ .Date.Format $dateFormat }}</time>
+      </div>
+    </li>
+  {{- end -}}
+  </ul>
+</section>
+{{- end -}}

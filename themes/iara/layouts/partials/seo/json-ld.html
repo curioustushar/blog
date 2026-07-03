@@ -1,0 +1,199 @@
+{{ $ISO8601 := "2006-01-02T15:04:05-07:00" }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {{- with .Site.Params.organization }}
+    {
+      "@type": "Organization",
+      "@id": {{ .url | absURL | printf "%s#organization" }},
+      "name": {{ .name }},
+      "url": {{ .url | absURL }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ .logo | absURL }}
+      },
+      {{- with .sameas }}
+      "sameAs": [
+        {{- range $idx, $url := . -}}{{- if $idx -}},{{- end }}
+        {{ $url | absURL -}}
+        {{ end }}
+      ]
+      {{- end }}
+    },
+    {{- else -}}
+    {{- with .Site.Params.author }}
+    {
+      "@type":"Person",
+      "@id": {{ $.Site.BaseURL | printf "%s#author" }},
+      "name": {{ .name }},
+      "image": {
+        "@type":"ImageObject",
+        "url": {{ .image | absURL | printf `"%s"` | safeJS }}
+      },
+      "description": {{ .bio }}
+    },
+    {{ end -}}
+    {{- end -}}
+    {
+      "@type": "WebSite",
+      "@id": {{ .Site.BaseURL | printf "%s#website" }},
+      "url": {{ .Site.BaseURL }},
+      "name": {{ .Site.Title }},
+      "description": {{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }},
+      {{- with .Site.Params.organization }}
+      "publisher": {
+         "@id": {{ .url | absURL | printf "%s#organization" }}
+      },
+      {{- else  }}
+      {{- if isset .Site.Params "author" }}
+      "publisher": {
+        "@id": {{ $.Site.BaseURL | printf "%s#author" }}
+      },
+      {{- end }}
+      {{- end }}
+      "inLanguage": {{ .Site.LanguageCode }}
+    },
+    {{- with .Site.Params.logo }}
+    {
+      "@type": "ImageObject",
+      "@id": {{ $.Site.BaseURL | printf "%s#primaryimage" }},
+      "url": {{ . | absURL }},
+      "caption": {{ $.Site.Title }}
+    },
+    {{- end }}
+    {{- with .Site.Params.images -}}
+    {{- range . }}
+    {
+      "@type": "ImageObject",
+      "url": {{ . | absURL }},
+      "caption": {{ $.Site.Title }}
+    },
+    {{- end }}
+    {{- end }}
+    {
+      "@type": "WebPage",
+      "@id": {{ .Permalink | printf "%s#webpage" }},
+      "url": {{ .Permalink }},
+      "name": {{ .Title }},
+      "isPartOf": {
+        "@id": {{ .Site.BaseURL | printf "%s#website" }}
+      },
+      {{- with .Site.Params.organization }}
+      "about": {
+         "@id": {{ .url | absURL | printf "%s#organization" }}
+      },
+      {{- end }}
+      "primaryImageOfPage": {
+        "@id": {{ .Site.BaseURL | printf "%s#primaryimage" }}
+      },
+      {{- if not .PublishDate.IsZero }}
+      "datePublished": {{ .PublishDate.Format $ISO8601 }},
+      {{- end }}
+      {{- if not .Lastmod.IsZero }}
+      "dateModified": {{ .Lastmod.Format $ISO8601 }},
+      {{- end }}
+      "description": {{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }},
+      "inLanguage": {{ .Site.LanguageCode }},
+      "potentialAction": [
+        {
+          "@type": "ReadAction",
+          "target": [
+            {{ .Permalink }}
+          ]
+        }
+      ]
+    }{{ if .IsPage }},
+    {
+      "@type": "Article",
+      "isPartOf": {
+        "@id": {{ .Permalink | printf "%s#webpage" }}
+      },
+      "mainEntityOfPage": {
+        "@id": {{ .Permalink | printf "%s#webpage" }}
+      },
+      "headline": {{ .Title }},
+      {{- with .Params.images }}
+      "image": [
+        {{- range $idx, $url := . -}}{{- if $idx -}},{{- end }}
+        {{ $url | absURL -}}
+        {{ end }}
+      ],
+      {{- end }}
+      {{- if not .PublishDate.IsZero }}
+      "datePublished": {{ .PublishDate.Format $ISO8601 }},
+      {{- end }}
+      {{- if not .Lastmod.IsZero }}
+      "dateModified": {{ .Lastmod.Format $ISO8601 }},
+      {{- end }}
+      {{- with .Site.Params.organization }}
+      "publisher": {
+         "@id": {{ .url | absURL | printf "%s#organization" }}
+      },
+      {{- else  }}
+      {{- if isset .Site.Params "author" }}
+      "publisher": {
+        "@id": {{ .Site.BaseURL | printf "%s#author" }}
+      },
+      {{- end }}
+      {{- end }}
+      "keywords": [
+      {{- if isset .Params "tags" -}}
+      {{- range $idx, $cat := .Params.tags -}}
+        {{- with $.Site.GetPage "tags" -}}
+        {{- with .GetPage $cat -}}{{- if $idx -}},{{- end }}
+        {{ .Title -}}
+        {{ end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- end }}
+      ],
+      "articleSection": [
+      {{- if isset .Params "categories" -}}
+      {{- range $idx, $cat := .Params.categories -}}
+        {{- with $.Site.GetPage "categories" -}}
+        {{- with .GetPage $cat -}}{{- if $idx -}},{{- end }}
+        {{ .Title -}}
+        {{ end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- end }}
+      ],
+      "inLanguage": {{ .Site.LanguageCode }},
+      {{- if isset .Params "authors" }}
+      "author": [
+        {{- range $idx, $author := .Params.authors -}}
+        {{- with $.Site.GetPage "authors" -}}
+        {{- with .GetPage $author }}{{- if $idx -}},{{- end }}
+        {
+          "@type":"Person",
+          "name": {{ .Title }},
+          "image": {
+            "@type":"ImageObject",
+            "url": {{ with .Params.avatar }}{{ . | absURL | printf `"%s"` | safeJS }}{{ else }}{{ .Params.gravatar | md5 | printf `"https://www.gravatar.com/avatar/%s?s=200&d=robohash"` | safeJS }}{{ end }}
+          },
+          "description": {{ .Params.bio }}
+        }
+        {{- end }}
+        {{- end -}}
+        {{- end }}
+      ],
+      {{- else if isset .Params "author" }}
+      "author": {
+        "@type": "Person",
+        "name": {{ .Params.author }}
+      },
+      {{- end }}
+      "potentialAction": [
+        {
+          "@type": "CommentAction",
+          "name": "Comment",
+          "target": [
+            {{ .Permalink | printf "%s#comments" }}
+          ]
+        }
+      ]
+    }{{ end }}
+  ]
+}
+</script>

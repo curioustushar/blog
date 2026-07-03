@@ -1,0 +1,19 @@
+{{- if or (isset $.Params "authors") (isset $.Params "author") -}}
+<span class="text-muted">{{ i18n "postedInShort" }}</span>
+{{ else }}
+<span class="text-muted">{{ i18n "postedIn" }}</span>
+{{ end }}
+<span>
+{{- if isset $.Params "categories" -}}
+{{ $len := len $.Params.categories -}}
+{{- range $idx, $cat := $.Params.categories -}}
+  {{- with $.Site.GetPage "categories" -}}
+    {{ with .GetPage $cat }}
+    <a href="{{ .Permalink }}" class="text-decoration-only-hover">{{ .Title }}</a><span class="text-muted">{{- if lt $idx (sub $len 2) -}}{{ i18n "delimit" }}{{ end }}{{- if eq $idx (sub $len 2) -}}{{ i18n "delimitLast" }}{{ end }}</span>
+    {{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- else -}}
+{{ i18n "noCategory" }}
+{{- end -}}
+</span>

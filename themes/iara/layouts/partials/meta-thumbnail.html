@@ -1,0 +1,17 @@
+{{- $images := .Resources.ByType "image" -}}
+{{- with $images.GetMatch "{*thumbnail*,*cover*,*feature*,*header*}" -}}
+{{- $image := .Fit "150x150 jpg q90 Linear" -}}
+<img src="{{ $image.Permalink }}" loading="lazy" class="card-img" alt="{{ $image.Title }}">
+{{- else -}}
+{{- with .Params.thumbnail -}}
+<img style="max-width: 150px; max-height: 150px;" src="{{ .image | absURL }}" loading="lazy" class="card-img" alt="{{ with .alt }}{{ . }}{{ else }}{{ $.Title }}{{ end }}">
+{{- else -}}
+{{- if isset .Params "images" -}}
+{{- with $image := index .Params.images 0 -}}
+<img style="max-width: 150px; max-height: 150px;" src="{{ $image | absURL }}" loading="lazy" class="card-img" alt="{{ $.Title }}">
+{{- end -}}
+{{- else -}}
+<!-- no image -->
+{{- end -}}
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,136 @@
+{{- define "__jupyter_md" -}}
+  {{- range . }}
+    {{- $html := . | markdownify -}}
+    {{- if ne $html "" -}}
+    <div class="p">{{ $html }}</div>
+    {{- end -}}
+  {{- end }}
+{{- end -}}
+{{- define "__jupyter_html" -}}
+  {{- $code := delimit . "" "" -}}
+  <div class="p">
+  {{ $code | safeHTML }}
+  </div>
+{{- end -}}
+{{- define "__jupyter_js" -}}
+  {{- $code := delimit . "" "" -}}
+  <script type="text/javascript">
+    {{ $code | safeJS }}
+  </script>
+{{- end -}}
+{{- define "__jupyter_svg" -}}
+  <div class="p">
+  {{ delimit . "" "" }}
+  </div>
+{{- end -}}
+{{- define "__jupyter_image" -}}
+  <div class="p">
+    <img src="data:image/{{ .type }};base64,{{ .base64 }}">
+  </div>
+{{- end -}}
+{{- define "__jupyter_tex" -}}
+  <div class="p">
+    {{ delimit . "" ""  }}
+  </div>
+{{- end -}}
+{{- define "__jupyter_highlight" -}}
+  {{- $code := delimit .code "" "" -}}
+  {{ highlight $code .ext "linenos=false" }}
+{{- end -}}
+{{- $res := .Page.Resources.Get .Params.src -}}
+{{- $notebook := $res.Content | transform.Unmarshal -}}
+{{- if and (ne $notebook.nbformat 4.0) (ne $notebook.nbformat 5.0) -}}
+  {{- errorf "Jupyter shortcode supports nbformat version 4 and 5 only, '%s' is version %.f" .Params.src $notebook.nbformat -}}
+{{- end -}}
+{{- $lang := $notebook.metadata.language_info.name | default "python" -}}
+<div class="jp-notebook">
+  {{ range $notebook.cells }}
+  <div class="jp-notebook-cell">
+    {{ if eq .cell_type "code" }}
+    <div class="jp-inner-cell jp-code-cell">
+      <div class="jp-prompt jp-inputprompt">
+        {{- $spacer := "&nbsp;&nbsp;" | safeHTML -}}
+        <span>In&nbsp;[{{ .execution_count | default $spacer }}]:</span>
+      </div>
+      <div class="jp-data jp-input-data">
+        {{ template "__jupyter_highlight" (dict "code" .source "ext" $lang) }}
+      </div>
+    </div>
+    {{ range .outputs }}
+    <div class="jp-inner-cell jp-output-cell">
+      <div class="jp-prompt jp-outputprompt">
+        {{ with .execution_count }}<span>Out&nbsp;[{{ . }}]:</span>{{ end }}
+      </div>
+      <div class="jp-data jp-output-data">
+      {{ if eq .output_type "stream" }}
+        <div class="jp-output-{{ .name }}">
+          {{ template "__jupyter_highlight" (dict "code" .text "ext" "txt") }}
+        </div>
+      {{ else if or (eq .output_type "display_data") (eq .output_type "execute_result") }}
+        {{ if .data }}
+          {{- $jsonws := index .data "application/vnd.jupyter.widget-state+json" -}}
+          {{- $jsonwv := index .data "application/vnd.jupyter.widget-view+json" -}}
+          {{- $js := index .data "application/javascript" -}}
+          {{- $html := index .data "text/html" -}}
+          {{- $md := index .data "text/markdown" -}}
+          {{- $svg := index .data "image/svg+xml" -}}
+          {{- $png := index .data "image/png" -}}
+          {{- $jpeg := index .data "image/jpeg" -}}
+          {{- $tex := index .data "text/latex" -}}
+          {{- $json := index .data "application/json" -}}
+          {{- $plain := index .data "text/plain" -}}
+          {{ if $html }}
+            {{ template "__jupyter_html" $html }}
+          {{ else if $js }}
+            {{ template "__jupyter_js" $js }}
+          {{ else if $md }}
+            {{ template "__jupyter_md" $md }}
+          {{ else if $svg }}
+            {{ template "__jupyter_svg" $svg }}
+          {{ else if $png }}
+            {{ template "__jupyter_image" (dict "base64" $png "type" "png") }}
+          {{ else if $jpeg }}
+            {{ template "__jupyter_image" (dict "base64" $jpeg "type" "jpeg") }}
+          {{ else if $tex }}
+            {{ template "__jupyter_tex" $tex }}
+          {{ else if $json }}
+            {{- $code := $json | jsonify -}}
+            {{ template "__jupyter_highlight" (dict "code" $code "ext" "json") }}
+          {{ else if $plain }}
+            {{ template "__jupyter_highlight" (dict "code" $plain "ext" "txt") }}
+          {{ else if $jsonws }}
+            <!-- Ignored application/vnd.jupyter.widget-state+json -->
+          {{ else if $jsonwv }}
+            <!-- Ignored application/vnd.jupyter.widget-view+json -->
+          {{ else }}
+            {{- errorf "Jupyter shortcode error: Output type '%s' in '%s' has no supported media: %#v" .output_type $.Params.src .data -}}
+          {{ end }}
+        {{ end }}
+      {{ else if eq .output_type "error" }}
+        {{ template "__jupyter_highlight" (dict "code" .traceback "ext" "txt") }}
+      {{ else }}
+        {{- errorf "Jupyter shortcode error: Output type '%s' in '%s' is not supported." .output_type $.Params.src -}}
+      {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  {{ else if eq .cell_type "markdown" }}
+    <div class="jp-inner-cell jp-md-cell">
+      <div class="jp-prompt"></div>
+      <div class="jp-data jp-md-data">
+        {{ template "__jupyter_md" .source }}
+      </div>
+    </div>
+  {{ else if eq .cell_type "raw" }}
+    <div class="jp-inner-cell jp-md-cell">
+      <div class="jp-prompt"></div>
+      <div class="jp-data jp-md-data">
+        {{ template "__jupyter_highlight" (dict "code" .source "ext" "txt") }}
+      </div>
+    </div>
+  {{ else }}
+    {{- errorf "Jupyter shortcode error: Cell type '%s' in '%s' is not supported." .cell_type $.Params.src -}}
+  {{ end }}
+  </div>
+{{ end }}
+</div>

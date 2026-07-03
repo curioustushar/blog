@@ -1,0 +1,63 @@
+.jp-notebook p,
+.jp-inner-cell {
+  overflow: hidden;
+}
+
+.jp-notebook .p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.jp-notebook img, .jp-notebook svg {
+  display: block;
+  max-width: 100%;
+}
+
+.jp-inner-cell {
+}
+
+.jp-prompt {
+  font-family: $font-family-monospace;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+@media (min-width: 992px) {
+  .jp-prompt {
+    position: absolute;
+    width: 150px;
+    margin-left: -150px;
+    padding-right: 10px;
+    text-align: end;
+  }
+}
+
+.jp-data {
+}
+
+.jp-output-data .highlight {
+  border: none;
+}
+
+.jp-output-stderr pre {
+  background-color: #fdd;
+}
+
+.jp-inputprompt {
+  color: #000080;
+}
+.jp-outputprompt {
+  color: #8b0000;
+}
+
+.jp-output-cell {
+  margin-top: -10px;
+}
+
+.jp-output-data pre {
+  padding-left: 10px !important;
+}
+
+.jp-download {
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,27 @@
+<div class="card border-0 mt-5">
+  <div class="row no-gutters">
+    <div class="col-10">
+      <div class="card-body py-0 pl-0">
+        <h5 class="card-title">
+          <a href="{{ .Permalink }}" class="text-decoration-only-hover" aria-label="title">{{ .Title }}</a>
+        </h5>
+        <div class="card-text d-none d-md-block mb-2">
+          <a href="{{ .Permalink }}" class="text-decoration-none" aria-label="summary">{{ .Summary }}</a>
+        </div>
+        <p class="card-text small mb-0">
+          {{ partial "meta-author.html" . }}
+          {{ partial "meta-category.html" . }}
+        </p>
+        <p class="card-text text-muted small mb-0">
+          {{ partial "meta-date.html" . }}
+          {{ partial "meta-reading-time.html" . }}
+        </p>
+      </div>
+    </div>
+    <div class="col-2 m-auto">
+      <a href="{{ .Permalink }}" aria-label="thumbnail">
+        {{ partial "meta-thumbnail.html" . }}
+      </a>
+    </div>
+  </div>
+</div>

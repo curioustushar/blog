@@ -1,0 +1,66 @@
+[categories]
+other = "Categorias"
+
+[tags]
+other = "Tags"
+
+[featured]
+other = "Destaque"
+
+[writtenBy]
+other = "Escrito por"
+
+[postedIn]
+other = "Publicado em"
+
+[postedInShort]
+other = "em"
+
+[comments]
+other = "Comentários"
+
+[latest]
+other = "Recente"
+
+[archive]
+other = "Arquivo"
+
+[articles]
+other = "Artigos"
+
+[search]
+other = "Pesquisar..."
+
+[delimit]
+other = ", "
+
+[delimitLast]
+other = " e "
+
+[readingTime]
+one = "1 minuto de leitura"
+other = "{{ .Count }} minutos de leitura"
+
+[noCategory]
+other = "Sem categoria"
+
+[email]
+other = "Email"
+
+[name]
+other = "Nome"
+
+[subject]
+other = "Assunto"
+
+[message]
+other = "Mensagem"
+
+[submit]
+other = "Enviar"
+
+[page-not-found]
+other = "Hmmmm.... Parece que a página que você está buscando não existe"
+
+[go-back-home]
+other = "Ir para Início"

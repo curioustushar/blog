@@ -1,0 +1,35 @@
+{{ with .Site.Params.Sidebar.Featured -}}
+<div class="featured">
+  <h3 class="pb-2 border-bottom">{{ i18n "featured" }}</h3>
+  <ul class="list-unstyled">
+    {{- range $idx, $item := .Item }}
+      {{- with $.Site.GetPage $item.path -}}
+      <li class="mb-3">
+        <div class="row no-gutters">
+          {{ if $.Site.Params.Sidebar.Featured.index -}}
+          <div class="col col-auto featured-index">
+            <span class="mr-2">{{ printf "%02d" (add $idx 1) }}</span>
+          </div>
+          {{- end }}
+          <div class="{{ if $.Site.Params.Sidebar.Featured.index }}col-10{{ else }}col-12{{ end }}">
+            <h6 class="mb-0">
+              <a href="{{ .Permalink }}" class="text-decoration-only-hover">{{ .Title }}</a>
+            </h6>
+            <p class="small mb-0">
+              {{ partial "meta-author.html" . }}
+              {{ partial "meta-category.html" . }}
+            </p>
+            <p class="text-muted small mb-0">
+              {{ partial "meta-date.html" . }}
+              {{ partial "meta-reading-time.html" . }}
+            </p>
+          </div>
+        </div>
+      </li>
+      {{- else }}
+        {{ errorf "Featured page '%s' not found." $item.path }}
+      {{- end }}
+    {{- end }}
+  </ul>
+</div>
+{{- end }}

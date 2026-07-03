@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg navbar-light border-bottom shadow-sm site-nav">
+  <a class="navbar-brand text-decoration-none" href="{{ .Site.BaseURL }}">
+    {{ with .Site.Params.logo }}
+    <img src="{{ . | absURL }}"
+         width="32"
+         height="32"
+         alt="Logo"
+         class="d-inline-block align-top"
+         loading="lazy">
+    {{ end }}
+    {{- with .Site.Params.Title -}}{{ . }}{{- else -}}{{ $.Site.Title }}{{- end -}}
+  </a>
+  <div class="d-flex flex-row order-2 order-lg-3 align-items-center">
+    <button type="button"
+            class="btn btn-link nav-link theme-toggle px-2 py-1 mr-2"
+            id="theme-toggle"
+            aria-label="Toggle color theme"
+            title="Toggle color theme">
+      <span class="theme-icon theme-icon-system" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </span>
+      <span class="theme-icon theme-icon-sun d-none" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </span>
+      <span class="theme-icon theme-icon-moon d-none" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+    </button>
+    {{ if .Site.Params.Search.Enabled }}
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item">
+        <a class="nav-link mr-3 mt-2 mr-lg-0 mt-lg-0"
+           href="#search-modal"
+           data-toggle="modal"
+           data-target="#search-modal">
+          <i class="fas fa-search"></i>
+        </a>
+      </li>
+    </ul>
+    {{ end }}
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-controls="navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse order-3 order-lg-2" id="navbar">
+    <ul class="navbar-nav ml-auto">
+      {{- $currentPage := . -}}
+      {{ range .Site.Menus.main -}}
+        {{- if .HasChildren -}}
+        <li class="nav-item dropdown {{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">
+            {{ .Pre }}
+            {{ .Name }}
+            {{ .Post }}
+          </a>
+          <div class="dropdown-menu rounded-0" aria-labelledby="navbarDropdown">
+            {{ range .Children -}}
+            <a class="dropdown-item" href="{{ .URL }}">
+              {{ .Pre }}
+              {{ .Name }}
+              {{ .Post }}
+            </a>
+            {{ end -}}
+          </div>
+        </li>
+        {{- else -}}
+        <li class="nav-item {{ if eq $currentPage.RelPermalink .URL }}active{{ end }}">
+          <a class="nav-link" href="{{ .URL }}">
+            {{ .Pre }}
+            {{ .Name }}
+            {{ .Post }}
+          </a>
+        </li>
+        {{ end -}}
+      {{ end -}}
+    </ul>
+  </div>
+</nav>

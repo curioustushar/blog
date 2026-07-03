@@ -1,0 +1,7 @@
+{{ if eq .Params.katex true }}
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script async src="/vendor/katex/katex.min.js"></script>
+<script async src="/vendor/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+{{ else if eq .Params.mathjax true }}
+<script async src="/vendor/mathjax/tex-mml-chtml.js"></script>
+{{ end }}

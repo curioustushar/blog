@@ -1,0 +1,182 @@
+.article article > {
+  hr::before {
+    text-indent: 0.6em;
+    letter-spacing: 0.6em;
+    content: "...";
+  }
+
+  hr {
+    height: unset;
+    color: $body-color;
+    font-size: 1.75rem;
+    text-align: center;
+    font-weight: 300;
+    border: none;
+  }
+}
+
+.article {
+  margin: 0 auto;
+  max-width: 45rem;
+  width: 100%;
+
+  .tagline {
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
+
+  .meta {
+    line-height: 1.25rem;
+    font-size: 1.1rem;
+
+    .authors {
+      max-width: 70%;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      border: solid 2px rgba(0, 0, 0, 0.5);
+      background-color: #fff;
+
+      img {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        max-width: unset;
+      }
+    }
+
+    .share-buttons {
+      font-size: inherit;
+      margin-bottom: 0;
+      font-size: 1.4rem;
+
+      a {
+        margin: 0 0.35rem;
+      }
+    }
+
+    .category, .author {
+      text-decoration: none;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  // img {
+  //   max-width: 100%;
+  // }
+
+  .highlight {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  blockquote {
+    margin-left: -10px;
+    padding-left: 13px;
+    box-shadow: rgba(0, 0, 0, 0.4) 3px 0px 0px 0px inset;
+    font-style: italic;
+  }
+
+  .footnotes hr {
+    border: 0;
+  }
+
+  .footnotes hr:before {
+    content: "";
+    display: block;
+    width: 250px;
+    background-color: $gray-400;
+    height: 1px;
+  }
+
+  .author-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: solid 2px $gray-500;
+  }
+
+  .author-info:not(last-child) {
+    margin-bottom: 1rem;
+  }
+
+  .author-meta {
+    padding-left: 52px;
+    max-width: 600px;
+
+    h2 {
+      font-size: 1.6rem;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footnotes {
+    line-height: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .footnote-ref {
+    padding-left: 0.1rem;
+  }
+
+  .footnote-backref {
+    text-decoration: none;
+  }
+}
+
+.article-cover {
+  text-align: center;
+
+  img {
+    width: 100%;
+  }
+}
+
+.share-buttons {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+
+  a {
+    margin: 0 0.75rem;
+  }
+}
+
+.tags {
+  .tag-link {
+    color: $gray-800;
+    background-color: $gray-200;
+    padding: 0.4rem 1rem;
+    border-radius: 0.2rem;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .article {
+    .author-img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .author-info:not(last-child) {
+      margin-bottom: 1.5rem;
+    }
+
+    .author-meta {
+      padding-left: 102px;
+    }
+  }
+}

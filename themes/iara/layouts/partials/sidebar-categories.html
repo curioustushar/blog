@@ -1,0 +1,14 @@
+{{- with .Site.Params.Sidebar.Categories -}}
+{{- if .show }}
+<div class="categories mt-4">
+  <h3 class="pb-2 border-bottom">{{ i18n "categories" }}</h3>
+  <ul class="list-unstyled">
+    {{- range $.Site.Taxonomies.categories }}
+    <li>
+      <a href="{{ .Page.Permalink }}" class="text-decoration-only-hover">{{ .Page.Title }}</a>{{ if $.Site.Params.Sidebar.Categories.count }} ({{ .Count }}){{ end }}
+    </li>
+    {{- end }}
+  </ul>
+</div>
+{{- end }}
+{{- end -}}

@@ -1,0 +1,54 @@
+/* Fix Boostrap overrides */
+.gsc-control-cse,
+.gsc-control-wrapper-cse,
+.gsc-above-wrapper-area-container,
+.gsc-search-box,
+.gsc-search-box tr,
+.gsc-search-box td {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.gsc-input {
+  border: none !important;
+  padding: 0 0.25rem !important;
+}
+
+.gsc-search-button {
+  margin: 0 0 0 0.25rem !important;
+}
+
+.gsc-result-info,
+a.gs-image {
+  border: none !important;
+}
+
+img.gs-image {
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+.gsc-above-wrapper-area,
+.gsc-input-box,
+.gsc-search-box {
+  table {
+    tbody {
+      tr {
+        background-color: unset !important;
+
+        td {
+          border: none !important;
+        }
+      }
+    }
+  }
+}
+
+.gsc-input-box {
+  table {
+    margin: 0 !important;
+  }
+
+  border-radius: 2px !important;
+}

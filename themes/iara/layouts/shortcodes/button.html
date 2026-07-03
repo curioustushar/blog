@@ -1,0 +1,11 @@
+{{ with .Params.location }}
+<p class="text-{{ . }}">
+{{ end }}
+  <a href="{{ .Params.url }}"
+     {{ with .Params.target }}target="{{ . }}"{{ end }}
+     class="btn btn{{ if .Params.outline }}-outline{{ end }}-{{ with .Params.color }}{{ . }}{{ else }}info{{ end }}">
+    {{ .Params.text | markdownify }}
+  </a>
+{{ if .Params.location }}
+</p>
+{{ end }}

@@ -1,0 +1,131 @@
+.modal-content {
+  border-radius: 0;
+}
+
+.btn-search:focus {
+  box-shadow: none;
+}
+
+.text-decoration-only-hover {
+  text-decoration: none !important;
+}
+
+.text-decoration-only-hover:hover {
+  text-decoration: underline !important;
+}
+
+// Pagination
+
+.pagination {
+  @extend .justify-content-center;
+
+  .page-item.active .page-link {
+    background-color: $gray-700;
+    border-color: $gray-700;
+    color: $white;
+  }
+}
+
+// Sidebar
+
+.sidebar {
+  .featured-index {
+    font-size: 2.1rem;
+    line-height: 2.5rem;
+    color: #00000026;
+  }
+
+  .featured {
+    h6 {
+      font-size: 1.12rem;
+    }
+
+    small, .small {
+      font-size: 0.93rem;
+    }
+  }
+
+  .author {
+    img {
+      border: 6px solid #f3f3f3 !important;
+    }
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+
+
+// Figures
+
+figure {
+  text-align: center;
+  width: 100%;
+
+  @extend .figure;
+
+  img {
+    max-width: 100%;
+
+    @extend .figure-img;
+  }
+
+  figcaption {
+    @extend .figure-caption;
+  }
+}
+
+// Tables
+
+table {
+  @extend .table;
+  @extend .table-sm;
+  @extend .table-bordered;
+  @extend .table-striped;
+}
+
+// Taxonomies
+
+.taxonomy {
+  margin: 0 auto;
+  max-width: 680px;
+  width: 100%;
+}
+
+// Code
+
+pre,
+code {
+  font-size: 1rem;
+}
+
+// Shortcodes
+
+/* Fix for gist shortcode */
+.gist {
+  table {
+    tr, td {
+      border: none !important;
+      background-color: #fff !important;
+    }
+  }
+
+  .my-2 {
+    margin: 0 !important;
+  }
+}
+
+.instagram-media {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.twitter-tweet {
+  margin: 0 auto 1rem auto !important;
+}
+
+.youtube-video,
+.vimeo-video {
+  margin-bottom: 1rem;
+}

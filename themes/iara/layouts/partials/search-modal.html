@@ -1,0 +1,14 @@
+<div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{- if .Site.Params.Search.Enabled -}}
+        {{ if eq $.Site.Params.Search.Provider "google" -}}
+        <div class="gcse-search"></div>
+        <script async src="https://cse.google.com/cse.js?cx={{ $.Site.Params.Search.Google.ID }}"></script>
+        {{- end }}
+        {{- end -}}
+      </div>
+    </div>
+  </div>
+</div>

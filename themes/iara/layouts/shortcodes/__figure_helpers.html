@@ -1,0 +1,16 @@
+{{/* These template definitions are global. */}}
+{{/* Only include once */}}
+{{- define "__figure_resize" -}}
+{{- if not (.Page.Scratch.Get "__figure_resize") -}}
+{{- .Page.Scratch.Set "__figure_resize" true -}}
+{{- $im := .im.Resize (printf "%s jpg %s %s %s" .size .q .f .bg) -}}
+{{- $im.Permalink -}}
+{{- end -}}
+{{- end -}}
+{{- define "__figure_fit" -}}
+{{- if not (.Page.Scratch.Get "__figure_fit") -}}
+{{- .Page.Scratch.Set "__figure_fit" true -}}
+{{- $im := .im.Fit (printf "%s jpg %s %s %s" .size .q .f .bg) -}}
+{{- $im.Permalink -}}
+{{- end -}}
+{{- end -}}

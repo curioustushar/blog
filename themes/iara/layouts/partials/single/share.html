@@ -1,0 +1,27 @@
+{{ if (and (ne .Params.DisableShare true) (ne .Params.disable_share true)) -}}
+<div class="share-buttons text-center">
+  <a class="share-button share-twitter"
+     href="#"
+     title="Share on Twitter"
+     data-url="{{ .Permalink }}"
+     data-text="{{ .Title }}"><i class="fab fa-twitter"></i></a>
+
+  <a class="share-button share-linkedin"
+     href="#"
+     title="Share on LinkedIn"
+     data-url="{{ .Permalink }}"
+     data-text="{{ .Title }}"><i class="fab fa-linkedin-in"></i></a>
+
+  <a class="share-button share-facebook"
+     href="#"
+     title="Share on Facebook"
+     data-url="{{ .Permalink }}"
+     data-text="{{ .Title }}"><i class="fab fa-facebook"></i></a>
+
+  <a class="share-button share-pinterest"
+     href="#"
+     title="Share on Pinterest"
+     data-url="{{ .Permalink }}"
+     data-text="{{ .Title }}"><i class="fab fa-pinterest"></i></a>
+</div>
+{{- end }}

@@ -1,0 +1,114 @@
+{{- $hasMenus := or .Site.Menus.footer1 .Site.Menus.footer2 .Site.Menus.footer3 .Site.Menus.footer4 .Site.Menus.footer5 .Site.Menus.footer6 -}}
+{{- $hasSocial := isset .Site.Params "social" -}}
+<footer class="site-footer mt-auto pt-5 pb-3 px-4">
+  {{ if or $hasSocial $hasMenus -}}
+  <div class="clearfix text-center">
+    {{ with .Site.Params.Social -}}
+    <div class="social-icons d-xl-inline-block float-xl-left">
+      <ul class="list-unstyled">
+        {{- range . }}
+        <li class="list-inline-item social-icon my-2">
+          <a href="{{ .url }}" title="{{ .title }}"><i class="{{ .icon }}"></i></a>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+    {{ if $hasMenus -}}
+    <div class="footer-sections d-xl-inline-block float-xl-right">
+      {{ with .Site.Menus.footer1 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+      {{ with .Site.Menus.footer2 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{ end -}}
+        </ul>
+      </div>
+      {{- end }}
+      {{ with .Site.Menus.footer3 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+      {{ with .Site.Menus.footer4 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+      {{ with .Site.Menus.footer5 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+      {{ with .Site.Menus.footer6 -}}
+      <div class="my-3 my-md-0 mx-md-2 d-md-inline-block align-top">
+        <ul class="list-unstyled">
+          {{- range . }}
+          <li>
+            <a class="td-n td-h " href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+  <hr class="my-3">
+  {{- end }}
+  <div class="copyright clearfix text-center">
+    <div class="d-md-inline-block float-md-left">
+      <i class="far fa-copyright"></i> {{ now.Format "2006"}} {{ with .Site.Params.Copyright }}{{ . }}{{ else }}{{ .Title }}{{ end }}
+      {{- with .Site.Params.License }}
+      &middot; <a href="{{ .url }}" target="_blank">{{ .name | safeHTML }}</a>
+      {{- end }}
+    </div>
+    {{- with .Site.Menus.terms }}
+    <div class="pt-2 pt-md-0 d-md-inline-block float-md-right">
+      <ul class="list-unstyled m-0">
+        {{- range . }}
+        <li class="list-inline-item">
+          <a href="{{ .URL }}">{{ .Pre }} {{ .Name }} {{ .Post }}</a>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
+    {{ with .Site.Params.BuiltWith -}}
+    <div class="pt-2 pt-md-0 d-md-inline-block float-md-none">
+      <span>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> and <a href="https://themes.gohugo.io/iara/" target="_blank">Iara Theme</a></span>
+    </div>
+    {{- end }}
+  </div>
+</footer>

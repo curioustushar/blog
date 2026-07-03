@@ -1,0 +1,22 @@
+{{- $images := $.Resources.ByType "image" -}}
+{{- with $images.GetMatch "{*cover*,*feature*}" }}
+<div class="article-cover">
+  <figure class="figure">
+    <img class="figure-img" src="{{ .Permalink }}" loading="lazy" alt="{{ .Title }}">
+    <figcaption class="figure-caption text-center">{{ .Params.Caption | markdownify }}</figcaption>
+  </figure>
+</div>
+{{- else -}}
+{{- with .Params.cover }}
+<div class="article-cover {{ with .class }}{{ . }}{{ end }}">
+  <figure class="figure">
+    <img class="figure-img" src="{{ .image | absURL }}"
+         loading="lazy"
+         alt="{{ with .alt }}{{ . }}{{ else }}{{ $.Params.Title }}{{ end }}">
+    {{ with .caption }}
+    <figcaption class="figure-caption text-center">{{ . | markdownify }}</figcaption>
+    {{ end }}
+  </figure>
+</div>
+{{- end -}}
+{{- end }}

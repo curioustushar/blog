@@ -1,0 +1,34 @@
+{{ define "main" -}}
+<section class="container taxonomy authors">
+  <ul class="list-unstyled mt-3 mb-5">
+    <h1>{{ .Title }}</h1>
+
+    <article>
+      {{ .Content }}
+    </article>
+
+    {{ range .Data.Pages -}}
+    <li class="my-2">
+      <div class="d-flex">
+        <div>
+          <a href="{{ .Permalink }}"
+             class="d-inline-block avatar mt-1">
+            <img src="{{ with .Params.avatar }}{{ . | absURL }}{{ else }}https://www.gravatar.com/avatar/{{ .Params.gravatar | md5 }}?s=60&d=robohash{{ end }}"
+                 width="60"
+                 height="60"
+                 loading="lazy"
+                 class="rounded-circle border border-light"
+                 alt="{{ .Title }}"
+                 title="{{ .Title }}">
+          </a>
+        </div>
+        <div class="ml-2">
+          <a href="{{ .Permalink }}" class="text-decoration-none">{{ .Title }}</a>
+          <a href="{{ .Permalink }}" class="text-decoration-none "><p class="small text-muted">{{ .Params.bio }}</p></a>
+        </div>
+      </div>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

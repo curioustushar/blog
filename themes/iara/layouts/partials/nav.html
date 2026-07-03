@@ -1,0 +1,106 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+  <a class="navbar-brand text-decoration-none" href="{{ .Site.BaseURL }}">
+    {{ with .Site.Params.logo }}
+    <img src="{{ . | absURL }}"
+         width="32"
+         height="32"
+         alt="Logo"
+         class="d-inline-block align-top"
+         loading="lazy">
+    {{ end }}
+    {{- with .Site.Params.Title -}}{{ . }}{{- else -}}{{ $.Site.Title }}{{- end -}}
+  </a>
+  <div class="d-flex flex-row order-2 order-lg-3">
+    {{ if .Site.Params.Search.Enabled }}
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item">
+        <a class="nav-link mr-3 mt-2 mr-lg-0 mt-lg-0"
+           href="#search-modal"
+           data-toggle="modal"
+           data-target="#search-modal">
+          <i class="fas fa-search"></i>
+        </a>
+      </li>
+    </ul>
+    {{ end }}
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-controls="navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse order-3 order-lg-2" id="navbar">
+    <ul class="navbar-nav ml-auto">
+      {{- $currentPage := . -}}
+      {{ range .Site.Menus.main -}}
+        {{- if .HasChildren -}}
+        <li class="nav-item dropdown {{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">
+            {{ .Pre }}
+            {{ .Name }}
+            {{ .Post }}
+          </a>
+          <div class="dropdown-menu rounded-0" aria-labelledby="navbarDropdown">
+            {{ range .Children -}}
+            <a class="dropdown-item" href="{{ .URL }}">
+              {{ .Pre }}
+              {{ .Name }}
+              {{ .Post }}
+            </a>
+            {{ end -}}
+          </div>
+        </li>
+        {{- else -}}
+        <li class="nav-item {{ if eq $currentPage.RelPermalink .URL }}active{{ end }}">
+          <a class="nav-link" href="{{ .URL }}">
+            {{ .Pre }}
+            {{ .Name }}
+            {{ .Post }}
+          </a>
+        </li>
+        {{ end -}}
+      {{ end -}}
+    </ul>
+  </div>
+</nav>
+{{ if and (.IsHome) (.Site.Menus.carousel) }}
+<div class="container mt-2">
+  <div class="d-flex justify-content-between">
+    <div class="nav-scroller-btn">
+      <button class="nav-scroller-left py-2 px-0" disabled="true">
+        <svg class="svgIcon-use" width="21" height="21">
+          <path d="M13.402 16.957l-6.478-6.479L13.402 4l.799.71-5.768 5.768 5.768 5.77z" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-scroller">
+      <nav class="nav d-flex justify-content-between">
+        {{ range .Site.Menus.carousel -}}
+        <a class="p-2 text-muted" href="{{ .URL }}">
+          {{ .Pre }}
+          {{ .Name }}
+          {{ .Post }}
+        </a>
+        {{ end -}}
+      </nav>
+    </div>
+    <div class="nav-scroller-btn">
+      <button class="nav-scroller-right py-2 px-0">
+        <svg class="svgIcon-use" width="21" height="21">
+          <path d="M8.3 4.2l6.4 6.3-6.4 6.3-.8-.8 5.5-5.5L7.5 5" fill-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+{{ end }}

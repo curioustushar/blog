@@ -1,0 +1,6 @@
+{{ if (and .Site.Config.Services.Disqus.Shortname (ne .Params.DisableComments true) (ne .Params.disable_comments true)) -}}
+<div class="border-top pt-4 pb-4">
+<h2 id="comments" class="mt-0">{{ i18n "comments" }}</h2>
+{{ template "_internal/disqus.html" . }}
+</div>
+{{- end }}

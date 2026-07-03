@@ -1,0 +1,53 @@
+<ul class="nav nav-tabs">
+  {{ if isset .Params "featured" }}
+  <li class="nav-item">
+    <a class="nav-link active" href="#featured" data-toggle="tab">{{ i18n "featured" }}</a>
+  </li>
+  {{ end }}
+  <li class="nav-item">
+    <a class="nav-link {{ if not (isset .Params "featured") }}active{{ end }}" href="#latest" data-toggle="tab">{{ i18n "latest" }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#archive" data-toggle="tab">{{ i18n "archive" }}</a>
+  </li>
+</ul>
+<div class="tab-content">
+  {{ with .Params.featured }}
+  <div role="featured" class="tab-pane fade show active" id="featured">
+    <ul class="list-unstyled mt-3 mb-5">
+      {{ range $item := . }}
+      <li class="my-2">
+        {{ with $.Site.GetPage $item }}
+        {{ partial "author-card.html" . }}
+        {{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+
+  <div role="latest" class="tab-pane {{ if not (isset .Params "featured") }}fade show active{{ end }}" id="latest">
+    <ul class="list-unstyled mt-3 mb-5">
+      {{ range first 10 .Data.Pages -}}
+      <li class="my-2">
+        {{ partial "author-card.html" . }}
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+  <div role="archive" class="tab-pane fade" id="archive">
+    <ul class="list-unstyled mt-3 mb-5">
+      {{ range .Data.Pages -}}
+      <li class="my-2">
+        <div class="d-flex justify-content-between">
+          <a href="{{ .Permalink }}" class="col-8 col-md-9 p-0 text-decoration-only-hover text-truncate">{{ .Title }}</a>
+          {{ if eq .Kind "page" }}
+          {{- $dateFormat := $.Site.Params.dateFormat | default "Jan 2, 2006" -}}
+          <time class="post-list" datetime="{{ .Date.Format "2006-01-02T15:04:05Z0700" }}">{{ .Date.Format $dateFormat }}</time>
+          {{ end }}
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</div>

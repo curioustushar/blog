@@ -1,0 +1,25 @@
+{{- $index := resources.Get "js/bootstrap/index.js" -}}
+{{- $alert := resources.Get "js/bootstrap/alert.js" -}}
+{{- $button := resources.Get "js/bootstrap/button.js" -}}
+{{- $collapse := resources.Get "js/bootstrap/collapse.js" -}}
+{{- $carousel := resources.Get "js/bootstrap/carousel.js" -}}
+{{- $dropdown := resources.Get "js/bootstrap/dropdown.js" -}}
+{{- $modal := resources.Get "js/bootstrap/modal.js" -}}
+{{- $tab := resources.Get "js/bootstrap/tab.js" -}}
+{{- $util := resources.Get "js/bootstrap/util.js" -}}
+
+{{- $bootstrapmodules := slice $index $util $alert $button $collapse $carousel $dropdown $modal $tab -}}
+
+{{ if hugo.IsServer }}
+  {{ $bootstrap := $bootstrapmodules | resources.Concat "js/bootstrap.js" }}
+  <script type="text/javascript" async src="{{ $bootstrap.RelPermalink }}"></script>
+
+  {{ $iara := resources.Get "js/iara.js" }}
+  <script type="text/javascript" async src="{{ $iara.RelPermalink }}"></script>
+{{ else }}
+  {{ $bootstrap := $bootstrapmodules | resources.Concat "js/bootstrap.js" | resources.Minify | resources.Fingerprint }}
+  <script type="text/javascript" async src="{{ $bootstrap.RelPermalink }}"></script>
+
+  {{ $iara := resources.Get "js/iara.js" | resources.Minify | resources.Fingerprint }}
+  <script type="text/javascript" async src="{{ $iara.RelPermalink }}"></script>
+{{ end }}

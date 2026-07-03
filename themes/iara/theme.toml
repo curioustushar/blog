@@ -1,0 +1,11 @@
+name = "Iara"
+license = "Apache License 2.0"
+licenselink = "https://github.com/alexandrevicenzi/iara/blob/master/LICENSE.md"
+description = "Feature rich Medium-like theme for Hugo."
+tags = ["blog", "responsive", "mobile", "search", "disqus", "google-analytics", "contact-form", "multilingual"]
+features = ["blog", "responsive", "shortcodes", "seo", "authors"]
+min_version = "0.128.0"
+
+[author]
+    name = "alexandrevicenzi"
+    homepage = "https://alxd.dev"

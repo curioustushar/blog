@@ -1,0 +1,17 @@
+{{- $sidebarOnRight := ne .Site.Params.sidebar.location "left" -}}
+{{- $show := eq .Site.Params.sidebar.author.show true -}}
+{{- with .Site.Params.Author -}}
+{{- if $show -}}
+{{ if $sidebarOnRight -}}
+<hr class="d-lg-none mb-5">
+{{- end }}
+<div class="author text-center mt-4 mb-5">
+  <img src="{{ .image }}"
+       class="rounded-circle"
+       width="160"
+       height="160">
+  <h4 class="my-2">{{ .name }}</h4>
+  <span class="small">{{ .bio }}</span>
+</div>
+{{- end }}
+{{- end -}}

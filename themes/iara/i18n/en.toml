@@ -1,0 +1,66 @@
+[categories]
+other = "Categories"
+
+[tags]
+other = "Tags"
+
+[featured]
+other = "Featured"
+
+[writtenBy]
+other = "Written By"
+
+[postedIn]
+other = "Posted in"
+
+[postedInShort]
+other = "in"
+
+[comments]
+other = "Comments"
+
+[latest]
+other = "Latest"
+
+[archive]
+other = "Archive"
+
+[articles]
+other = "Articles"
+
+[search]
+other = "Search"
+
+[delimit]
+other = ", "
+
+[delimitLast]
+other = ", and "
+
+[readingTime]
+one = "1 min read"
+other = "{{ .Count }} min read"
+
+[noCategory]
+other = "No category"
+
+[email]
+other = "Email"
+
+[name]
+other = "Name"
+
+[subject]
+other = "Subject"
+
+[message]
+other = "Message"
+
+[submit]
+other = "Submit"
+
+[page-not-found]
+other = "It seems like we couldn't find the page you were looking for."
+
+[go-back-home]
+other = "Go back Home"
