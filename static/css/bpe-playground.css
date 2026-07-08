@@ -1,0 +1,142 @@
+/* Tokenization playground — matches blog nn-demo + site.css tokens */
+
+#bpe-playground {
+  margin: 0;
+}
+
+.bpe-playground.nn-demo {
+  margin: 0;
+}
+
+.bpe-playground-header {
+  margin-bottom: 0.75rem;
+}
+
+.bpe-playground-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+.bpe-playground-stats {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  line-height: 1.45;
+}
+
+.bpe-playground-panels {
+  margin-top: 0;
+}
+
+.bpe-playground-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 12rem;
+}
+
+.bpe-playground-input,
+.bpe-token-view {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  background: var(--code-bg);
+  color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bpe-playground-input {
+  resize: vertical;
+  min-height: 11rem;
+}
+
+.bpe-playground-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.bpe-token-view {
+  min-height: 11rem;
+  max-height: 18rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.token-highlight {
+  position: relative;
+  border-radius: 3px;
+  cursor: help;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 1px;
+}
+
+.token-highlight-tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 30;
+  box-shadow: var(--shadow);
+  font-family: "Source Code Pro", ui-monospace, monospace;
+}
+
+.token-highlight:hover {
+  outline: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.token-highlight:hover .token-highlight-tip {
+  opacity: 1;
+}
+
+/* Token highlight palette — accent + blog semantic colors */
+.token-c0  { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.token-c1  { background: color-mix(in srgb, var(--class-a) 28%, transparent); }
+.token-c2  { background: color-mix(in srgb, var(--class-b) 28%, transparent); }
+.token-c3  { background: color-mix(in srgb, var(--verb) 28%, transparent); }
+.token-c4  { background: color-mix(in srgb, var(--accent) 18%, var(--bg-muted)); }
+.token-c5  { background: color-mix(in srgb, var(--class-a) 18%, var(--bg-muted)); }
+.token-c6  { background: color-mix(in srgb, var(--class-b) 18%, var(--bg-muted)); }
+.token-c7  { background: color-mix(in srgb, var(--verb) 18%, var(--bg-muted)); }
+.token-c8  { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.token-c9  { background: color-mix(in srgb, var(--class-a) 22%, transparent); }
+.token-c10 { background: color-mix(in srgb, var(--class-b) 22%, transparent); }
+.token-c11 { background: color-mix(in srgb, var(--verb) 22%, transparent); }
+
+/* Standalone bpe-assignment page: inherit blog tokens when site.css is loaded */
+.bpe-assignment-playground-section {
+  margin: 1.25rem 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.bpe-assignment-playground-section h2 {
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+  color: var(--text);
+}

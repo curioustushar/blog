@@ -1,0 +1,66 @@
+.bpe-summary-demo {
+  margin: 1.5rem 0;
+}
+
+.bpe-score-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.bpe-score-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.bpe-score-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 1rem;
+}
+
+.bpe-mini-table {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  border-collapse: collapse;
+  color: var(--text);
+}
+
+.bpe-mini-table th,
+.bpe-mini-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.bpe-mini-table thead th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bpe-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.bpe-widget-cta {
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.bpe-widget-cta a {
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+}

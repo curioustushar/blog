@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <script>
+  (function () {
+    var stored = localStorage.getItem("theme");
+    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme = stored === "light" || stored === "dark" ? stored : (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+  </script>
+  <title>Multilingual BPE Tokenizer — India Wikipedia</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="stylesheet" href="../css/nn-demos.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/bpe-playground.css">
+  <script src="../js/theme.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Tokenizer widget · Wikipedia India</p>
+      <h1>Multilingual BPE Tokenizer</h1>
+      <p class="lede">
+        Byte-level BPE over the <strong>India</strong> article in English, Hindi, Telugu, and Tamil.
+        <strong>10,000</strong> total vocabulary · reproducible merges · live verification.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel score-panel" id="score-panel">
+      <h2>Self score</h2>
+      <div class="score-big" id="score-value">—</div>
+      <p class="formula" id="score-formula">score = 1000 / (X<sub>max</sub> − X<sub>min</sub>)</p>
+      <div class="ratio-bars" id="ratio-bars"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Ratio definitions</h2>
+      <div class="callout">
+        <p><strong>X<sub>i</sub></strong> = tokens when encoding language corpus ÷ vocab allocated to that language</p>
+        <ul>
+          <li><strong>X1</strong> English · vocab 5,000</li>
+          <li><strong>X2</strong> Hindi · vocab 1,200</li>
+          <li><strong>X3</strong> Telugu · vocab 1,000</li>
+          <li><strong>X4</strong> Tamil · vocab 2,800</li>
+        </ul>
+        <p class="muted">Target ratio X<sub>i</sub> ≤ 1.2 is noted; full-article Wikipedia text yields higher ratios — numbers below are measured, not claimed.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Corpus &amp; token statistics</h2>
+      <div class="table-wrap">
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>Lang</th>
+              <th>Wikipedia title</th>
+              <th>Words</th>
+              <th>Chars</th>
+              <th>Tokens (encoded)</th>
+              <th>Vocab alloc</th>
+              <th>Ratio</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Sorted ratios (largest → smallest)</h2>
+      <ol class="sorted-list" id="sorted-list"></ol>
+    </section>
+
+    <section class="bpe-assignment-playground-section" id="playground-panel">
+      <h2>Tokenization playground</h2>
+      <div id="bpe-playground"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Verify yourself</h2>
+      <p>Re-encode bundled corpora in your browser with the same merge table. Claimed vs live counts must match.</p>
+      <button type="button" class="btn primary" id="verify-btn">Run verification</button>
+      <pre class="verify-out" id="verify-out">Click to verify…</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Tokenizer vocabulary</h2>
+      <div class="toolbar">
+        <input type="search" id="vocab-search" placeholder="Search tokens…" aria-label="Search tokens">
+        <span class="badge" id="vocab-count">—</span>
+        <button type="button" class="btn" id="download-json">Download tokenizer.json</button>
+        <button type="button" class="btn" id="download-vocab">Download vocab.txt</button>
+        <button type="button" class="btn" id="download-merges">Download merges.csv</button>
+      </div>
+      <div class="vocab-grid" id="vocab-grid"></div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p>Tushar Gupta · <a href="https://curioustushar.github.io/blog/">Blog</a></p>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>

@@ -2,3 +2,14 @@
 <link rel="stylesheet" href="{{ "css/nn-demos.css" | relURL }}">
 <script type="module" src="{{ "js/nn/main.js" | relURL }}"></script>
 {{ end }}
+{{ if .Params.bpe }}
+<link rel="stylesheet" href="{{ "css/nn-demos.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/bpe-widget.css" | relURL }}">
+<link rel="stylesheet" href="{{ "css/bpe-playground.css" | relURL }}">
+<script
+  type="module"
+  src="{{ "js/bpe/summary.js" | relURL }}"
+  data-widget-url="{{ "bpe-assignment/" | relURL }}"
+  data-tokenizer-url="{{ "bpe-assignment/tokenizer.json" | relURL }}"
+></script>
+{{ end }}
