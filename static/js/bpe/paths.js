@@ -14,8 +14,8 @@ export function getBpePaths() {
   const base = script?.src?.replace(/\/js\/bpe\/summary\.js.*$/, "") || "/blog";
   const root = base.replace(/\/?$/, "/");
   return {
-    widget: `${root}bpe-assignment/`,
-    tokenizer: `${root}bpe-assignment/tokenizer.json`,
+    widget: `${root}bpe/`,
+    tokenizer: `${root}bpe/tokenizer.json`,
   };
 }
 
@@ -24,4 +24,12 @@ export function wireWidgetLink(linkEl) {
   const { widget } = getBpePaths();
   linkEl.href = widget;
   linkEl.textContent = "open full widget →";
+}
+
+export function wireTokenizerDownloadLink(linkEl, { showUrl = false } = {}) {
+  if (!linkEl) return;
+  const { tokenizer } = getBpePaths();
+  linkEl.href = tokenizer;
+  linkEl.setAttribute("download", "tokenizer.json");
+  if (showUrl) linkEl.textContent = tokenizer;
 }

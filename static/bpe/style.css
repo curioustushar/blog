@@ -151,6 +151,25 @@ th { color: var(--muted); font-weight: 600; }
   margin-bottom: 1rem;
 }
 
+.share-url-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.share-url-input {
+  flex: 1;
+  min-width: 200px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
 .toolbar input {
   flex: 1;
   min-width: 160px;

@@ -273,6 +273,136 @@ html[data-theme="dark"] .site-nav .navbar-toggler-icon {
   color: var(--text-muted);
 }
 
+/* Bootstrap .card defaults to white — use theme surface on list pages */
+.taxonomy .taxonomy-card,
+.taxonomy .card {
+  background-color: var(--bg-elevated) !important;
+  background-image: none !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px;
+  padding: 0.25rem 0.5rem;
+  color: var(--text) !important;
+}
+
+.taxonomy .card-body {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.taxonomy .card-title a {
+  color: var(--text);
+}
+
+.taxonomy .card-title a:hover {
+  color: var(--accent);
+}
+
+.taxonomy-excerpt {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* Taxonomy tabs — override Bootstrap nav-tabs + theme .text-dark on .active */
+.taxonomy .nav-tabs {
+  border-bottom-color: var(--border) !important;
+}
+
+.taxonomy .nav-tabs .nav-link {
+  color: var(--text-muted) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.taxonomy .nav-tabs .nav-link:hover,
+.taxonomy .nav-tabs .nav-link:focus {
+  color: var(--text) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.taxonomy .nav-tabs .nav-link.active,
+.taxonomy .nav-tabs .nav-link.active:hover,
+.taxonomy .nav-tabs .nav-item.show .nav-link {
+  color: var(--text) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  border-bottom: 2px solid var(--accent) !important;
+}
+
+.taxonomy .tab-content,
+.taxonomy .tab-pane {
+  background: transparent !important;
+  color: var(--text);
+}
+
+.taxonomy .card-text {
+  color: var(--text-muted);
+}
+
+.taxonomy .card-text a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.taxonomy .card-text a:hover {
+  color: var(--text);
+}
+
+.taxonomy .text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Fallback when .Summary is used instead of .Description */
+.taxonomy .post-summary {
+  background: var(--summary-bg);
+  border-left: 4px solid var(--summary-border);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.25rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.taxonomy .post-summary p,
+.taxonomy .post-summary strong {
+  color: var(--text);
+}
+
+.taxonomy .post-summary a {
+  color: var(--accent);
+}
+
+.taxonomy .card-text h2,
+.taxonomy .card-text h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+  border-left: none;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.taxonomy .card-text hr {
+  border-color: var(--border);
+  margin: 1rem 0;
+}
+
+.taxonomy .card-text .section-pill {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--border);
+}
+
+.taxonomy .post-list {
+  color: var(--text-muted);
+}
+
 .site-footer {
   background: var(--bg-elevated) !important;
   border-top: 1px solid var(--border);
@@ -386,4 +516,84 @@ html[data-theme="dark"] .article hr {
 html[data-theme="dark"] .article .tags .tag-link {
   color: var(--text) !important;
   background-color: var(--bg-muted) !important;
+}
+
+/* ── Dark theme: Bootstrap overrides (Iara ships light-only components) ── */
+html[data-theme="dark"] .text-dark,
+html[data-theme="dark"] .text-body {
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .text-muted {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .card-body {
+  background-color: var(--bg-elevated) !important;
+  background-image: none !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .card-title,
+html[data-theme="dark"] .card-title a,
+html[data-theme="dark"] .card h5,
+html[data-theme="dark"] .card h5 a {
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .card-text,
+html[data-theme="dark"] .taxonomy-excerpt {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] .nav-tabs {
+  border-bottom-color: var(--border) !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link,
+html[data-theme="dark"] .nav-tabs .nav-link.disabled {
+  color: var(--text-muted) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link:hover,
+html[data-theme="dark"] .nav-tabs .nav-link:focus,
+html[data-theme="dark"] .nav-tabs a.nav-link:hover,
+html[data-theme="dark"] .nav-tabs a.nav-link:focus {
+  color: var(--text) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link.active,
+html[data-theme="dark"] .nav-tabs .nav-link.active:hover,
+html[data-theme="dark"] .nav-tabs .nav-item.show .nav-link,
+html[data-theme="dark"] .nav-tabs a.nav-link.active,
+html[data-theme="dark"] .nav-tabs a.nav-link.active:hover,
+html[data-theme="dark"] .nav-tabs a.nav-link.active:focus {
+  color: var(--text) !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 2px solid var(--accent) !important;
+}
+
+html[data-theme="dark"] .tab-content,
+html[data-theme="dark"] .tab-pane {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .taxonomy a {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .taxonomy a:hover {
+  color: var(--accent);
+}
+
+html[data-theme="dark"] .taxonomy .taxonomy-card {
+  box-shadow: var(--shadow);
 }

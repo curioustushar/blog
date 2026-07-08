@@ -127,15 +127,15 @@
 .token-c10 { background: color-mix(in srgb, var(--class-b) 22%, transparent); }
 .token-c11 { background: color-mix(in srgb, var(--verb) 22%, transparent); }
 
-/* Standalone bpe-assignment page: inherit blog tokens when site.css is loaded */
-.bpe-assignment-playground-section {
+/* Standalone bpe page: inherit blog tokens when site.css is loaded */
+.bpe-playground-section {
   margin: 1.25rem 0;
   padding: 0;
   background: transparent;
   border: none;
 }
 
-.bpe-assignment-playground-section h2 {
+.bpe-playground-section h2 {
   font-size: 1.2rem;
   margin: 0 0 1rem;
   color: var(--text);

@@ -1,11 +1,11 @@
 # BPE Tokenizer Widget
 
-Static widget served with the blog at `/blog/bpe-assignment/`.
+Static widget served with the blog at `/blog/bpe/`.
 
 ## Local preview
 
 ```bash
-cd static/bpe-assignment
+cd static/bpe
 python3 -m http.server 8080
 # open http://localhost:8080
 ```
@@ -16,4 +16,4 @@ python3 -m http.server 8080
 python3 scripts/train_bpe_tokenizer.py
 ```
 
-Regenerates `static/bpe-assignment/tokenizer.json` and `static/bpe-assignment/corpora/*.txt`.
+Regenerates `static/bpe/tokenizer.json` and `static/bpe/corpora/*.txt`.

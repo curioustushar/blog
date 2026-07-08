@@ -139,6 +139,27 @@ async function init() {
 
   document.getElementById("verify-btn").addEventListener("click", () => verify(mergeRank, stats));
 
+  const shareUrl = new URL("tokenizer.json", window.location.href).href;
+  const shareInput = document.getElementById("tokenizer-share-url");
+  const directLink = document.getElementById("tokenizer-json-direct");
+  if (shareInput) shareInput.value = shareUrl;
+  if (directLink) directLink.href = shareUrl;
+
+  document.getElementById("copy-share-url")?.addEventListener("click", async () => {
+    const btn = document.getElementById("copy-share-url");
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      if (btn) {
+        const prev = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = prev; }, 2000);
+      }
+    } catch {
+      shareInput?.select();
+      document.execCommand("copy");
+    }
+  });
+
   document.getElementById("download-json").addEventListener("click", () => {
     download("tokenizer.json", JSON.stringify(data, null, 2), "application/json");
   });

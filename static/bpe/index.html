@@ -78,9 +78,19 @@
       <ol class="sorted-list" id="sorted-list"></ol>
     </section>
 
-    <section class="bpe-assignment-playground-section" id="playground-panel">
+    <section class="bpe-playground-section" id="playground-panel">
       <h2>Tokenization playground</h2>
       <div id="bpe-playground"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Download tokenizer.json</h2>
+      <p class="muted">Share this link — anyone can download the trained tokenizer (merges, vocab, stats).</p>
+      <div class="share-url-row">
+        <a href="tokenizer.json" download="tokenizer.json" class="btn primary" id="tokenizer-json-direct">Download tokenizer.json</a>
+        <input type="text" readonly class="share-url-input" id="tokenizer-share-url" aria-label="Shareable tokenizer.json URL">
+        <button type="button" class="btn" id="copy-share-url">Copy link</button>
+      </div>
     </section>
 
     <section class="panel">

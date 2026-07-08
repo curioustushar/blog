@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_DIR = ROOT / "static" / "bpe-assignment"
+OUT_DIR = ROOT / "static" / "bpe"
 CORPUS_DIR = OUT_DIR / "corpora"
 
 USER_AGENT = "BPE-Tokenizer/1.0 (https://curioustushar.github.io/blog/)"

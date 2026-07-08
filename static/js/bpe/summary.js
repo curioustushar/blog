@@ -1,5 +1,5 @@
 import { mountPlaygroundFromUrl } from "./playground.js";
-import { getBpePaths, wireWidgetLink } from "./paths.js";
+import { getBpePaths, wireTokenizerDownloadLink, wireWidgetLink } from "./paths.js";
 
 const { widget: WIDGET_URL, tokenizer: TOKENIZER_URL } = getBpePaths();
 
@@ -36,3 +36,4 @@ const playgroundEl = document.getElementById("bpe-playground");
 if (playgroundEl) mountPlaygroundFromUrl(playgroundEl, TOKENIZER_URL);
 
 wireWidgetLink(document.getElementById("bpe-full-widget-link"));
+wireTokenizerDownloadLink(document.getElementById("bpe-tokenizer-download-link"), { showUrl: true });

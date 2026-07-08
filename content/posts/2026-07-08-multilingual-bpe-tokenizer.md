@@ -98,9 +98,10 @@ Type mixed-script text and watch BPE split it in real time. Hover a highlighted 
 
 The extended widget adds corpus-level statistics, a **Run verification** button (re-encodes bundled Wikipedia text in-browser so you can audit the claimed counts), and downloads:
 
-- `tokenizer.json` — merges, vocab, and precomputed stats
-- `vocab.txt` — id → token mapping
-- `merges.csv` — merge rank and language of origin
+<p class="bpe-download-cta"><strong>Direct download:</strong> <a id="bpe-tokenizer-download-link" href="#">tokenizer.json</a></p>
+
+- `vocab.txt` — id → token mapping (from full widget)
+- `merges.csv` — merge rank and language of origin (from full widget)
 
 <p class="bpe-widget-cta"><strong>Full widget:</strong> <a id="bpe-full-widget-link" href="#">open full widget</a></p>
 

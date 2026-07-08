@@ -64,3 +64,16 @@
   font-size: 0.9rem;
   word-break: break-all;
 }
+
+.bpe-download-cta {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.bpe-download-cta a {
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+  color: var(--accent);
+}
