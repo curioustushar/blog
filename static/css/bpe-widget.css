@@ -2,6 +2,70 @@
   margin: 1.5rem 0;
 }
 
+.bpe-fertility-table {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  table-layout: fixed;
+  color: var(--text);
+}
+
+.bpe-fertility-table th,
+.bpe-fertility-table td {
+  padding: 0.35rem 0.45rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bpe-fertility-table thead th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bpe-fertility-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.bpe-fertility-table .lang {
+  white-space: nowrap;
+}
+
+.bpe-fertility-table .status {
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.bpe-fertility-table .status-pass {
+  color: #51cf66;
+}
+
+.bpe-fertility-table .status-fail {
+  color: #ff6b6b;
+}
+
+.bpe-fertility-intro {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 0 0 0.85rem;
+  line-height: 1.45;
+}
+
+.bpe-fertility-heading {
+  margin: 0 0 0.65rem;
+  font-size: 1.05rem;
+}
+
 .bpe-score-card {
   background: var(--bg-elevated);
   border: 1px solid var(--border);

@@ -1,0 +1,187 @@
+{
+  "metric": "faithful_unit_fertility",
+  "metric_formula": "Xi = token_count / faithful_unit_count",
+  "pretoken_note": "Faithful unit = one Unicode letter/mark/number run OR one visible non-space punctuation/symbol character.",
+  "roundtrip_sample": "India's population is 1,428,627,663.",
+  "roundtrip_ok": true,
+  "ratios": {
+    "en": 0.622435,
+    "hi": 0.624226,
+    "te": 0.720277,
+    "ta": 0.69606
+  },
+  "fertilities": {
+    "en": 0.622435,
+    "hi": 0.624226,
+    "te": 0.720277,
+    "ta": 0.69606
+  },
+  "x_labels": {
+    "en": "X1 (English)",
+    "hi": "X2 (Hindi)",
+    "te": "X3 (Telugu)",
+    "ta": "X4 (Tamil)"
+  },
+  "sorted_desc": [
+    {
+      "rank": 1,
+      "lang": "te",
+      "name": "Telugu",
+      "symbol": "X3",
+      "eval_page": "భారతదేశం",
+      "faithful_units": 36293,
+      "token_count": 26141,
+      "fertility": 0.720277,
+      "ratio": 0.720277,
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass"
+    },
+    {
+      "rank": 2,
+      "lang": "ta",
+      "name": "Tamil",
+      "symbol": "X4",
+      "eval_page": "இந்தியா",
+      "faithful_units": 185869,
+      "token_count": 129376,
+      "fertility": 0.69606,
+      "ratio": 0.69606,
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass"
+    },
+    {
+      "rank": 3,
+      "lang": "hi",
+      "name": "Hindi",
+      "symbol": "X2",
+      "eval_page": "भारत",
+      "faithful_units": 88359,
+      "token_count": 55156,
+      "fertility": 0.624226,
+      "ratio": 0.624226,
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass"
+    },
+    {
+      "rank": 4,
+      "lang": "en",
+      "name": "English",
+      "symbol": "X1",
+      "eval_page": "India",
+      "faithful_units": 186426,
+      "token_count": 116038,
+      "fertility": 0.622435,
+      "ratio": 0.622435,
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass"
+    }
+  ],
+  "x_min": 0.622435,
+  "x_max": 0.720277,
+  "x_spread": 0.097842,
+  "score": 10220.56,
+  "score_formula": "1000 / (max_fertility - min_fertility)",
+  "hindi_penalty_factor": 1.0,
+  "hindi_adjusted_score": 10220.56,
+  "details": {
+    "en": {
+      "language": "English",
+      "wiki_title": "India",
+      "eval_page": "India",
+      "faithful_units": 186426,
+      "pretoken_words": 186426,
+      "merged_tokens": 116038,
+      "word_count": 186426,
+      "char_count": 598376,
+      "token_count": 116038,
+      "ratio_symbol": "X1",
+      "fertility": 0.622435,
+      "ratio": 0.622435,
+      "calculation": "116038 / 186426 = 0.622435",
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass",
+      "within_threshold": true
+    },
+    "hi": {
+      "language": "Hindi",
+      "wiki_title": "भारत",
+      "eval_page": "भारत",
+      "faithful_units": 88359,
+      "pretoken_words": 88359,
+      "merged_tokens": 55156,
+      "word_count": 88359,
+      "char_count": 266728,
+      "token_count": 55156,
+      "ratio_symbol": "X2",
+      "fertility": 0.624226,
+      "ratio": 0.624226,
+      "calculation": "55156 / 88359 = 0.624226",
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass",
+      "within_threshold": true
+    },
+    "te": {
+      "language": "Telugu",
+      "wiki_title": "భారతదేశం",
+      "eval_page": "భారతదేశం",
+      "faithful_units": 36293,
+      "pretoken_words": 36293,
+      "merged_tokens": 26141,
+      "word_count": 36293,
+      "char_count": 113836,
+      "token_count": 26141,
+      "ratio_symbol": "X3",
+      "fertility": 0.720277,
+      "ratio": 0.720277,
+      "calculation": "26141 / 36293 = 0.720277",
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass",
+      "within_threshold": true
+    },
+    "ta": {
+      "language": "Tamil",
+      "wiki_title": "இந்தியா",
+      "eval_page": "இந்தியா",
+      "faithful_units": 185869,
+      "pretoken_words": 185869,
+      "merged_tokens": 129376,
+      "word_count": 185869,
+      "char_count": 643241,
+      "token_count": 129376,
+      "ratio_symbol": "X4",
+      "fertility": 0.69606,
+      "ratio": 0.69606,
+      "calculation": "129376 / 185869 = 0.696060",
+      "threshold": 1.2,
+      "threshold_label": "≤ 1.2",
+      "status": "pass",
+      "within_threshold": true
+    }
+  },
+  "thresholds": {
+    "all_languages": 1.2
+  },
+  "constraints": {
+    "total_vocab": 10000,
+    "variant": "wiki_faithful_markdown",
+    "languages": {
+      "en": "English",
+      "hi": "Hindi",
+      "te": "Telugu",
+      "ta": "Tamil"
+    },
+    "training_weights": {
+      "en": 3,
+      "hi": 4,
+      "te": 4,
+      "ta": 2
+    }
+  }
+}

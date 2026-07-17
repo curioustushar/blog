@@ -6,12 +6,12 @@ tags: ["tokenization", "bpe", "nlp", "multilingual"]
 author: Tushar Gupta
 interactive: true
 bpe: true
-description: "Byte-level BPE over India's Wikipedia article in English, Hindi, Telugu, and Tamil — theory, ratios, score, and a verifiable tokenizer widget."
+description: "HuggingFace BPE + Metaspace over faithful Wikipedia Markdown for India in English, Hindi, Telugu, and Tamil — fertility score and verifiable roundtrip widget."
 ---
 
 <div class="post-summary">
 
-Before a language model reads text, something has to **cut it into pieces**. That step — tokenization — quietly controls vocabulary size, sequence length, and how fairly a model treats each language. Here I build a **10,000-token byte-level BPE** tokenizer on the [India](https://en.wikipedia.org/wiki/India) Wikipedia article in **English, Hindi, Telugu, and Tamil**, then measure how evenly it compresses each script.
+Before a language model reads text, something has to **cut it into pieces**. That step — tokenization — quietly controls vocabulary size, sequence length, and how fairly a model treats each language. Here I train a **10,000-token shared BPE** tokenizer (HuggingFace `tokenizers`, Metaspace pre-tokenizer/decoder) on **faithful Wikipedia Markdown** for the [India](https://en.wikipedia.org/wiki/India) article in **English, Hindi, Telugu, and Tamil**, then score how evenly it compresses each script while preserving visible text under `decode(encode(text))`.
 
 </div>
 
@@ -22,96 +22,123 @@ Before a language model reads text, something has to **cut it into pieces**. Tha
 Neural networks do not consume raw strings. They consume **integer sequences** indexed into a finite vocabulary. Every design choice in that mapping has downstream effects:
 
 - **Sequence length** — more tokens per sentence means more compute and shallower context within a fixed window.
-- **Out-of-vocabulary handling** — a tokenizer that never sees a character or byte can represent can still encode *any* Unicode string; one that only knows whole words cannot.
-- **Cross-lingual fairness** — the same semantic content in English vs. an Indic script can tokenize to very different lengths if the vocabulary was trained mostly on Latin text.
+- **Faithful representation** — if `decode(encode(text))` drops apostrophes, commas in numbers, or URL characters, the tokenizer is not representing the same input even if token counts look low.
+- **Cross-lingual fairness** — the same encyclopedic content in English vs. an Indic script can tokenize to very different lengths if the vocabulary was trained mostly on Latin text.
 
 Subword methods sit in a useful middle ground: frequent words stay whole, rare words decompose into reusable pieces.
 
-## Byte Pair Encoding (BPE)
+## BPE with Metaspace (faithful roundtrip)
 
-BPE starts from a small alphabet — here, the **256 UTF-8 bytes** — and iteratively **merges** the most frequent adjacent pair into a new symbol.
+This tokenizer uses HuggingFace **BPE** with:
 
-1. Pretokenize text into words (whitespace-delimited chunks).
-2. Represent each word as a sequence of bytes.
-3. Count adjacent byte pairs across the corpus.
-4. Merge the most common pair; repeat until the merge budget is exhausted.
+- **Normalizer:** NFKC
+- **Pre-tokenizer / decoder:** Metaspace (`▁` marks word boundaries; spaces round-trip)
+- **Vocab size:** 10,000 (one shared table for all four languages)
 
-The result is a vocabulary of bytes plus learned merges. Encoding replays those merges in priority order: repeatedly combine the **lowest-rank** applicable pair until no more merges apply.
+Metaspace preserves punctuation, brackets, URL characters, apostrophes, and number separators — required for **faithful Markdown** evaluation. A byte-level tokenizer that skips whitespace or lacks a `decode` method fails the roundtrip gate even if fertility looks good.
 
-This is the same family of algorithm used in GPT-2 and many modern LLMs, adapted here for a **fixed multilingual budget** rather than English-only training.
+Training weights (corpus oversampling): English ×3, Hindi ×4, Telugu ×4, Tamil ×2.
 
-### Why byte-level for four scripts?
+## The corpora: faithful Wikipedia Markdown
 
-English Wikipedia is mostly ASCII-friendly. Hindi (Devanagari), Telugu, and Tamil each use distinct Unicode blocks. A **byte-level** tokenizer does not need script-specific rules: any character is already a sequence of UTF-8 bytes. The cost is longer initial sequences before merges kick in — which is why **merge budget allocation** across languages becomes a design problem, not an implementation detail.
+Plain `explaintext` extracts clip links and tables. This assignment uses **wiki-faithful Markdown**: Wikipedia REST HTML converted to Markdown while keeping links, URLs, tables, references, and categories where the converter emits them.
 
-## The corpora: one topic, four languages
+| Code | Language | Wikipedia title |
+|------|----------|-----------------|
+| en | English | [India](https://en.wikipedia.org/wiki/India) |
+| hi | Hindi | [भारत](https://hi.wikipedia.org/wiki/India) |
+| te | Telugu | [భారతదేశం](https://te.wikipedia.org/wiki/India) |
+| ta | Tamil | [இந்தியா](https://ta.wikipedia.org/wiki/இந்தியா) |
 
-Using the **same article** (India) in four languages controls for topic. We are not comparing "news vs. poetry"; we are asking how the **same encyclopedic content** compresses under one shared vocabulary.
+Rebuild:
 
-| Code | Language | Wikipedia title | Words (approx.) |
-|------|----------|-----------------|-----------------|
-| en | English | [India](https://en.wikipedia.org/wiki/India) | 10,121 |
-| hi | Hindi | [भारत](https://hi.wikipedia.org/wiki/India) | 8,078 |
-| te | Telugu | [భారతదేశం](https://te.wikipedia.org/wiki/India) | 2,511 |
-| ta | Tamil | [இந்தியா](https://ta.wikipedia.org/wiki/இந்தியா) | 10,297 |
+```bash
+python scripts/build_wiki_faithful_markdown.py
+python scripts/train_bpe_tokenizer.py
+```
 
-Telugu's article is shorter in this snapshot; Tamil and English are similarly long. Raw word count alone does not predict token count — script complexity and merge coverage matter more.
+## Fertility metric and score
 
-## Designing a 10,000-token shared vocabulary
+A **faithful unit** is one contiguous Unicode letter/mark/number run, **or** one visible non-space punctuation/symbol character.
 
-The vocabulary constraint: **10,000 total symbols**, with roughly **5,000 allocated to English** and the remainder split across the other three languages. In practice that means:
+For each language *i*:
 
-| Language | Vocab allocation | Merge budget |
-|----------|------------------|--------------|
-| English | 5,000 | 3,200 |
-| Hindi | 1,200 | 900 |
-| Telugu | 1,000 | 700 |
-| Tamil | 2,800 | 2,800 |
-
-**English** receives the largest slice because Latin-heavy text benefits from a bigger merge table early in training.**Tamil** receives extra merge budget — Indic scripts with combining characters often need more byte-pair steps before common morphemes emerge. Hindi and Telugu sit between those extremes.
-
-All languages share **one merge table**. A merge learned from Hindi text can help encode Tamil bytes if the underlying pair is common enough. That is the point of a multilingual vocab: shared structure, not four isolated dictionaries.
-
-## The ratio metric and score
-
-For each language *i*, define:
-
-**X<sub>i</sub>** = tokens produced when encoding the full Wikipedia article ÷ vocab slots allocated to language *i*
-
-Sort X1…X4 (English, Hindi, Telugu, Tamil). The **spread** is max − min. The **score** rewards balance:
+**X<sub>i</sub>** = token count when encoding the full faithful corpus ÷ faithful unit count
 
 **Score** = 1000 / (X<sub>max</sub> − X<sub>min</sub>)
 
-A tokenizer that compresses all four languages equally yields a small spread and a high score. One that tokenizes English cheaply but explodes on Tamil yields a large spread and a low score — even if the total vocab is still 10,000.
+All four ratios must stay **≤ 1.2** under this denominator (see below). The tokenizer must also round-trip visible text — e.g. `India's population is 1,428,627,663.` decodes unchanged.
 
-In the playground below, **fertility** (encode tokens ÷ pretoken words) is a complementary per-input measure: it tells you how many subword pieces each whitespace-delimited word became for *your* text, not the full corpus.
+## Results
+
+Measured on the faithful Markdown corpora (July 2026 snapshot):
+
+| Language | Tokens | Faithful units | Fertility X<sub>i</sub> | ≤ 1.2? |
+|----------|-------:|---------------:|------------------------:|:------:|
+| English (X1) | 116,038 | 186,426 | **0.6224** | pass |
+| Hindi (X2) | 55,156 | 88,359 | **0.6242** | pass |
+| Telugu (X3) | 26,141 | 36,293 | **0.7203** | pass |
+| Tamil (X4) | 129,376 | 185,869 | **0.6961** | pass |
+
+**Spread** (max − min): 0.7203 − 0.6224 = **0.0978**
+
+**Raw score:** 1000 / 0.0978 = **10,220.6**
+
+**Hindi penalty:** exp(max(0, X<sub>hi</sub> / 1.2 − 1)) = exp(0) = **1.0** (no penalty when Hindi ≤ 1.2)
+
+**Adjusted score:** 10,220.6 / 1.0 = **10,220.6**
+
+Roundtrip check: `decode(encode("India's population is 1,428,627,663."))` → identical string.
+
+## How the 1.2 threshold works
+
+Each language gets a **fertility ratio** X<sub>i</sub> = tokens / faithful units. The assignment requires **every** language to satisfy:
+
+```text
+X_i ≤ 1.2
+```
+
+So 1.2 is not an average — it is a **per-language ceiling**. If any single language exceeds 1.2, that submission fails the threshold gate even if others look good.
+
+**Examples:**
+
+| Language | Calculation | Pass? |
+|----------|-------------|:-----:|
+| English | 116,038 / 186,426 = 0.6224 ≤ 1.2 | yes |
+| Hindi | 55,156 / 88,359 = 0.6242 ≤ 1.2 | yes |
+| Telugu | 26,141 / 36,293 = 0.7203 ≤ 1.2 | yes |
+| Tamil | 129,376 / 185,869 = 0.6961 ≤ 1.2 | yes |
+
+**Hindi penalty** (score adjustment only, not a pass/fail gate):
+
+```text
+hindi_penalty = exp(max(0, X_hi / 1.2 - 1))
+adjusted_score = raw_score / hindi_penalty
+```
+
+When X<sub>hi</sub> = 0.6242, the exponent is 0, so the penalty factor is 1.0. If Hindi were 1.32, then 1.32/1.2 − 1 = 0.1 and penalty = e<sup>0.1</sup> ≈ 1.105, reducing the adjusted score.
 
 <div id="bpe-summary" class="nn-demo bpe-summary-demo"></div>
 
 ## Tokenization playground
 
-Type mixed-script text and watch BPE split it in real time. Hover a highlighted span to see its **vocab id** and literal value (spaces render as `<0x20>`, newlines as `<0x0A>`).
+Type mixed-script text (including punctuation and numbers) and watch BPE split it in real time. The playground checks that `decode(encode(text))` preserves visible characters.
 
 <div id="bpe-playground"></div>
 
 ## Full widget: verification & downloads
 
-The extended widget adds corpus-level statistics, a **Run verification** button (re-encodes bundled Wikipedia text in-browser so you can audit the claimed counts), and downloads:
+The extended widget adds corpus-level statistics, a **Run verification** button (re-encodes bundled faithful Markdown in-browser), roundtrip checks, and downloads:
 
-<p class="bpe-download-cta"><strong>Direct download:</strong> <a id="bpe-tokenizer-download-link" href="#">tokenizer.json</a></p>
-
-- `vocab.txt` — id → token mapping (from full widget)
-- `merges.csv` — merge rank and language of origin (from full widget)
+<p class="bpe-download-cta"><strong>Direct download:</strong> <a id="bpe-tokenizer-download-link" href="#">tokenizer.json</a> (HuggingFace format with encode + decode)</p>
 
 <p class="bpe-widget-cta"><strong>Full widget:</strong> <a id="bpe-full-widget-link" href="#">open full widget</a></p>
 
 ## What I would try next
 
-A few directions that fall out of this exercise:
-
-1. **Joint training** — interleave corpora during merge selection instead of training per-language tables and deduplicating.
+1. **Corpus weight tuning** — adjust oversampling if one language dominates merge statistics.
 2. **Unigram LM tokenization** (SentencePiece-style) — optimize a probabilistic objective rather than greedy pair counts.
-3. **Normalize Indic text** — NFC/NFKC and consistent punctuation often shave fertility without growing vocab.
-4. **Dynamic vocab budgets** — allocate merge slots proportional to corpus bytes, then re-score.
+3. **NFKC normalization experiments** — consistent punctuation often shaves fertility without breaking faithfulness.
+4. **Live Wikipedia drift** — re-fetch corpora periodically; faithful unit counts change as articles edit.
 
 Tokenization looks like plumbing. It is actually the first place multilingual bias shows up — long before the model sees a loss function.

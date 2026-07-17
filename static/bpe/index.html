@@ -25,31 +25,26 @@
       <p class="eyebrow">Tokenizer widget · Wikipedia India</p>
       <h1>Multilingual BPE Tokenizer</h1>
       <p class="lede">
-        Byte-level BPE over the <strong>India</strong> article in English, Hindi, Telugu, and Tamil.
-        <strong>10,000</strong> total vocabulary · reproducible merges · live verification.
+        HuggingFace BPE + Metaspace over faithful Wikipedia Markdown for the <strong>India</strong> article
+        in English, Hindi, Telugu, and Tamil.
+        <strong>10,000</strong> shared vocabulary · faithful roundtrip · live verification.
       </p>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="panel score-panel" id="score-panel">
-      <h2>Self score</h2>
-      <div class="score-big" id="score-value">—</div>
-      <p class="formula" id="score-formula">score = 1000 / (X<sub>max</sub> − X<sub>min</sub>)</p>
-      <div class="ratio-bars" id="ratio-bars"></div>
-    </section>
-
     <section class="panel">
       <h2>Ratio definitions</h2>
       <div class="callout">
-        <p><strong>X<sub>i</sub></strong> = tokens when encoding language corpus ÷ vocab allocated to that language</p>
+        <p><strong>X<sub>i</sub></strong> = tokens when encoding language corpus ÷ faithful units for that language</p>
+        <p>A <strong>faithful unit</strong> is one Unicode letter/mark/number run, or one visible punctuation/symbol character.</p>
         <ul>
-          <li><strong>X1</strong> English · vocab 5,000</li>
-          <li><strong>X2</strong> Hindi · vocab 1,200</li>
-          <li><strong>X3</strong> Telugu · vocab 1,000</li>
-          <li><strong>X4</strong> Tamil · vocab 2,800</li>
+          <li><strong>X1</strong> English</li>
+          <li><strong>X2</strong> Hindi</li>
+          <li><strong>X3</strong> Telugu</li>
+          <li><strong>X4</strong> Tamil</li>
         </ul>
-        <p class="muted">Target ratio X<sub>i</sub> ≤ 1.2 is noted; full-article Wikipedia text yields higher ratios — numbers below are measured, not claimed.</p>
+        <p class="muted">All languages share one 10k vocab. Tokenizers must pass <code>decode(encode(text))</code> on visible characters (e.g. <code>India's population is 1,428,627,663.</code>).</p>
       </div>
     </section>
 
@@ -61,10 +56,10 @@
             <tr>
               <th>Lang</th>
               <th>Wikipedia title</th>
-              <th>Words</th>
+              <th>Faithful units</th>
               <th>Chars</th>
               <th>Tokens (encoded)</th>
-              <th>Vocab alloc</th>
+              <th>Vocab</th>
               <th>Ratio</th>
             </tr>
           </thead>
@@ -85,7 +80,7 @@
 
     <section class="panel">
       <h2>Download tokenizer.json</h2>
-      <p class="muted">Share this link — anyone can download the trained tokenizer (merges, vocab, stats).</p>
+      <p class="muted">Share this link — HuggingFace <code>tokenizer.json</code> with BPE + Metaspace encode/decode.</p>
       <div class="share-url-row">
         <a href="tokenizer.json" download="tokenizer.json" class="btn primary" id="tokenizer-json-direct">Download tokenizer.json</a>
         <input type="text" readonly class="share-url-input" id="tokenizer-share-url" aria-label="Shareable tokenizer.json URL">
@@ -95,7 +90,7 @@
 
     <section class="panel">
       <h2>Verify yourself</h2>
-      <p>Re-encode bundled corpora in your browser with the same merge table. Claimed vs live counts must match.</p>
+      <p>Re-encode bundled faithful Markdown corpora in your browser. Roundtrip and token counts must match claimed values.</p>
       <button type="button" class="btn primary" id="verify-btn">Run verification</button>
       <pre class="verify-out" id="verify-out">Click to verify…</pre>
     </section>
@@ -107,7 +102,7 @@
         <span class="badge" id="vocab-count">—</span>
         <button type="button" class="btn" id="download-json">Download tokenizer.json</button>
         <button type="button" class="btn" id="download-vocab">Download vocab.txt</button>
-        <button type="button" class="btn" id="download-merges">Download merges.csv</button>
+        <button type="button" class="btn" id="download-merges">Download report.json</button>
       </div>
       <div class="vocab-grid" id="vocab-grid"></div>
     </section>

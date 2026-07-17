@@ -1,0 +1,48 @@
+{
+  "variant": "wiki_faithful_markdown",
+  "languages": {
+    "en": "English",
+    "hi": "Hindi",
+    "te": "Telugu",
+    "ta": "Tamil"
+  },
+  "wiki_titles": {
+    "en": "India",
+    "hi": "भारत",
+    "te": "భారతదేశం",
+    "ta": "இந்தியா"
+  },
+  "weights": {
+    "en": 3,
+    "hi": 4,
+    "te": 4,
+    "ta": 2
+  },
+  "vocab_size": 10000,
+  "faithful_units": {
+    "en": 186426,
+    "hi": 88359,
+    "te": 36293,
+    "ta": 185869
+  },
+  "unit_policy": "Counts each contiguous Unicode letter/mark/number run as one unit and each visible non-space punctuation/symbol character as one unit.",
+  "token_counts": {
+    "en": 116038,
+    "hi": 55156,
+    "te": 26141,
+    "ta": 129376
+  },
+  "ratios": {
+    "en": 0.6224346389452116,
+    "hi": 0.6242261682454532,
+    "te": 0.7202766373680876,
+    "ta": 0.696060128369981
+  },
+  "spread": 0.097841998422876,
+  "score": 10220.559842594083,
+  "hindi_penalty_factor": 1.0,
+  "hindi_adjusted_score": 10220.559842594083,
+  "roundtrip_sample": "India's population is 1,428,627,663.",
+  "roundtrip_ok": true,
+  "reproduce": "python scripts/build_wiki_faithful_markdown.py && python scripts/train_bpe_tokenizer.py"
+}

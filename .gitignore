@@ -4,6 +4,10 @@
 .hugo_build.lock
 .venv/
 
+# BPE corpus build artifacts (large HTML snapshots)
+static/bpe/corpus/*.raw.html
+scripts/__pycache__/
+
 # OS
 .DS_Store
 Thumbs.db

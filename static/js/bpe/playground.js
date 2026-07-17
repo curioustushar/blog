@@ -1,10 +1,10 @@
 import {
-  buildMergeRank,
-  buildVocabIndex,
+  checkRoundtrip,
   encodeSpans,
   tokenLabel,
   DEFAULT_PLAYGROUND_TEXT,
-} from "./encoder.js";
+  ROUNDTRIP_SAMPLE,
+} from "./hf-tokenizer.js";
 
 function escapeHtml(s) {
   return s
@@ -28,31 +28,38 @@ function renderTokenSpans(spans) {
     .join("");
 }
 
-function computeStats(text, mergeRank, vocabIndex, vocabSize) {
-  const pretokenWords = (text.match(/\S+/g) || []).length;
-  const spans = encodeSpans(text, mergeRank, vocabIndex);
+function computeStats(text, tokenizer, vocabSize) {
+  const spans = encodeSpans(tokenizer, text);
   const encodeTokens = spans.length;
   const uniqueTokens = new Set(spans.map((s) => s.text)).size;
   const chars = text.length;
-  const fertility =
-    pretokenWords > 0 ? (encodeTokens / pretokenWords).toFixed(2) : "—";
+  const roundtrip = checkRoundtrip(tokenizer, text);
+  const sampleRt = checkRoundtrip(tokenizer, ROUNDTRIP_SAMPLE);
 
-  return { encodeTokens, uniqueTokens, pretokenWords, chars, fertility, vocabSize };
+  return {
+    encodeTokens,
+    uniqueTokens,
+    chars,
+    vocabSize,
+    roundtripOk: roundtrip.ok,
+    sampleRoundtripOk: sampleRt.ok,
+  };
 }
 
 function statsLine(s) {
-  return `${s.encodeTokens} encode tokens · ${s.uniqueTokens} unique tokens · ${s.pretokenWords} pretoken words · ${s.chars} chars · ${s.vocabSize.toLocaleString()} merged vocab · fertility ${s.fertility}`;
+  const rt = s.roundtripOk ? "roundtrip ✓" : "roundtrip ✗";
+  const sample = s.sampleRoundtripOk ? "sample ✓" : "sample ✗";
+  return `${s.encodeTokens} tokens · ${s.uniqueTokens} unique · ${s.chars} chars · ${s.vocabSize.toLocaleString()} vocab · ${rt} · ${sample}`;
 }
 
-export function mountPlayground(root, { mergeRank, vocab, vocabSize = 10000, initialText }) {
+export function mountPlayground(root, { tokenizer, vocabSize = 10000, initialText }) {
   if (!root) return;
 
-  const vocabIndex = buildVocabIndex(vocab);
   const sample = initialText ?? DEFAULT_PLAYGROUND_TEXT;
 
   root.innerHTML = `
     <div class="nn-demo bpe-playground" data-section="tokenizer-playground">
-      <p class="bpe-playground-sub">All languages share one <strong>10k</strong> merged vocab. Type or paste text in any script — English, Hindi, Telugu, or Tamil.</p>
+      <p class="bpe-playground-sub">Shared <strong>10k</strong> BPE vocab with Metaspace decode — punctuation, URLs, and number separators round-trip faithfully.</p>
       <div class="bpe-playground-stats" data-out="playground-stats"></div>
       <div class="nn-panels bpe-playground-panels">
         <div class="nn-panel bpe-playground-panel">
@@ -72,9 +79,9 @@ export function mountPlayground(root, { mergeRank, vocab, vocabSize = 10000, ini
 
   function update() {
     const text = textarea.value;
-    const stats = computeStats(text, mergeRank, vocabIndex, vocabSize);
+    const stats = computeStats(text, tokenizer, vocabSize);
     statsEl.textContent = statsLine(stats);
-    outputEl.innerHTML = renderTokenSpans(encodeSpans(text, mergeRank, vocabIndex));
+    outputEl.innerHTML = renderTokenSpans(encodeSpans(tokenizer, text));
   }
 
   textarea.addEventListener("input", update);
@@ -82,11 +89,19 @@ export function mountPlayground(root, { mergeRank, vocab, vocabSize = 10000, ini
 }
 
 export async function mountPlaygroundFromUrl(root, tokenizerUrl) {
-  const res = await fetch(tokenizerUrl);
-  const data = await res.json();
+  const { loadTokenizer } = await import("./hf-tokenizer.js");
+  let tokenizer;
+  try {
+    tokenizer = await loadTokenizer(tokenizerUrl);
+  } catch (err) {
+    console.error(err);
+    if (root) {
+      root.innerHTML = `<p class="muted">Playground unavailable — could not load <code>tokenizer.json</code> from <code>${tokenizerUrl}</code>.</p>`;
+    }
+    return;
+  }
   mountPlayground(root, {
-    mergeRank: buildMergeRank(data.merges),
-    vocab: data.vocab,
-    vocabSize: data.meta?.total_vocab ?? data.vocab?.length ?? 10000,
+    tokenizer,
+    vocabSize: tokenizer.getVocabSize(),
   });
 }
