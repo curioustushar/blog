@@ -5,5 +5,8 @@
   var theme = stored === "light" || stored === "dark" ? stored : (prefersDark ? "dark" : "light");
   document.documentElement.setAttribute("data-theme", theme);
   document.documentElement.setAttribute("data-theme-mode", stored === "light" || stored === "dark" ? stored : "system");
+
+  var navSticky = localStorage.getItem("nav-sticky") !== "false";
+  document.documentElement.setAttribute("data-nav-sticky", navSticky ? "true" : "false");
 })();
 </script>
