@@ -2,6 +2,23 @@
 
 Hugo + [Iara](https://github.com/alexandrevicenzi/iara) theme. Lives alongside the portfolio as a **project site**.
 
+## ERA V5 Submission — Mixture & Curriculum Plan
+
+**Author:** Tushar Gupta  
+**Assignment:** Mixture and Curriculum (V5)
+
+| Artifact | Link |
+|----------|------|
+| **Full specification** | [docs/the-mixture-is-the-model-2-5t-pretraining-plan.md](./docs/the-mixture-is-the-model-2-5t-pretraining-plan.md) |
+| **Live blog post** | https://curioustushar.github.io/blog/posts/the-mixture-is-the-model-2-5t-pretraining-plan/ |
+| **Proxy experiment script + results** | [scripts/mixture_proxy_experiment.py](./scripts/mixture_proxy_experiment.py) · [scripts/mixture_proxy_results.json](./scripts/mixture_proxy_results.json) |
+| **Related: 40B model design** | https://curioustushar.github.io/blog/posts/train-40b-model-design/ |
+| **Related: data cleaning pipeline** | https://curioustushar.github.io/blog/posts/data-cleaning-strategies-applied/ |
+
+**Summary:** 2.5T-token pre-training mixture across **7 capability lanes** (100% budget), Indic split 40/25/20/15 across verified/unverified/translated/synthetic tiers, protected floors (Indic ≥12%, Agentic ≥2%), **separate anneal preset** over final 125B tokens (5%), four-stage curriculum with difficulty and reasoning-length bands, **proxy experiment executed** (loader simulation + char-LM smoke run), and cleaning progress toward starved P0/P1 slots.
+
+---
+
 | Site | Repo | URL |
 |------|------|-----|
 | Portfolio (root) | [`curioustushar.github.io`](https://github.com/curioustushar/curioustushar.github.io) | https://curioustushar.github.io |

@@ -3,6 +3,7 @@
 /resources/_gen/
 .hugo_build.lock
 .venv/
+.venv311/
 
 # BPE corpus build artifacts (large HTML snapshots)
 static/bpe/corpus/*.raw.html

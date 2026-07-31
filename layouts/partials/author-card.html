@@ -1,20 +1,13 @@
-<div class="card taxonomy-card border-0 mt-4">
+<div class="card border-0 mt-4">
   <div class="row no-gutters">
     <div class="col-9">
       <div class="card-body pl-0 py-0">
         <h5 class="card-title">
           <a href="{{ .RelPermalink }}" class="text-decoration-only-hover">{{ .Title }}</a>
         </h5>
-        {{ with .Description }}
-        <p class="card-text taxonomy-excerpt d-none d-md-block mb-1">{{ . }}</p>
-        {{ else }}
         <div class="card-text d-none d-md-block mb-1">
           <a href="{{ .RelPermalink }}" class="text-decoration-none">{{ .Summary }}</a>
         </div>
-        {{ end }}
-        <p class="card-text text-muted small mb-0">
-          {{ partial "meta-author.html" . }}
-        </p>
         <p class="card-text text-muted small mb-1">
           {{ partial "meta-date.html" . }}
           {{ partial "meta-reading-time.html" . }}

@@ -26,7 +26,7 @@ When training a language model, **raw data is not training data**. This post app
 
 **The problem:** Dataset documentation admits *"we have not verified the reasoning traces and answers for accuracy."* Synthetic data at scale means guaranteed quality issues that a production cleaning pipeline must address.
 
-**Why this matters:** As documented in the [Train 40B model design](/blog/posts/train-40b-model-design/), data cleaning is not optional housekeeping — it's **load-bearing engineering** that determines model quality more than architectural cleverness.
+**Why this matters:** As documented in the [Train 40B model design]({{< relref "2026-07-17-train-40b-model-design.md" >}}), data cleaning is not optional housekeeping — it's **load-bearing engineering** that determines model quality more than architectural cleverness.
 
 ---
 
@@ -35,12 +35,13 @@ When training a language model, **raw data is not training data**. This post app
 These are production strategies that fixed defects found in a prior audit of a 120B model run. Each strategy corresponds to a stage in the cleaning pipeline, where raw bytes enter on the left and clean, provenance-stamped tokens exit on the right.
 
 <div class="strategy-reference-box">
-  <strong>Three key sources inform this work:</strong>
-  <ul>
-    <li><strong>Data cleaning and deduplication pipeline</strong> — The 9-stage production workflow</li>
-    <li><strong><a href="https://lightninglm.theschoolofai.in/">LightningLM 120B paper</a></strong> — Production validation of these strategies at scale</li>
-    <li><strong><a href="/blog/posts/train-40b-model-design/">Train 40B model design</a></strong> — Application to India-first multilingual training</li>
-  </ul>
+
+**Three key sources inform this work:**
+
+- **Data cleaning and deduplication pipeline** — The 9-stage production workflow
+- **[LightningLM 120B paper](https://lightninglm.theschoolofai.in/)** — Production validation of these strategies at scale
+- **[Train 40B model design]({{< relref "2026-07-17-train-40b-model-design.md" >}})** — Application to India-first multilingual training
+
 </div>
 
 ### Strategy 1: Text Normalization
@@ -95,7 +96,7 @@ These are production strategies that fixed defects found in a prior audit of a 1
 <div id="cleaning-widget" class="cleaning-widget"></div>
 
 <script type="module">
-import { renderCleaningWidget } from '/blog/js/cleaning-widget.js';
+const { renderCleaningWidget } = await import((window.HUGO_RELURL || '/') + 'js/cleaning-widget.js');
 
 const strategies = [
   {
@@ -460,13 +461,13 @@ No manifest = no entry. This simple rule prevents:
 - Missing provenance
 
 ### 5. Script-aware cleaning is mandatory
-As emphasized in the [Train 40B design](/blog/posts/train-40b-model-design/), cleaners tuned for English will destroy low-resource languages. A function that strips all invisible characters mangles Brahmic scripts while believing it's helping.
+As emphasized in the [Train 40B design]({{< relref "2026-07-17-train-40b-model-design.md" >}}), cleaners tuned for English will destroy low-resource languages. A function that strips all invisible characters mangles Brahmic scripts while believing it's helping.
 
 ---
 
 ## How this relates to Train 40B model design
 
-The [Train 40B model design](/blog/posts/train-40b-model-design/) called for **2.5T pre-training tokens** with guaranteed per-batch composition (12% Indic, 20% code, 8% agentic). That design assumed all data entering the corpus had been cleaned via this pipeline.
+The [Train 40B model design]({{< relref "2026-07-17-train-40b-model-design.md" >}}) called for **2.5T pre-training tokens** with guaranteed per-batch composition (12% Indic, 20% code, 8% agentic). That design assumed all data entering the corpus had been cleaned via this pipeline.
 
 **Key connections:**
 
@@ -485,7 +486,7 @@ The [Train 40B model design](/blog/posts/train-40b-model-design/) called for **2
 ## References
 
 1. [**LightningLM: Training a 120B Sparse MoE**](https://lightninglm.theschoolofai.in/) — Production validation of these strategies at scale, especially Section 8 (Data Methodology)
-2. [**Train 40B Model Design**](/blog/posts/train-40b-model-design/) — Application of cleaning pipeline to India-first multilingual training
+2. [**Train 40B Model Design**]({{< relref "2026-07-17-train-40b-model-design.md" >}}) — Application of cleaning pipeline to India-first multilingual training
 3. [**AyAI1Team/reasoning-v1-20m Dataset**](https://huggingface.co/datasets/AyAI1Team/reasoning-v1-20m) — The 22.2M-row dataset used for this demonstration
 
 ---
