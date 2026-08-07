@@ -1,0 +1,1540 @@
+{
+  "summary": {
+    "accept": 28,
+    "reject": 60,
+    "defer": 77,
+    "protected": 5
+  },
+  "decisions": [
+    {
+      "candidate_id": "cand_00000_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.422707306785208,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 0
+    },
+    {
+      "candidate_id": "cand_00001_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.2528262651182772,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 1
+    },
+    {
+      "candidate_id": "cand_00002_shard_00045",
+      "shard_id": "shard_00045",
+      "mixture_lane": "math",
+      "score": 0.19184318608414455,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 2
+    },
+    {
+      "candidate_id": "cand_00003_shard_00044",
+      "shard_id": "shard_00044",
+      "mixture_lane": "math",
+      "score": 0.8718056860081399,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 3
+    },
+    {
+      "candidate_id": "cand_00004_shard_00012",
+      "shard_id": "shard_00012",
+      "mixture_lane": "wikipedia",
+      "score": 0.07374519996199412,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 4
+    },
+    {
+      "candidate_id": "cand_00005_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.931042694004961,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 5
+    },
+    {
+      "candidate_id": "cand_00006_shard_00028",
+      "shard_id": "shard_00028",
+      "mixture_lane": "books",
+      "score": 0.7040735820084981,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 6
+    },
+    {
+      "candidate_id": "cand_00007_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.9789103558237922,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 7
+    },
+    {
+      "candidate_id": "cand_00008_shard_00030",
+      "shard_id": "shard_00030",
+      "mixture_lane": "books",
+      "score": 0.9303703040188109,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 8
+    },
+    {
+      "candidate_id": "cand_00009_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.22174582263029782,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 9
+    },
+    {
+      "candidate_id": "cand_00010_shard_00001",
+      "shard_id": "shard_00001",
+      "mixture_lane": "wikipedia",
+      "score": 0.06690709015049671,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 10
+    },
+    {
+      "candidate_id": "cand_00011_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.6235338110997187,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 11
+    },
+    {
+      "candidate_id": "cand_00012_shard_00004",
+      "shard_id": "shard_00004",
+      "mixture_lane": "wikipedia",
+      "score": 0.6395644882320344,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 12
+    },
+    {
+      "candidate_id": "cand_00013_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.2034330387142098,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 13
+    },
+    {
+      "candidate_id": "cand_00014_shard_00017",
+      "shard_id": "shard_00017",
+      "mixture_lane": "wikipedia",
+      "score": 0.9952895806625695,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 14
+    },
+    {
+      "candidate_id": "cand_00015_shard_00038",
+      "shard_id": "shard_00038",
+      "mixture_lane": "code",
+      "score": 0.9365037497916501,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 15
+    },
+    {
+      "candidate_id": "cand_00016_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.4383841062519662,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 16
+    },
+    {
+      "candidate_id": "cand_00017_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.8457103422483686,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 17
+    },
+    {
+      "candidate_id": "cand_00018_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.7935761119689737,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 18
+    },
+    {
+      "candidate_id": "cand_00019_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.8781472560665913,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 19
+    },
+    {
+      "candidate_id": "cand_00020_shard_00005",
+      "shard_id": "shard_00005",
+      "mixture_lane": "wikipedia",
+      "score": 0.9047028883138445,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 20
+    },
+    {
+      "candidate_id": "cand_00021_shard_00045",
+      "shard_id": "shard_00045",
+      "mixture_lane": "math",
+      "score": 0.3897742830193076,
+      "decision": "protected",
+      "rationale": "protected_floor_override",
+      "global_step": 21
+    },
+    {
+      "candidate_id": "cand_00022_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.7837001571393805,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 22
+    },
+    {
+      "candidate_id": "cand_00023_shard_00030",
+      "shard_id": "shard_00030",
+      "mixture_lane": "books",
+      "score": 0.6743610332893117,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 23
+    },
+    {
+      "candidate_id": "cand_00024_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.4773221161396527,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 24
+    },
+    {
+      "candidate_id": "cand_00025_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.8732150240971742,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 25
+    },
+    {
+      "candidate_id": "cand_00026_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.003195356811209432,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 26
+    },
+    {
+      "candidate_id": "cand_00027_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.9088593201965232,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 27
+    },
+    {
+      "candidate_id": "cand_00028_shard_00009",
+      "shard_id": "shard_00009",
+      "mixture_lane": "wikipedia",
+      "score": 0.3703188356874322,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 28
+    },
+    {
+      "candidate_id": "cand_00029_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.6701319554518285,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 29
+    },
+    {
+      "candidate_id": "cand_00030_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.5166794628642218,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 30
+    },
+    {
+      "candidate_id": "cand_00031_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.9182066947496977,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 31
+    },
+    {
+      "candidate_id": "cand_00032_shard_00016",
+      "shard_id": "shard_00016",
+      "mixture_lane": "wikipedia",
+      "score": 0.5467632088220593,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 32
+    },
+    {
+      "candidate_id": "cand_00033_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.6677313518402472,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 33
+    },
+    {
+      "candidate_id": "cand_00034_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.9557549841598968,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 34
+    },
+    {
+      "candidate_id": "cand_00035_shard_00044",
+      "shard_id": "shard_00044",
+      "mixture_lane": "math",
+      "score": 0.1668738483374179,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 35
+    },
+    {
+      "candidate_id": "cand_00036_shard_00003",
+      "shard_id": "shard_00003",
+      "mixture_lane": "wikipedia",
+      "score": 0.8631390444615714,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 36
+    },
+    {
+      "candidate_id": "cand_00037_shard_00031",
+      "shard_id": "shard_00031",
+      "mixture_lane": "books",
+      "score": 0.31435916952657494,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 37
+    },
+    {
+      "candidate_id": "cand_00038_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.8246825499983231,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 38
+    },
+    {
+      "candidate_id": "cand_00039_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.18165510175322533,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 39
+    },
+    {
+      "candidate_id": "cand_00040_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.9927943958884092,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 40
+    },
+    {
+      "candidate_id": "cand_00041_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.8368681729391376,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 41
+    },
+    {
+      "candidate_id": "cand_00042_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.2746585263578823,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 42
+    },
+    {
+      "candidate_id": "cand_00043_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.5790683432899109,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 43
+    },
+    {
+      "candidate_id": "cand_00044_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.4482869541850609,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 44
+    },
+    {
+      "candidate_id": "cand_00045_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.09832196405584039,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 45
+    },
+    {
+      "candidate_id": "cand_00046_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.5818391944239473,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 46
+    },
+    {
+      "candidate_id": "cand_00047_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.19194186040943997,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 47
+    },
+    {
+      "candidate_id": "cand_00048_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.49333185993445383,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 48
+    },
+    {
+      "candidate_id": "cand_00049_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.44102772335545803,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 49
+    },
+    {
+      "candidate_id": "cand_00050_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.9300717757851984,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 50
+    },
+    {
+      "candidate_id": "cand_00051_shard_00015",
+      "shard_id": "shard_00015",
+      "mixture_lane": "wikipedia",
+      "score": 0.2413773472051549,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 51
+    },
+    {
+      "candidate_id": "cand_00052_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.2690356728315902,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 52
+    },
+    {
+      "candidate_id": "cand_00053_shard_00046",
+      "shard_id": "shard_00046",
+      "mixture_lane": "math",
+      "score": 0.005552079762693513,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 53
+    },
+    {
+      "candidate_id": "cand_00054_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.3371584809704587,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 54
+    },
+    {
+      "candidate_id": "cand_00055_shard_00031",
+      "shard_id": "shard_00031",
+      "mixture_lane": "books",
+      "score": 0.5212324176731595,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 55
+    },
+    {
+      "candidate_id": "cand_00056_shard_00026",
+      "shard_id": "shard_00026",
+      "mixture_lane": "books",
+      "score": 0.3251249155320984,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 56
+    },
+    {
+      "candidate_id": "cand_00057_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.3775486220553398,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 57
+    },
+    {
+      "candidate_id": "cand_00058_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.7316844243862862,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 58
+    },
+    {
+      "candidate_id": "cand_00059_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.7627500423143502,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 59
+    },
+    {
+      "candidate_id": "cand_00060_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.8003771907650813,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 60
+    },
+    {
+      "candidate_id": "cand_00061_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.6445327421288315,
+      "decision": "protected",
+      "rationale": "protected_floor_override",
+      "global_step": 61
+    },
+    {
+      "candidate_id": "cand_00062_shard_00006",
+      "shard_id": "shard_00006",
+      "mixture_lane": "wikipedia",
+      "score": 0.4996983081800161,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 62
+    },
+    {
+      "candidate_id": "cand_00063_shard_00011",
+      "shard_id": "shard_00011",
+      "mixture_lane": "wikipedia",
+      "score": 0.26037755079110564,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 63
+    },
+    {
+      "candidate_id": "cand_00064_shard_00045",
+      "shard_id": "shard_00045",
+      "mixture_lane": "math",
+      "score": 0.2965989539624655,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 64
+    },
+    {
+      "candidate_id": "cand_00065_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.7761369861606827,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 65
+    },
+    {
+      "candidate_id": "cand_00066_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.9776077701192367,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 66
+    },
+    {
+      "candidate_id": "cand_00067_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.8714266074521995,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 67
+    },
+    {
+      "candidate_id": "cand_00068_shard_00012",
+      "shard_id": "shard_00012",
+      "mixture_lane": "wikipedia",
+      "score": 0.8329633790610739,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 68
+    },
+    {
+      "candidate_id": "cand_00069_shard_00006",
+      "shard_id": "shard_00006",
+      "mixture_lane": "wikipedia",
+      "score": 0.4697027275035397,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 69
+    },
+    {
+      "candidate_id": "cand_00070_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.453449353914114,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 70
+    },
+    {
+      "candidate_id": "cand_00071_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.35680714188069274,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 71
+    },
+    {
+      "candidate_id": "cand_00072_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.681081059547393,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 72
+    },
+    {
+      "candidate_id": "cand_00073_shard_00006",
+      "shard_id": "shard_00006",
+      "mixture_lane": "wikipedia",
+      "score": 0.237026431187295,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 73
+    },
+    {
+      "candidate_id": "cand_00074_shard_00017",
+      "shard_id": "shard_00017",
+      "mixture_lane": "wikipedia",
+      "score": 0.9152664884261942,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 74
+    },
+    {
+      "candidate_id": "cand_00075_shard_00028",
+      "shard_id": "shard_00028",
+      "mixture_lane": "books",
+      "score": 0.6783455704986923,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 75
+    },
+    {
+      "candidate_id": "cand_00076_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.5401888639992543,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 76
+    },
+    {
+      "candidate_id": "cand_00077_shard_00005",
+      "shard_id": "shard_00005",
+      "mixture_lane": "wikipedia",
+      "score": 0.03635616554793812,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 77
+    },
+    {
+      "candidate_id": "cand_00078_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.10927330914635056,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 78
+    },
+    {
+      "candidate_id": "cand_00079_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.7377054453216738,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 79
+    },
+    {
+      "candidate_id": "cand_00080_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.7132025220694957,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 80
+    },
+    {
+      "candidate_id": "cand_00081_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.2448432290099662,
+      "decision": "protected",
+      "rationale": "protected_floor_override",
+      "global_step": 81
+    },
+    {
+      "candidate_id": "cand_00082_shard_00017",
+      "shard_id": "shard_00017",
+      "mixture_lane": "wikipedia",
+      "score": 0.1751410491241005,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 82
+    },
+    {
+      "candidate_id": "cand_00083_shard_00007",
+      "shard_id": "shard_00007",
+      "mixture_lane": "wikipedia",
+      "score": 0.1737195421414728,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 83
+    },
+    {
+      "candidate_id": "cand_00084_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.9556717297424729,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 84
+    },
+    {
+      "candidate_id": "cand_00085_shard_00038",
+      "shard_id": "shard_00038",
+      "mixture_lane": "code",
+      "score": 0.19034245079158396,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 85
+    },
+    {
+      "candidate_id": "cand_00086_shard_00007",
+      "shard_id": "shard_00007",
+      "mixture_lane": "wikipedia",
+      "score": 0.788712227435017,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 86
+    },
+    {
+      "candidate_id": "cand_00087_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.8379360704771094,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 87
+    },
+    {
+      "candidate_id": "cand_00088_shard_00030",
+      "shard_id": "shard_00030",
+      "mixture_lane": "books",
+      "score": 0.2270035553320785,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 88
+    },
+    {
+      "candidate_id": "cand_00089_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.531028329751228,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 89
+    },
+    {
+      "candidate_id": "cand_00090_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.43203653638065714,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 90
+    },
+    {
+      "candidate_id": "cand_00091_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.8732542164794296,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 91
+    },
+    {
+      "candidate_id": "cand_00092_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.5667344018739495,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 92
+    },
+    {
+      "candidate_id": "cand_00093_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.09133532133217326,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 93
+    },
+    {
+      "candidate_id": "cand_00094_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.3173229117685284,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 94
+    },
+    {
+      "candidate_id": "cand_00095_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.4011106291788422,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 95
+    },
+    {
+      "candidate_id": "cand_00096_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.9224090128956384,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 96
+    },
+    {
+      "candidate_id": "cand_00097_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.05141182082039579,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 97
+    },
+    {
+      "candidate_id": "cand_00098_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.7684456728790993,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 98
+    },
+    {
+      "candidate_id": "cand_00099_shard_00026",
+      "shard_id": "shard_00026",
+      "mixture_lane": "books",
+      "score": 0.3856475067757181,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 99
+    },
+    {
+      "candidate_id": "cand_00100_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.15147810106898613,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 100
+    },
+    {
+      "candidate_id": "cand_00101_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.02376420563640171,
+      "decision": "protected",
+      "rationale": "protected_floor_override",
+      "global_step": 101
+    },
+    {
+      "candidate_id": "cand_00102_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.2961870285906333,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 102
+    },
+    {
+      "candidate_id": "cand_00103_shard_00013",
+      "shard_id": "shard_00013",
+      "mixture_lane": "wikipedia",
+      "score": 0.19189918278527893,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 103
+    },
+    {
+      "candidate_id": "cand_00104_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.6627079652768345,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 104
+    },
+    {
+      "candidate_id": "cand_00105_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.13505665122881919,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 105
+    },
+    {
+      "candidate_id": "cand_00106_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.30901845109393317,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 106
+    },
+    {
+      "candidate_id": "cand_00107_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.01166533609192477,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 107
+    },
+    {
+      "candidate_id": "cand_00108_shard_00012",
+      "shard_id": "shard_00012",
+      "mixture_lane": "wikipedia",
+      "score": 0.33799787758337285,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 108
+    },
+    {
+      "candidate_id": "cand_00109_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.4208741598811173,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 109
+    },
+    {
+      "candidate_id": "cand_00110_shard_00012",
+      "shard_id": "shard_00012",
+      "mixture_lane": "wikipedia",
+      "score": 0.5523775288724289,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 110
+    },
+    {
+      "candidate_id": "cand_00111_shard_00002",
+      "shard_id": "shard_00002",
+      "mixture_lane": "wikipedia",
+      "score": 0.9706081158878767,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 111
+    },
+    {
+      "candidate_id": "cand_00112_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.7718285959614042,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 112
+    },
+    {
+      "candidate_id": "cand_00113_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.7878594235023156,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 113
+    },
+    {
+      "candidate_id": "cand_00114_shard_00037",
+      "shard_id": "shard_00037",
+      "mixture_lane": "books",
+      "score": 0.7012346244187175,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 114
+    },
+    {
+      "candidate_id": "cand_00115_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.03892674111736164,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 115
+    },
+    {
+      "candidate_id": "cand_00116_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.7714597850040206,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 116
+    },
+    {
+      "candidate_id": "cand_00117_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.10369479216255592,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 117
+    },
+    {
+      "candidate_id": "cand_00118_shard_00031",
+      "shard_id": "shard_00031",
+      "mixture_lane": "books",
+      "score": 0.30215908174918943,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 118
+    },
+    {
+      "candidate_id": "cand_00119_shard_00034",
+      "shard_id": "shard_00034",
+      "mixture_lane": "books",
+      "score": 0.9095521901989244,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 119
+    },
+    {
+      "candidate_id": "cand_00120_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.3357940824552891,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 120
+    },
+    {
+      "candidate_id": "cand_00121_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.6708420034662919,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 121
+    },
+    {
+      "candidate_id": "cand_00122_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.7549190096917839,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 122
+    },
+    {
+      "candidate_id": "cand_00123_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.7569043056007717,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 123
+    },
+    {
+      "candidate_id": "cand_00124_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.8604766560859225,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 124
+    },
+    {
+      "candidate_id": "cand_00125_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.41127334265300847,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 125
+    },
+    {
+      "candidate_id": "cand_00126_shard_00046",
+      "shard_id": "shard_00046",
+      "mixture_lane": "math",
+      "score": 0.09010869243417603,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 126
+    },
+    {
+      "candidate_id": "cand_00127_shard_00035",
+      "shard_id": "shard_00035",
+      "mixture_lane": "books",
+      "score": 0.5347314727340665,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 127
+    },
+    {
+      "candidate_id": "cand_00128_shard_00046",
+      "shard_id": "shard_00046",
+      "mixture_lane": "math",
+      "score": 0.10255835580233447,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 128
+    },
+    {
+      "candidate_id": "cand_00129_shard_00046",
+      "shard_id": "shard_00046",
+      "mixture_lane": "math",
+      "score": 0.8001153785269977,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 129
+    },
+    {
+      "candidate_id": "cand_00130_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.9865138574937624,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 130
+    },
+    {
+      "candidate_id": "cand_00131_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.44376606248406836,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 131
+    },
+    {
+      "candidate_id": "cand_00132_shard_00014",
+      "shard_id": "shard_00014",
+      "mixture_lane": "wikipedia",
+      "score": 0.40798567081987525,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 132
+    },
+    {
+      "candidate_id": "cand_00133_shard_00026",
+      "shard_id": "shard_00026",
+      "mixture_lane": "books",
+      "score": 0.22400793391838855,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 133
+    },
+    {
+      "candidate_id": "cand_00134_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.382867389680554,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 134
+    },
+    {
+      "candidate_id": "cand_00135_shard_00015",
+      "shard_id": "shard_00015",
+      "mixture_lane": "wikipedia",
+      "score": 0.491422583696298,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 135
+    },
+    {
+      "candidate_id": "cand_00136_shard_00017",
+      "shard_id": "shard_00017",
+      "mixture_lane": "wikipedia",
+      "score": 0.1571085474354002,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 136
+    },
+    {
+      "candidate_id": "cand_00137_shard_00006",
+      "shard_id": "shard_00006",
+      "mixture_lane": "wikipedia",
+      "score": 0.06757736626723254,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 137
+    },
+    {
+      "candidate_id": "cand_00138_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.2528198327060835,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 138
+    },
+    {
+      "candidate_id": "cand_00139_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.13982399626165257,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 139
+    },
+    {
+      "candidate_id": "cand_00140_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.9722482969454136,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 140
+    },
+    {
+      "candidate_id": "cand_00141_shard_00042",
+      "shard_id": "shard_00042",
+      "mixture_lane": "math",
+      "score": 0.15357014144621095,
+      "decision": "protected",
+      "rationale": "protected_floor_override",
+      "global_step": 141
+    },
+    {
+      "candidate_id": "cand_00142_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.13790663544505524,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 142
+    },
+    {
+      "candidate_id": "cand_00143_shard_00003",
+      "shard_id": "shard_00003",
+      "mixture_lane": "wikipedia",
+      "score": 0.3007119524527136,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 143
+    },
+    {
+      "candidate_id": "cand_00144_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.27114080434458815,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 144
+    },
+    {
+      "candidate_id": "cand_00145_shard_00033",
+      "shard_id": "shard_00033",
+      "mixture_lane": "books",
+      "score": 0.26466364419662014,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 145
+    },
+    {
+      "candidate_id": "cand_00146_shard_00043",
+      "shard_id": "shard_00043",
+      "mixture_lane": "math",
+      "score": 0.11695142372440347,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 146
+    },
+    {
+      "candidate_id": "cand_00147_shard_00037",
+      "shard_id": "shard_00037",
+      "mixture_lane": "books",
+      "score": 0.6693411408153691,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 147
+    },
+    {
+      "candidate_id": "cand_00148_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.4268815015505258,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 148
+    },
+    {
+      "candidate_id": "cand_00149_shard_00046",
+      "shard_id": "shard_00046",
+      "mixture_lane": "math",
+      "score": 0.630697381596709,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 149
+    },
+    {
+      "candidate_id": "cand_00150_shard_00030",
+      "shard_id": "shard_00030",
+      "mixture_lane": "books",
+      "score": 0.9697704419888953,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 150
+    },
+    {
+      "candidate_id": "cand_00151_shard_00028",
+      "shard_id": "shard_00028",
+      "mixture_lane": "books",
+      "score": 0.48089332051595984,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 151
+    },
+    {
+      "candidate_id": "cand_00152_shard_00002",
+      "shard_id": "shard_00002",
+      "mixture_lane": "wikipedia",
+      "score": 0.2605599547411688,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 152
+    },
+    {
+      "candidate_id": "cand_00153_shard_00026",
+      "shard_id": "shard_00026",
+      "mixture_lane": "books",
+      "score": 0.9855665299076509,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 153
+    },
+    {
+      "candidate_id": "cand_00154_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.704942056840505,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 154
+    },
+    {
+      "candidate_id": "cand_00155_shard_00028",
+      "shard_id": "shard_00028",
+      "mixture_lane": "books",
+      "score": 0.4158259326163274,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 155
+    },
+    {
+      "candidate_id": "cand_00156_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.6753724125855073,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 156
+    },
+    {
+      "candidate_id": "cand_00157_shard_00032",
+      "shard_id": "shard_00032",
+      "mixture_lane": "books",
+      "score": 0.030597789685846723,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 157
+    },
+    {
+      "candidate_id": "cand_00158_shard_00039",
+      "shard_id": "shard_00039",
+      "mixture_lane": "code",
+      "score": 0.4357833607205617,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 158
+    },
+    {
+      "candidate_id": "cand_00159_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.3715087586016182,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 159
+    },
+    {
+      "candidate_id": "cand_00160_shard_00047",
+      "shard_id": "shard_00047",
+      "mixture_lane": "math",
+      "score": 0.8287209930896575,
+      "decision": "accept",
+      "rationale": "high_proxy_utility",
+      "global_step": 160
+    },
+    {
+      "candidate_id": "cand_00161_shard_00041",
+      "shard_id": "shard_00041",
+      "mixture_lane": "code",
+      "score": 0.42830437105808045,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 161
+    },
+    {
+      "candidate_id": "cand_00162_shard_00027",
+      "shard_id": "shard_00027",
+      "mixture_lane": "books",
+      "score": 0.5946583202096304,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 162
+    },
+    {
+      "candidate_id": "cand_00163_shard_00037",
+      "shard_id": "shard_00037",
+      "mixture_lane": "books",
+      "score": 0.29941139819552454,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 163
+    },
+    {
+      "candidate_id": "cand_00164_shard_00040",
+      "shard_id": "shard_00040",
+      "mixture_lane": "code",
+      "score": 0.022707225992974645,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 164
+    },
+    {
+      "candidate_id": "cand_00165_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.05228142348404075,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 165
+    },
+    {
+      "candidate_id": "cand_00166_shard_00029",
+      "shard_id": "shard_00029",
+      "mixture_lane": "books",
+      "score": 0.602268657088808,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 166
+    },
+    {
+      "candidate_id": "cand_00167_shard_00026",
+      "shard_id": "shard_00026",
+      "mixture_lane": "books",
+      "score": 0.08930523160130373,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 167
+    },
+    {
+      "candidate_id": "cand_00168_shard_00036",
+      "shard_id": "shard_00036",
+      "mixture_lane": "books",
+      "score": 0.49343523441195375,
+      "decision": "defer",
+      "rationale": "borderline_quality",
+      "global_step": 168
+    },
+    {
+      "candidate_id": "cand_00169_shard_00037",
+      "shard_id": "shard_00037",
+      "mixture_lane": "books",
+      "score": 0.2512340653341343,
+      "decision": "reject",
+      "rationale": "low_proxy_utility",
+      "global_step": 169
+    }
+  ]
+}

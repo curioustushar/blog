@@ -1,0 +1,11 @@
+{
+  "shard_id": "shard_00046",
+  "content_hash": "112168a31f9ca00f6e35621141930b7d8bc01876ef4fad255927259e367a36db",
+  "tokenizer_hash": "931d01c581dd6c98ac9005f664503720e17e8efe9e3e7b509ff1da6e94b17a98",
+  "token_count": 4968,
+  "document_count": 46,
+  "split": "train",
+  "source": "math",
+  "created_at": "2026-08-07T09:00:45.791830",
+  "version": "1.0"
+}

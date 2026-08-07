@@ -1,0 +1,122 @@
+{
+  "tokenizer_integrity": {
+    "status": "PASS",
+    "artifact": "data/tokenizer/tokenizer_hash.txt",
+    "timestamp": "2026-08-07T09:00:45.398609",
+    "details": {
+      "hash": "931d01c581dd6c98"
+    }
+  },
+  "shard_integrity": {
+    "status": "PASS",
+    "artifact": "data/shards/",
+    "timestamp": "2026-08-07T09:00:45.815982",
+    "details": {
+      "shard_count": 48
+    }
+  },
+  "manifest_validation": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/manifests/",
+    "timestamp": "2026-08-07T09:00:45.827690",
+    "details": {
+      "count": 48
+    }
+  },
+  "evaluation_firewall": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/manifests/blocked_shards.json",
+    "timestamp": "2026-08-07T09:00:45.828427",
+    "details": {
+      "blocked": 7,
+      "allowed": 41
+    }
+  },
+  "crash_recovery": {
+    "status": "PASS",
+    "artifact": "/Users/tushargupta/projects/curioustushar.github.io/training-data-execution-system/submission_artifacts/checkpoints/ckpt_00150.json",
+    "timestamp": "2026-08-07T09:00:47.588089",
+    "details": {
+      "expected_batch": "batch_00033",
+      "resumed_batch": "batch_00033"
+    }
+  },
+  "replay": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/replay/replay_50_100.json",
+    "timestamp": "2026-08-07T09:00:47.961188",
+    "details": {
+      "interval": "50-100",
+      "match": true
+    }
+  },
+  "opus_audit": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/reports/opus_decisions.json",
+    "timestamp": "2026-08-07T09:00:48.014072",
+    "details": {
+      "accept": 28,
+      "reject": 60,
+      "defer": 77,
+      "protected": 5
+    }
+  },
+  "packing_correctness": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/reports/packing_report.json",
+    "timestamp": "2026-08-07T09:00:48.014334",
+    "details": {
+      "batch_count": 33,
+      "average_utilization": 0.8735,
+      "sample_batch": "/Users/tushargupta/projects/curioustushar.github.io/training-data-execution-system/submission_artifacts/reports/packed_batches/batch_00001.json"
+    }
+  },
+  "mixture_compliance": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/reports/mixture.json",
+    "timestamp": "2026-08-07T09:00:48.015192",
+    "details": {
+      "planned": {
+        "code": 0.1,
+        "books": 0.5,
+        "math": 0.2,
+        "wikipedia": 0.2
+      },
+      "actual": {
+        "math": 0.2727272727272727,
+        "code": 0.12121212121212122,
+        "books": 0.48484848484848486,
+        "wikipedia": 0.12121212121212122
+      },
+      "compliant": true
+    }
+  },
+  "learning_trace": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/ledgers/learning.jsonl",
+    "timestamp": "2026-08-07T09:00:48.015550",
+    "details": {
+      "records": 34
+    }
+  },
+  "checkpoint_integrity": {
+    "status": "PASS",
+    "artifact": "/Users/tushargupta/projects/curioustushar.github.io/training-data-execution-system/submission_artifacts/checkpoints/ckpt_00150.json",
+    "timestamp": "2026-08-07T09:00:48.017206",
+    "details": {
+      "checkpoint_id": "ckpt_00150"
+    }
+  },
+  "throughput": {
+    "status": "PASS",
+    "artifact": "submission_artifacts/performance.json",
+    "timestamp": "2026-08-07T09:00:48.017534",
+    "details": {
+      "tokens_per_second": 8434.43,
+      "loss_bearing_tokens_per_second": 7367.14,
+      "packing_utilization": 0.8735,
+      "padding_percentage": 12.65,
+      "batches_packed": 33
+    }
+  }
+}

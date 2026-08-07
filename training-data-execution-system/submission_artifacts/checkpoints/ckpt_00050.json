@@ -1,0 +1,17 @@
+{
+  "checkpoint_id": "ckpt_00050",
+  "global_step": 50,
+  "ledger_offset": 50,
+  "next_batch_id": "batch_00012",
+  "branch_id": "main",
+  "run_id": "run_001",
+  "rng_state": 42,
+  "tokens_seen": 4865,
+  "lane_counts": {
+    "math": 3,
+    "code": 2,
+    "books": 4,
+    "wikipedia": 2
+  },
+  "mixture_stage": 1
+}

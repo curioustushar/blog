@@ -1,0 +1,71 @@
+[INFO] ============================================================
+[INFO] Training Data Execution System - Demo Starting
+[INFO] ============================================================
+[INFO] Stage 1: Creating corpus...
+[INFO] Created corpus: 2100 documents
+[INFO]   Wikipedia train: 1000
+[INFO]   Wikipedia eval: 100
+[INFO]   Books train: 500
+[INFO]   Code train: 300
+[INFO]   Math train: 200
+[INFO] shards created
+[INFO] Stage 2: Building frozen tokenizer...
+[INFO] Tokenizer built: vocab_size=10000, hash=931d01c581dd...
+[INFO] [PASS] tokenizer_hash_verified: 931d01c581dd...
+[INFO] [PASS] tokenizer_hash_verified
+[INFO] Evidence recorded: tokenizer_integrity = PASS
+[INFO] Stage 3: Generating immutable shards...
+[INFO] Created 48 shards
+[INFO] [PASS] shard_content_hash_verified: 48/48
+[INFO] shards created
+[INFO] Evidence recorded: shard_integrity = PASS
+[INFO] Stage 4: Creating manifests...
+[INFO] Created 48 manifests
+[INFO] manifests validated
+[INFO] Evidence recorded: manifest_validation = PASS
+[INFO] Stage 5: Blocking evaluation shards...
+[INFO] [BLOCK] eval shard: shard_00019 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00020 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00021 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00022 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00023 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00024 (split=eval)
+[INFO] [BLOCK] eval shard: shard_00025 (split=eval)
+[INFO] [PASS] eval_shard_blocked: 7 shards blocked
+[INFO] Training shards: 41, Blocked shards: 7
+[INFO] evaluation data blocked
+[INFO] [PASS] eval_shard_blocked
+[INFO] Evidence recorded: evaluation_firewall = PASS
+[INFO] Stage 6: Compiling mixture schedule...
+[INFO] mixture compiled
+[INFO] Stage 7: Packing and training...
+[INFO] batches packed
+[INFO] OPUS decisions recorded
+[INFO] checkpoint saved
+[INFO] [PASS] checkpoint_saved
+[INFO] Stage 10: Simulating crash...
+[ERROR] crash simulated
+[INFO] run resumed
+[INFO] [PASS] resume_next_batch_matched: expected=batch_00033 got=batch_00033
+[INFO] Evidence recorded: crash_recovery = PASS
+[INFO] Stage 11: Replaying historical stream...
+[INFO] [PASS] replay_hash_matched
+[INFO] historical stream replayed
+[INFO] Evidence recorded: replay = PASS
+[INFO] Stage 12: Forking branch...
+[INFO] branch forked
+[INFO] OPUS summary: {'accept': 28, 'reject': 60, 'defer': 77, 'protected': 5}
+[INFO] Evidence recorded: opus_audit = PASS
+[INFO] Evidence recorded: packing_correctness = PASS
+[INFO] Evidence recorded: mixture_compliance = PASS
+[INFO] Evidence recorded: learning_trace = PASS
+[INFO] audit completed
+[INFO] Evidence recorded: checkpoint_integrity = PASS
+[INFO] performance measured
+[INFO] Evidence recorded: throughput = PASS
+[INFO] Generated /Users/tushargupta/projects/curioustushar.github.io/training-data-execution-system/submission_artifacts/evidence.json
+[INFO] Generated /Users/tushargupta/projects/curioustushar.github.io/training-data-execution-system/submission_artifacts/evidence.md
+[INFO] [PASS] evidence_generated
+[INFO] ============================================================
+[INFO] Demo complete. All passed: True
+[INFO] ============================================================

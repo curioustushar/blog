@@ -1,0 +1,11 @@
+{
+  "shard_id": "shard_00031",
+  "content_hash": "91d70166008e71dd71bc56819dc8c6b893e177746fe6b46ab96ff41997c622c8",
+  "tokenizer_hash": "931d01c581dd6c98ac9005f664503720e17e8efe9e3e7b509ff1da6e94b17a98",
+  "token_count": 4920,
+  "document_count": 41,
+  "split": "train",
+  "source": "books",
+  "created_at": "2026-08-07T09:00:45.663347",
+  "version": "1.0"
+}

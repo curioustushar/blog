@@ -1,0 +1,11 @@
+{
+  "shard_id": "shard_00024",
+  "content_hash": "3c478b805b835a5ed57651b018916d9d5d875c6468cc9d9b08fe229da9b1ae32",
+  "tokenizer_hash": "931d01c581dd6c98ac9005f664503720e17e8efe9e3e7b509ff1da6e94b17a98",
+  "token_count": 4845,
+  "document_count": 17,
+  "split": "eval",
+  "source": "wikipedia",
+  "created_at": "2026-08-07T09:00:45.603047",
+  "version": "1.0"
+}

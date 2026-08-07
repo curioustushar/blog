@@ -1,0 +1,77 @@
+{
+  "schedule": {
+    "stages": [
+      {
+        "stage_id": 1,
+        "token_range": [
+          0,
+          100000
+        ],
+        "lane_weights": {
+          "code": 0.1,
+          "books": 0.5,
+          "math": 0.2,
+          "wikipedia": 0.2
+        },
+        "protected_floors": {
+          "math": 0.05
+        },
+        "lane_supply": {
+          "code": 19716,
+          "books": 59028,
+          "math": 26436,
+          "wikipedia": 93860
+        }
+      },
+      {
+        "stage_id": 2,
+        "token_range": [
+          100000,
+          300000
+        ],
+        "lane_weights": {
+          "code": 0.3,
+          "books": 0.2,
+          "math": 0.3,
+          "wikipedia": 0.2
+        },
+        "protected_floors": {
+          "math": 0.05
+        },
+        "lane_supply": {
+          "code": 19716,
+          "books": 59028,
+          "math": 26436,
+          "wikipedia": 93860
+        }
+      },
+      {
+        "stage_id": 3,
+        "token_range": [
+          300000,
+          1000000
+        ],
+        "lane_weights": {
+          "code": 0.25,
+          "books": 0.25,
+          "math": 0.25,
+          "wikipedia": 0.25
+        },
+        "protected_floors": {
+          "math": 0.05
+        },
+        "lane_supply": {
+          "code": 19716,
+          "books": 59028,
+          "math": 26436,
+          "wikipedia": 93860
+        }
+      }
+    ],
+    "protected_floors": {
+      "math": 0.05
+    },
+    "total_training_tokens": 199040
+  },
+  "compliance": {}
+}
