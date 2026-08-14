@@ -396,6 +396,78 @@ def compute_min_pairwise_distance(
     return min_dist if min_dist != float('inf') else 0.0
 
 
+def algebraic_decode_raw_kronecker(
+    kappa: np.ndarray,
+    char_dim: int = 256,
+    pos_dim: int = 32,
+    length_normalized: bool = True,
+    tolerance: float = 1e-6,
+) -> Optional[bytes]:
+    """
+    Algebraic decoder: reconstruct byte sequence from raw Kronecker representation.
+    
+    Algorithm:
+    1. Find non-zero positions in κ(b)
+    2. Extract (byte_val, position) from each index
+    3. Reconstruct byte sequence
+    4. Verify consistency
+    
+    Complexity: O(D) = O(char_dim × pos_dim), independent of vocabulary size V.
+    
+    Parameters
+    ----------
+    kappa : np.ndarray
+        Raw Kronecker representation
+    char_dim : int
+        Byte alphabet size (256 for UTF-8)
+    pos_dim : int
+        Maximum byte position
+    length_normalized : bool
+        Whether input was length-normalized
+    tolerance : float
+        Threshold for considering an entry non-zero
+    
+    Returns
+    -------
+    bytes or None
+        Reconstructed byte sequence, or None if decoding fails
+    """
+    D = char_dim * pos_dim
+    
+    if len(kappa) != D:
+        return None
+    
+    # Find non-zero entries (O(D) operation)
+    nonzero_indices = np.where(np.abs(kappa) > tolerance)[0]
+    
+    if len(nonzero_indices) == 0:
+        return b''  # Empty token
+    
+    # Extract byte-position pairs
+    byte_position_pairs = []
+    for idx in nonzero_indices:
+        byte_val = idx // pos_dim
+        position = idx % pos_dim
+        magnitude = kappa[idx]
+        
+        byte_position_pairs.append((position, byte_val, magnitude))
+    
+    # Sort by position
+    byte_position_pairs.sort()
+    
+    # Verify positions are consecutive (0, 1, 2, ...)
+    positions = [pos for pos, _, _ in byte_position_pairs]
+    expected_positions = list(range(len(positions)))
+    if positions != expected_positions:
+        # Non-consecutive positions - possibly corrupted
+        return None
+    
+    # Extract bytes
+    byte_sequence = bytes([byte_val for _, byte_val, _ in byte_position_pairs])
+    
+    return byte_sequence
+
+
 if __name__ == "__main__":
     # Quick test
     encoder = KroneckerEncoderStaged(
@@ -414,3 +486,10 @@ if __name__ == "__main__":
         print(f"  Kronecker shape: {stages['stage2_kronecker'].shape}")
         print(f"  Non-zero entries: {np.count_nonzero(stages['stage2_kronecker'])}")
         print(f"  Norm: {np.linalg.norm(stages['stage2_kronecker']):.4f}")
+        
+        # Test decoder
+        decoded_bytes = algebraic_decode_raw_kronecker(stages['stage2_kronecker'])
+        if decoded_bytes:
+            decoded_token = decoded_bytes.decode('utf-8', errors='replace')
+            match = "✓" if decoded_token == token else "✗"
+            print(f"  Decoded: '{decoded_token}' {match}")
