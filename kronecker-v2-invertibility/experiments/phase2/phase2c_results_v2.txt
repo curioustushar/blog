@@ -1,0 +1,40 @@
+================================================================================
+PHASE 2C FINAL DEBUGGING v2
+================================================================================
+
+Key fix: Using LEARNABLE TASK (deterministic mapping)
+Objective: Clean binary answer - does structured byte prediction work?
+
+================================================================================
+TEST A: Codec Verification
+================================================================================
+  [104, 101, 108, 108, 111]      → PASS
+  [97]                           → PASS
+  [0, 255, 128, 64]              → PASS
+  [0, 1, 2, 3, 4, 5, 6, 7]       → PASS
+
+✅ Codec verified
+
+================================================================================
+TEST B: Fake Logits (verify extraction)
+================================================================================
+  Target:    [104 101 108 108 111  33  42  99]
+  Predicted: [104 101 108 108 111  33  42  99]
+  Match: True
+
+✅ Extraction verified
+
+================================================================================
+TEST C: Single Example Overfit
+================================================================================
+Target: [ 0 13 26 39 52 65 78 91]
+Traceback (most recent call last):
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug_v2.py", line 428, in <module>
+    if not test_c_single_example():
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug_v2.py", line 264, in test_c_single_example
+    loss = model.train_step(X, y, lr=0.05)
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug_v2.py", line 179, in train_step
+    h1 = np.maximum(0, x @ self.W1 + self.b1)
+                       ~~^~~~~~~~~
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 100 is different from 1)

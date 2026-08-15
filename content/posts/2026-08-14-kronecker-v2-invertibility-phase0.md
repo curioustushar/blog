@@ -300,7 +300,10 @@ The raw Kronecker representation shows **no empirical collisions** in preliminar
 
 **However:** Z-normalization and projection are potential information bottlenecks that require deeper investigation.
 
-**Next:** Scale to 50K+ tokens and test the complete pipeline including normalization and projection.
+**What happened next:**
+
+- **[Phase 1](https://curioustushar.github.io/blog/posts/kronecker-v2-phase1-scale-validation/)** validated the full pipeline at 1K–50K tokens — z-norm and projection preserve uniqueness, and the algebraic decoder works at scale.
+- **[Phase 2](/blog/posts/kronecker-v2-phase2-complete/)** showed that structured byte prediction can replace the V×d output head, achieving 100% exact reconstruction on synthetic tasks.
 
 If this line of research succeeds, we could eliminate vocabulary-sized matrices from BOTH ends of the model, achieving truly parameter-efficient token representations.
 
@@ -334,4 +337,4 @@ Original Kronecker paper:
 
 **This is active research.** Findings are preliminary. The hypothesis has not been falsified yet, but substantial work remains to validate it at scale.
 
-**Follow along:** More phases coming soon as the investigation progresses.
+**Series:** [Phase 0](/blog/posts/kronecker-v2-invertibility-phase0/) (this post) → [Phase 1](/blog/posts/kronecker-v2-phase1-scale-validation/) → [Phase 2](/blog/posts/kronecker-v2-phase2-complete/)

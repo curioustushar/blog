@@ -1,0 +1,77 @@
+/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug.py:180: RuntimeWarning: overflow encountered in matmul
+  d_h1 = d_h2 @ self.W2.T
+/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug.py:182: RuntimeWarning: invalid value encountered in matmul
+  self.W1 -= lr * (x.T @ d_h1)
+================================================================================
+PHASE 2C FINAL DEBUGGING
+================================================================================
+
+Objective: Clean binary answer - does structured byte prediction work?
+Strategy: Run tests in order, stop at first failure
+
+================================================================================
+TEST A: Codec Verification
+================================================================================
+  [104, 101, 108, 108, 111]      → PASS
+  [97]                           → PASS
+  [0, 255, 128, 64]              → PASS
+  [0, 1, 2, 3, 4, 5, 6, 7]       → PASS
+
+✅ Codec verified
+
+================================================================================
+TEST B: Fake Logits (verify extraction)
+================================================================================
+  Target:    [104 101 108 108 111  33  42  99]
+  Predicted: [104 101 108 108 111  33  42  99]
+  Match: True
+
+✅ Extraction verified
+
+================================================================================
+TEST C: Single Example Overfit
+================================================================================
+Target: [104 101 108 108 111  33  42  99]
+  Epoch    0: loss=5.546947, byte=100.0%, exact=True
+  Epoch  300: loss=0.000235, byte=100.0%, exact=True
+
+✅ Perfect at epoch 300
+
+================================================================================
+TEST D: 100-Example Memorization
+================================================================================
+  Epoch    0: loss=5.5479, byte=  0.8%, exact=  0.0%
+  Epoch  200: loss=nan, byte=  0.5%, exact=  0.0%
+  Epoch  400: loss=nan, byte=  0.5%, exact=  0.0%
+  Epoch  600: loss=nan, byte=  0.5%, exact=  0.0%
+  Epoch  800: loss=nan, byte=  0.5%, exact=  0.0%
+
+⚠️  Memorization weak (0.0%)
+
+⚠️  Memorization weak, but continuing...
+
+================================================================================
+TEST E: Fixed-Length Synthetic (L=8)
+================================================================================
+
+Training 5000 examples...
+  Epoch   0: byte=  0.4%, exact=  0.0%
+  Epoch  40: byte=  0.4%, exact=  0.0%
+  Epoch  80: byte=  0.4%, exact=  0.0%
+  Epoch 120: byte=  0.5%, exact=  0.0%
+  Epoch 160: byte=  0.5%, exact=  0.0%
+
+Final Test:
+  Byte accuracy: 0.57%
+  Exact sequence: 0.00%
+  Time: 188.6s
+Traceback (most recent call last):
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug.py", line 372, in <module>
+    exact_acc, byte_acc = test_e_fixed_length_synthetic()
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug.py", line 325, in test_e_fixed_length_synthetic
+    kappa = construct_kappa(pred_bytes)
+  File "/Users/tushargupta/projects/curioustushar.github.io/kronecker-v2-invertibility/experiments/phase2/phase2c_final_debug.py", line 23, in construct_kappa
+    kappa[idx] = 1.0
+    ~~~~~^^^^^
+IndexError: index 8208 is out of bounds for axis 0 with size 8192

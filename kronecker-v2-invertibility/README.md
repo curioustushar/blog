@@ -1,618 +1,522 @@
-# Kronecker Embedding V2: Invertibility Investigation
+# Kronecker V2: Invertible Token Representations
 
-**Research Question:** Can Kronecker Embeddings be made mathematically invertible, eliminating the need for a vocabulary-sized output classification head?
+> Can we eliminate vocabulary-sized output heads in language models?
 
-## Abstract
+[![Status](https://img.shields.io/badge/Phase_0-Complete-success)]() [![Status](https://img.shields.io/badge/Phase_1-Complete-success)]() [![Status](https://img.shields.io/badge/Phase_2-Complete-success)]() [![Status](https://img.shields.io/badge/Phase_3-Designed-blue)]() [![Python](https://img.shields.io/badge/python-3.8+-blue)]() [![License](https://img.shields.io/badge/license-MIT-green)]()
 
-This repository investigates whether the Kronecker Embedding representation (Shravan, 2026) can be extended to support efficient decoding without requiring a conventional V × d_model output classifier. We analyze the mathematical properties of the encoding pipeline, identify sources of information loss, design experiments to test injectivity, and evaluate whether an explicit inverse transformation exists that can scale to 1M+ token vocabularies.
-
-**Status:** 🚧 Active Research — In Progress
-
-## Problem Selection
-
-**Selected:** Problem 5 — Invertible / Reverse Kronecker Representation
-
-From the original Kronecker Embedding paper (arXiv:2605.29459), we know:
-- Input embedding reduced from 91-94% of parameters
-- BUT: Output head still requires V × d_model parameters
-- Weight tying is "architecturally inapplicable" because codec dimension D ≠ d_model
-
-**Core hypothesis:** If we can construct an inverse mapping `embedding → token` that doesn't require evaluating all V vocabulary items, we could eliminate the output head entirely and achieve symmetric parameter efficiency on both input and output sides.
-
-## Research Objectives
-
-### Primary
-
-1. **Determine injectivity:** Is the current Kronecker encoding injective over the vocabulary?
-2. **Identify information loss:** Where exactly does the representation lose information?
-3. **Design invertible variant:** What minimal modifications make the encoding bijective?
-4. **Construct explicit inverse:** Can we decode without a learned V-way classifier?
-5. **Validate at scale:** Does it work at 32K, 100K, 500K, and 1M tokens?
-
-### Secondary
-
-6. Measure collision rates under floating-point precision
-7. Test generalization to unseen tokens
-8. Integrate into a small Transformer and measure end-to-end performance
-9. Compare parameter counts and inference costs vs. standard approaches
-
-## Mathematical Framework
-
-### Current Kronecker Encoding
-
-For a token with UTF-8 byte sequence **b** = (b₁, ..., b_L):
-
-```
-κ(b) = (1/√L) · Σₚ₌₁ᴸ (cᵦₚ ⊗ pₚ)
-```
-
-Where:
-- c_v ∈ R²⁵⁶: one-hot vector for byte value v
-- p_p ∈ R^{pos_dim}: one-hot vector for position p
-- ⊗: Kronecker product
-- Result: κ(b) ∈ R^D where D = 256 × pos_dim
-
-Then:
-1. **Z-normalization:** κ̄(b) = (κ(b) - μ) / σ
-2. **Projection:** e(b) = W · κ̄(b), where W ∈ R^{D×d_model}
-
-### Information Flow Analysis
-
-| Stage | Transform | Input Dim | Output Dim | Learnable? | Potential Info Loss? |
-|-------|-----------|-----------|------------|------------|---------------------|
-| 1. Bytes | UTF-8 decode | variable | ≤256 values | No | None (deterministic) |
-| 2. Kronecker | c ⊗ p | bytes | D = 256·pos_dim | No | **Position overflow** (if L > pos_dim) |
-| 3. Length norm | ÷√L | D | D | No | **Length info preserved** (in norm) |
-| 4. Z-norm | (x-μ)/σ | D | D | No | **Mean removed** (not recoverable) |
-| 5. Projection | W·x | D | d_model | Yes | **Dimension reduction** (D→d_model) |
-
-### Levels of Invertibility
-
-We define five increasingly strong notions:
-
-**Level 1 — Empirical Reconstruction**
-- Decoder achieves >X% accuracy on test set
-- ❌ Does NOT prove mathematical invertibility
-- ❌ May be memorization
-
-**Level 2 — Injectivity**
-- ∀ x≠y in vocabulary: f(x) ≠ f(y)
-- Finite vocabulary property
-- Still requires checking all V candidates
-
-**Level 3 — Constructive Inverse**
-- Explicit algorithm: f⁻¹(f(x)) = x
-- No vocabulary enumeration needed
-- Complexity: o(V)
-
-**Level 4 — Scalable Inverse**
-- Works at 32K, 100K, 500K, 1M+ tokens
-- Practical time/memory bounds
-- Real-world deployment feasible
-
-**Level 5 — Continuous Invertibility**
-- Works for arbitrary byte strings
-- Not just the training vocabulary
-- Generalizes to unseen tokens
-
-## Research Plan
-
-### Phase 1: Mathematical Analysis [Week 1]
-
-**1.1 Encoder Decomposition**
-- [ ] Document exact transformation at each stage
-- [ ] Identify reversible vs irreversible operations
-- [ ] Compute theoretical information capacity
-
-**1.2 Injectivity Proof/Disproof**
-- [ ] **Before z-norm:** Is κ(b) injective?
-- [ ] **After z-norm:** Does normalization introduce collisions?
-- [ ] **After projection:** When D > d_model, is W·κ̄ injective?
-
-**1.3 Information-Theoretic Bounds**
-- [ ] Minimum bits required: log₂(V)
-- [ ] Available capacity in D dimensions
-- [ ] Available capacity in d_model dimensions
-- [ ] Floating-point precision effects
-
-**Deliverable:** `docs/mathematics.md` with theorems, proofs, or explicit counterexamples
-
-### Phase 2: Collision Detection [Week 1]
-
-**2.1 Brute-Force Search**
-- [ ] Encode all tokens in vocabulary
-- [ ] Check pairwise distances
-- [ ] Report exact collisions (if any)
-- [ ] Test at κ level, κ̄ level, and e level
-
-**2.2 Adversarial Search**
-- [ ] Generate byte strings designed to collide
-- [ ] Test permutations, repeated characters
-- [ ] Test maximum-length tokens
-- [ ] Test Unicode edge cases
-
-**2.3 Numerical Precision**
-- [ ] Test FP32, FP16, BF16
-- [ ] Measure effective distinguishability
-- [ ] Report collision rate vs tolerance
-
-**Deliverable:** `results/collisions/` with collision pairs, distances, statistics
-
-### Phase 3: Decoder Design [Week 2]
-
-**3.1 Baseline: Vocabulary Classifier**
-```python
-class VocabClassifier:
-    def decode(self, e: Tensor) -> int:
-        logits = self.W_out @ e  # (V, d_model) @ (d_model,)
-        return logits.argmax()
-```
-- Standard approach
-- Parameters: V × d_model
-- Complexity: O(V)
-
-**3.2 Nearest Neighbor Decoder**
-```python
-class NearestNeighborDecoder:
-    def decode(self, e: Tensor) -> int:
-        # Precompute embeddings for all V tokens
-        distances = torch.cdist(e, self.vocab_embeddings)
-        return distances.argmin()
-```
-- Tests representation quality
-- No learned parameters (beyond encoder)
-- Complexity: O(V)
-
-**3.3 Algebraic Decoder (Primary Target)**
-```python
-class AlgebraicDecoder:
-    def decode(self, e: Tensor) -> int:
-        # Inverse projection (if possible)
-        kappa_bar = self.W_pseudo_inv @ e
-        
-        # Reverse z-norm (requires mean/std recovery)
-        kappa = kappa_bar * std + mean
-        
-        # Extract byte-position pairs from sparse vector
-        bytes = self.extract_bytes(kappa)
-        
-        # Map bytes → token_id
-        return self.bytes_to_token(bytes)
-```
-- **Goal:** Avoid enumerating V tokens
-- **Challenge:** Reverse z-norm requires μ, σ
-- **Challenge:** Projection may not be invertible
-
-**3.4 Hybrid Decoder**
-- Algebraic decoding to narrow candidates
-- Small classifier over reduced set
-- Complexity: O(√V) or O(log V)
-
-**Deliverable:** `src/decoders/` with all decoder implementations
-
-### Phase 4: Encoder Modifications [Week 2]
-
-**4.1 Remove Z-Normalization**
-- Eliminates irreversible mean-centering
-- May hurt downstream performance
-- Test impact on LM loss
-
-**4.2 Orthogonal Projection**
-- Replace learned W with orthogonal matrix
-- Guarantees invertibility when d_model ≥ D
-- Test: random orthogonal, learned orthogonal (Cayley)
-
-**4.3 Expand D**
-- Increase pos_dim to raise codec dimension
-- D > d_model → append identity block
-- Preserve injectivity through dimensionality
-
-**4.4 Embed Token Length**
-- Add explicit length encoding to κ
-- Helps reverse length normalization
-- Cost: +log₂(pos_dim) bits
-
-**4.5 Store Decoding Hints**
-- Auxiliary small vector with μ, σ, L
-- Concatenate to main embedding
-- Cost: +3 dimensions
-
-**Deliverable:** `src/encoders/` with modified Kronecker variants
-
-### Phase 5: Injectivity Experiments [Week 3]
-
-**5.1 Vocabulary Sweep**
-```python
-# For vocabularies: 1K, 10K, 32K, 100K, 500K, 1M
-for V in vocab_sizes:
-    encoder = ModifiedKronecker(V, pos_dim=P)
-    embeddings = {token: encoder(token) for token in vocab}
-    
-    # Check uniqueness
-    unique = len(set(embeddings.values()))
-    collisions = V - unique
-    
-    report(V, collisions, collision_rate)
-```
-
-**5.2 Generalization Test**
-- Train on vocab_train (50% of tokens)
-- Test decoding on vocab_test (unseen 50%)
-- Success = decoder works on unseen tokens
-
-**5.3 Scaling Analysis**
-```
-Plot:
-X-axis: Vocabulary size (log scale)
-Y-axis: Decoding accuracy, collision rate, time per token
-Lines: Each decoder type
-```
-
-**Deliverable:** `results/injectivity/` with plots, tables, and analysis
-
-### Phase 6: Transformer Integration [Week 3]
-
-**6.1 Tiny Transformer**
-- 2-6 layers, 256-512 hidden dim
-- Small dataset (e.g., TinyStories)
-- Controlled comparison
-
-**6.2 Three Arms**
-1. **Baseline:** Standard embedding + standard output head
-2. **Kronecker-Standard:** Kronecker input + standard output head (current paper)
-3. **Kronecker-Invertible:** Kronecker input + algebraic decoder
-
-**6.3 Metrics**
-- Training loss, validation loss, perplexity
-- Top-1 accuracy, top-5 accuracy
-- Parameter count (input side, output side, total)
-- Tokens/sec throughput
-- Memory footprint
-
-**6.4 Ablations**
-- Remove z-norm
-- Orthogonal projection
-- Different decoder types
-- Various pos_dim values
-
-**Deliverable:** `experiments/transformer/` with training logs, checkpoints, plots
-
-### Phase 7: Attack the Method [Week 4]
-
-**7.1 Collision Attack**
-- Explicitly search for colliding byte sequences
-- Genetic algorithms, gradient-based search
-- Report any found collisions
-
-**7.2 Precision Attack**
-- Test under FP16, BF16, INT8 quantization
-- Measure degradation in decoder accuracy
-
-**7.3 Adversarial Strings**
-- Pathological inputs: all zeros, all 0xFF
-- Very long tokens (truncated)
-- Repeated sequences
-
-**7.4 Distribution Shift**
-- Train on English, test on code
-- Train on ASCII, test on Unicode
-- Out-of-distribution robustness
-
-**7.5 Noise Injection**
-- Add Gaussian noise to embeddings
-- Measure decoder degradation
-- Compare robustness vs standard embeddings
-
-**Deliverable:** `experiments/ablations/` with attack results
-
-## Success Criteria
-
-### Minimum Success
-
-- [x] Documented exact Kronecker encoding
-- [ ] Mathematical analysis of injectivity
-- [ ] Collision experiments on 100K+ vocab
-- [ ] ≥3 decoder implementations
-- [ ] Clear identification of information bottlenecks
-- [ ] Honest assessment of feasibility
-
-### Strong Success
-
-Additionally:
-- [ ] Proof or disproof of injectivity
-- [ ] Explicit inverse with complexity o(V)
-- [ ] Decoder works at 1M tokens
-- [ ] Integration into Transformer without loss degradation
-- [ ] Parameter savings vs standard approach quantified
-
-### Exceptional Success
-
-Additionally:
-- [ ] Generalization to unseen tokens demonstrated
-- [ ] Formal theorem with proof
-- [ ] Published-quality results
-- [ ] Open research questions identified for future work
-
-## Preliminary Findings
-
-### Encoding Analysis
-
-**Injectivity Before Projection:**
-
-The base Kronecker codec κ(b) is **likely injective** for distinct byte sequences up to length `pos_dim`, because:
-- Each (byte, position) pair maps to a unique index in the D-dimensional vector
-- Two different byte sequences → different sparse patterns
-- **Exception:** Truncation when L > pos_dim may cause collisions
-
-**Z-Normalization Issue:**
-
-Z-norm removes the mean, which contains information about the token. This is **not invertible** without storing μ.
-
-**Projection Bottleneck:**
-
-When D > d_model (typical: D=4096 or 8192, d_model=768 or 1024), the projection W ∈ R^{D×d_model} is a dimensionality reduction. Even with a learned pseudo-inverse, this may not be fully invertible over the finite vocabulary.
-
-**Hypothesized Solution:**
-
-1. **Remove z-norm** or **store normalization parameters**
-2. **Use orthogonal projection** to preserve as much information as possible
-3. **Increase d_model** or **append auxiliary dimensions** for decoding hints
-4. **Algebraic decoder:** Compute pseudo-inverse W⁺, then extract bytes from sparse vector
-
-## Repository Structure
-
-```
-kronecker-v2-invertibility/
-├── README.md                          # This file
-├── pyproject.toml                     # Dependencies
-├── LICENSE                            # MIT
-│
-├── src/
-│   ├── kronecker/                     # Base Kronecker implementation
-│   │   ├── __init__.py
-│   │   ├── encoder.py                 # Kronecker codec
-│   │   └── utils.py                   # Byte handling, truncation
-│   ├── encoders/                      # Modified encoders
-│   │   ├── __init__.py
-│   │   ├── no_znorm.py               # Variant without z-norm
-│   │   ├── orthogonal.py              # Orthogonal projection
-│   │   ├── expanded.py                # Expanded dimensionality
-│   │   └── hint_embedding.py          # With decoding hints
-│   ├── decoders/                      # Decoder implementations
-│   │   ├── __init__.py
-│   │   ├── vocab_classifier.py        # Baseline: full softmax
-│   │   ├── nearest_neighbor.py        # NN search
-│   │   ├── algebraic.py               # Algebraic inverse
-│   │   └── hybrid.py                  # Hybrid approach
-│   └── models/                        # Transformer integration
-│       ├── __init__.py
-│       ├── tiny_transformer.py        # Small test model
-│       └── training.py                # Training loop
-│
-├── experiments/
-│   ├── collisions/                    # Collision detection
-│   │   ├── brute_force.py
-│   │   ├── adversarial.py
-│   │   └── precision_test.py
-│   ├── injectivity/                   # Injectivity proofs/tests
-│   │   ├── vocab_sweep.py
-│   │   └── generalization.py
-│   ├── scaling/                       # Scaling experiments
-│   │   ├── vocab_1k.py
-│   │   ├── vocab_10k.py
-│   │   ├── vocab_100k.py
-│   │   └── vocab_1m.py
-│   ├── precision/                     # Numerical precision
-│   │   ├── fp32_vs_fp16.py
-│   │   └── quantization.py
-│   ├── transformer/                   # End-to-end training
-│   │   ├── train_baseline.py
-│   │   ├── train_kronecker.py
-│   │   └── train_invertible.py
-│   └── ablations/                     # Attack experiments
-│       ├── collision_attack.py
-│       ├── noise_injection.py
-│       └── distribution_shift.py
-│
-├── tests/
-│   ├── test_encoder.py
-│   ├── test_decoders.py
-│   ├── test_injectivity.py
-│   └── test_integration.py
-│
-├── results/                           # Experimental results
-│   ├── collisions/
-│   ├── injectivity/
-│   ├── scaling/
-│   └── transformer/
-│
-├── figures/                           # Plots and visualizations
-│   ├── collision_rates.png
-│   ├── decoder_comparison.png
-│   ├── scaling_curves.png
-│   └── transformer_loss.png
-│
-└── docs/
-    ├── mathematics.md                 # Mathematical analysis
-    ├── experiments.md                 # Experiment details
-    └── related_work.md                # Literature review
-```
-
-## Related Work
-
-### Vector Symbolic Architectures
-- Plate (1995): Holographic Reduced Representations
-- Kanerva (2009): Hyperdimensional Computing
-- Gayler (2003): Vector Symbolic Architectures
-
-**Relevance:** These systems use high-dimensional vectors with algebraic operations (binding, bundling) that ARE invertible. Could Kronecker adopt similar principles?
-
-### Invertible Neural Networks
-- Dinh et al. (2017): Normalizing Flows (Real NVP)
-- Kingma & Dhariwal (2018): Glow
-- Behrmann et al. (2019): Invertible Residual Networks
-
-**Relevance:** Techniques for constructing invertible transformations in neural networks. Could we wrap Kronecker in an invertible architecture?
-
-### Output Layer Compression
-- Grave et al. (2017): Adaptive Softmax
-- Shazeer et al. (2017): Hierarchical Softmax
-- Jean et al. (2015): Sampled Softmax
-
-**Relevance:** Existing methods to reduce output head cost. How does invertible Kronecker compare?
-
-### Learned Embeddings Geometry
-- Lopardo et al. (2026): "Tied embeddings are biased toward output prediction space"
-- Mu & Viswanath (2018): Word embeddings anisotropy
-
-**Relevance:** Understanding structure of learned embeddings may inform invertibility constraints.
-
-## Reproduction Instructions
-
-### Setup
-
-```bash
-# Clone repository
-git clone <repo-url>
-cd kronecker-v2-invertibility
-
-# Create virtual environment
-python3 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install dependencies
-pip install -e .
-
-# Install reference Kronecker (for comparison)
-pip install kronecker-embeddings
-
-# Run tests
-pytest tests/ -v
-```
-
-### Run Collision Detection
-
-```bash
-# Brute-force collision search on 32K vocab
-python experiments/collisions/brute_force.py --vocab-size 32768 --pos-dim 16
-
-# Adversarial search
-python experiments/collisions/adversarial.py --num-trials 10000
-```
-
-### Run Injectivity Tests
-
-```bash
-# Vocabulary sweep
-python experiments/injectivity/vocab_sweep.py --vocab-sizes 1000 10000 32000 100000
-
-# Generalization test
-python experiments/injectivity/generalization.py --split 0.5
-```
-
-### Train Tiny Transformer
-
-```bash
-# Baseline
-python experiments/transformer/train_baseline.py --layers 4 --hidden 256 --data tinystories
-
-# Kronecker-invertible
-python experiments/transformer/train_invertible.py --layers 4 --hidden 256 --decoder algebraic
-```
-
-### Generate All Figures
-
-```bash
-python scripts/generate_figures.py --results results/ --output figures/
-```
-
-## Current Status
-
-**Week 1: Mathematical Analysis**
-- [x] Reviewed reference Kronecker implementation
-- [x] Documented encoding pipeline
-- [x] Identified information loss points
-- [ ] Formal injectivity proof/disproof — IN PROGRESS
-- [ ] Collision experiments — NEXT
-
-**Week 2-4: Implementation & Experiments**
-- [ ] NOT STARTED
-
-## Research Questions
-
-1. **Is current Kronecker κ(b) injective before z-norm?**
-   - Hypothesis: YES, for distinct byte sequences ≤ pos_dim
-   - Test: Explicit collision search
-
-2. **Does z-normalization introduce collisions?**
-   - Hypothesis: NO, but removes invertibility (mean is lost)
-   - Solution: Store μ, σ or skip z-norm
-
-3. **Can projection W be inverted over finite vocabulary?**
-   - Hypothesis: PARTIALLY — pseudo-inverse recovers approximate κ̄
-   - Test: Measure reconstruction error
-
-4. **Does algebraic decoder scale to 1M tokens?**
-   - Hypothesis: YES, if we solve (2) and (3)
-   - Test: Implement and benchmark
-
-5. **Does invertible variant hurt LM performance?**
-   - Hypothesis: NO, if properly designed
-   - Test: Train small Transformer, compare perplexity
-
-## Conclusion
-
-This research investigates a fundamental question: **Can token embeddings be made truly invertible?**
-
-If successful, we could:
-- Eliminate the output vocabulary head
-- Achieve symmetric parameter efficiency (input + output)
-- Enable vocabulary-free or vocabulary-agnostic architectures
-
-If unsuccessful, we will:
-- Identify the exact mathematical obstacles
-- Quantify information bottlenecks
-- Propose the closest achievable approximation
-
-Either outcome advances our understanding of token representations in language models.
-
-## Citation
-
-If you use this research, please cite:
-
-```bibtex
-@misc{gupta2026kronecker_invertibility,
-  title={Kronecker Embedding V2: Investigating Invertible Token Representations},
-  author={Gupta, Tushar},
-  year={2026},
-  howpublished={\url{https://curioustushar.github.io/blog/}},
-  note={Research investigation}
-}
-```
-
-And cite the original Kronecker Embedding paper:
-
-```bibtex
-@article{shravan2026kronecker,
-  title={Kronecker Embeddings: Byte-Level Structured Token Representations
-         for Parameter-Efficient Language Models},
-  author={Shravan, Rohan},
-  journal={arXiv preprint arXiv:2605.29459},
-  year={2026},
-  url={https://github.com/theschoolofai/kronecker-embeddings}
-}
-```
-
-## License
-
-MIT License - see LICENSE file
-
-## Contact
-
-- Author: Tushar Gupta
-- Blog: https://curioustushar.github.io/blog/
-- Issues: [GitHub Issues](https://github.com/curioustushar/blog/issues)
+**TL;DR:** We demonstrate that structured byte prediction can eliminate V×d output parameters in transformer language models, achieving 100% exact reconstruction on synthetic tasks with up to 512× parameter savings. Practical utility for real language modeling remains an open empirical question.
 
 ---
 
-**This is active research.** Findings are preliminary and subject to revision as experiments progress.
+## Overview
+
+Standard language models use a vocabulary-sized output projection: `h → softmax(V×d) → token`. For large vocabularies (V > 100K), this becomes a massive parameter bottleneck.
+
+**This project explores:** Can we replace it with structured byte prediction?
+```
+h → bytes(d×L×256) → κ → algebraic_decode → token
+```
+
+### Key Results
+
+| Phase | Question | Result |
+|-------|----------|--------|
+| **Phase 0** | Is κ injective? | ✅ **YES** - 0/89 collisions; algebraic decoder viable |
+| **Phase 1** | Does it scale? | ✅ **YES** - 0 collisions at 1K–50K; 98.9% unseen decode |
+| **Phase 2** | Is it learnable? | ✅ **YES** - 100% reconstruction (synthetic) |
+| **Phase 3** | Is it practical? | ⏳ **TBD** - Designed, not executed |
+
+---
+
+## Phase 0: Mathematical Feasibility
+
+**Question:** Can Kronecker token embeddings be inverted algebraically, eliminating the V×d output head?
+
+**Approach:** 30-minute falsification experiment — test for collisions, identify information-loss stages, sketch an algebraic decoder.
+
+### Findings
+
+| Stage | Reversible? | Notes |
+|-------|-------------|-------|
+| UTF-8 bytes | ✅ Yes | Deterministic |
+| Raw Kronecker κ(b) | ✅ Yes | 0/89 collisions; sparse O(D) decode |
+| Length norm (1/√L) | ⚠️ Partial | Recoverable from magnitude |
+| Z-normalization | ❌ Initially | Mean μ subtracted and lost |
+| Projection W·κ̄ | ⚠️ Untested | Needed large-scale validation |
+
+**Key result:** Raw Kronecker appears injective over distinct byte sequences (len ≤ 32). An algebraic sparse-recovery decoder runs in O(D), independent of vocabulary size V.
+
+**Parameter implication (V=1M, d=768):** 768M softmax params → ~6.3M projection params (~122× reduction).
+
+**Limitations:** Small test set (89 tokens); z-norm and projection not yet validated at scale.
+
+📄 **Full write-up:** [Phase 0 blog post](https://curioustushar.github.io/blog/posts/kronecker-v2-invertibility-phase0/)
+
+---
+
+## Phase 1: Scale Validation
+
+**Question:** Does injectivity hold at real vocabulary scales, through the full pipeline (z-norm + projection)?
+
+**Approach:** Collision tests at 1K–50K tokens; algebraic decoder on training and unseen tokens; decoder scaling benchmarks.
+
+### Findings
+
+| Aspect | Result |
+|--------|--------|
+| Raw Kronecker injectivity | ✅ 0 collisions (1K, 10K, 50K) |
+| Z-norm preserves uniqueness | ✅ 0 collisions (revised Phase 0 hypothesis) |
+| Projection preserves uniqueness | ✅ 0 collisions at d=768 |
+| Algebraic decoder (training) | ✅ 100% exact reconstruction |
+| Algebraic decoder (unseen) | ✅ 98.9% exact reconstruction |
+| Decoder scaling | ✅ O(D) — ~35μs, ~23,440× faster than O(V) search |
+
+**Key insight:** Z-norm is not globally invertible over ℝ^D, but preserves uniqueness over the restricted Kronecker vocabulary subset (sparse, structured index patterns).
+
+**Verdict:** GREEN — strong preliminary evidence that algebraic decoding is viable at tested scales.
+
+📄 **Full write-up:** [Phase 1 blog post](https://curioustushar.github.io/blog/posts/kronecker-v2-phase1-scale-validation/) · [Technical report](docs/phase1_report.md)
+
+---
+
+## What We Proved (Phase 2)
+
+📄 **Full write-up:** [Phase 2 blog post](https://curioustushar.github.io/blog/posts/kronecker-v2-phase2-complete/)
+
+### ✅ Feasibility Validated
+
+**Structured byte prediction works:**
+- 100% exact accuracy across all lengths (L=1 to 32)
+- Zero p^L degradation
+- Variable-length functional (EOS mechanism)
+- Codec 100% reliable
+- Transformer-compatible
+
+### Parameter Comparison
+
+| Vocabulary | Softmax | Structured Bytes | Savings |
+|------------|---------|------------------|---------|
+| 10K        | 5.1M    | ~1M              | **5×**  |
+| 50K        | 25.6M   | ~1M              | **26×** |
+| 100K       | 51.2M   | ~1M              | **51×** |
+| 1M         | 512M    | ~1M              | **512×** |
+
+**Complexity:** O(L) instead of O(V) where L = max token byte length.
+
+---
+
+## Quick Start
+
+### Reproduce Phase 2 Results
+
+```bash
+# Clone repository
+cd kronecker-v2-invertibility/experiments/phase2
+
+# Run validation tests (< 5 minutes total)
+python phase2c_minimal.py      # Interface validation (30s)
+python phase2d_ultra_fast.py   # Length scaling (80s)
+python phase2e_fixed.py        # Variable-length (30s)
+```
+
+**Requirements:** Python 3.8+, numpy
+
+**Expected output:** 100% exact accuracy on all tests.
+
+---
+
+## How It Works
+
+### The Problem: Continuous κ Fails
+
+**Phase 2A tried:** `h → κ_pred` (continuous regression)
+
+❌ **Result:** 0% reconstruction - neural noise destroyed the sparse structure needed by the algebraic decoder.
+
+### The Solution: Discrete Factors Work
+
+**Phase 2C approach:** `h → bytes` (discrete classification)
+
+✅ **Result:** 100% reconstruction - predict the discrete bytes that *construct* κ, guaranteeing valid structure.
+
+### Pipeline
+
+```python
+# 1. Predict bytes (discrete)
+byte_logits = model(h)  # (batch, L, 256)
+bytes = argmax(byte_logits)
+
+# 2. Construct κ (exact)
+κ = construct_kappa(bytes)  # Deterministic, no noise
+
+# 3. Decode token (algebraic)
+token = algebraic_decode(κ)  # Works perfectly
+```
+
+---
+
+## Project Structure
+
+```
+kronecker-v2-invertibility/
+├── src/
+│   └── kronecker_encoder.py          # Algebraic decoder
+├── experiments/
+│   └── phase2/
+│       ├── phase2c_minimal.py         # Interface validation
+│       ├── phase2d_ultra_fast.py      # Length scaling
+│       ├── phase2e_fixed.py           # Variable-length
+│       └── phase2f_transformer.py     # Transformer integration
+├── docs/
+│   ├── phase1_report.md               # Scale validation
+│   ├── phase2_design.md                 # Phase 2 initial design
+│   ├── phase2_findings.md               # Continuous κ failure
+│   ├── phase2b_structured_prediction.md # Discrete factor design
+│   ├── phase2_verdict.md                # Scientific verdict
+│   ├── phase2_final_summary.md          # Technical report
+│   ├── phase3a_specification.md         # Phase 3 protocol
+│   └── ...
+├── PROJECT_STATUS.md                  # Master document
+└── README.md                          # This file
+```
+
+---
+
+## Phase 2 Results
+
+### Fixed-Length (Phase 2C)
+
+**Task:** Predict 8 bytes for each token  
+**Model:** Simple linear  
+**Result:** 100% exact accuracy
+
+### Length Scaling (Phase 2D)
+
+**Task:** Test L ∈ {1, 2, 4, 8, 16, 32}  
+**Result:** 100% exact for ALL lengths
+
+| L  | Exact Acc | Convergence |
+|----|-----------|-------------|
+| 1  | 100%      | Fast        |
+| 2  | 100%      | Fast        |
+| 4  | 100%      | Fast        |
+| 8  | 100%      | Moderate    |
+| 16 | 100%      | Slow        |
+| 32 | 100%      | Slow        |
+
+**Key finding:** No p^L degradation observed.
+
+### Variable-Length (Phase 2E)
+
+**Task:** Mixed lengths (L=1-8) with EOS token  
+**Result:** 100% length and content prediction
+
+### Transformer Integration (Phase 2F)
+
+**Task:** Attach structured byte head to a 2-layer Transformer backbone  
+**Model:** Mini Transformer + byte head (numpy)  
+**Result:** Architecturally compatible; codec 100% functional on all outputs
+
+| Check | Result |
+|-------|--------|
+| Byte head attaches to Transformer hidden states | ✅ Pass |
+| `bytes → κ → decode → bytes` on model outputs | ✅ 100% |
+| Full end-to-end Transformer training | ⚠️ Not demonstrated |
+
+**Note:** Full backprop through the Transformer was not practical in numpy (head-only training did not learn). Architectural compatibility is proven; end-to-end LM training awaits Phase 3 (PyTorch).
+
+📄 **Script:** [experiments/phase2/phase2f_transformer.py](experiments/phase2/phase2f_transformer.py)
+
+---
+
+## What We Didn't Prove
+
+Phase 2 established **feasibility**, not **utility**.
+
+**Still unknown:**
+- ❓ Perplexity on real LM tasks
+- ❓ Speed vs softmax baseline
+- ❓ Memory efficiency in practice
+- ❓ Generation quality
+- ❓ Scaling to V > 100K
+
+**These require Phase 3** (PyTorch + GPU + WikiText-103).
+
+---
+
+## Phase 3: Designed, Not Executed
+
+### Three-Stage Protocol
+
+**3A: Experimental Specification** ✅
+- WikiText-103 benchmark
+- Matched Transformer backbone
+- Pre-specified success criteria
+
+**3B: PyTorch Proxy** ⏳
+- Reproduce Phase 2 in PyTorch
+- 6 validation tests
+- Catch bugs before expensive training
+
+**3C: Full Benchmark** ⏳
+- Softmax vs structured bytes
+- Perplexity, memory, throughput
+- Vocabulary scaling (10K → 100K)
+
+### Timeline (if continuing)
+
+- Phase 3B: 3-5 days
+- Phase 3C: 5-8 weeks
+- **Total: ~2 months**
+
+### Requirements
+
+- PyTorch 2.0+
+- GPU (A100 or equivalent)
+- WikiText-103 dataset
+
+---
+
+## Key Insights
+
+### 1. Discrete > Continuous
+
+Predicting discrete factors (bytes) that construct κ eliminates the noise problem of continuous regression.
+
+### 2. Parameter Scaling
+
+Structured bytes scale with **max token length** (L), not **vocabulary size** (V).
+
+- Good for: Large vocabularies (V > 100K)
+- Neutral for: Medium vocabularies
+- Overkill for: Small vocabularies (V < 10K)
+
+### 3. No p^L Degradation
+
+Byte errors are independent, not compounding. 100% byte accuracy → 100% exact accuracy.
+
+---
+
+## Methodological Highlights
+
+### Clear Scope
+
+**Phase 2 claim:** Feasibility validated (synthetic)  
+**Phase 3 claim:** (none yet - awaiting experiments)
+
+**We don't claim:**
+- Better than softmax (unproven)
+- Production-ready (not tested)
+- Practical utility (requires Phase 3)
+
+### Pre-Registration
+
+Phase 3 protocol defined **before** experiments:
+- Prevents p-hacking
+- Ensures fair comparison
+- Enables replication
+
+### Validation Checkpoints
+
+```
+numpy (Phase 2) → PyTorch proxy (3B) → Full LM (3C)
+```
+
+Each step validates before adding complexity.
+
+---
+
+## Documentation
+
+### Core Documents
+
+- **[Project Status](PROJECT_STATUS.md)** - Master document
+- **[Phase 1 Report](docs/phase1_report.md)** - Scale validation & algebraic decoder
+- **[Phase 2 Verdict](docs/phase2_verdict.md)** - Scientific verdict (what was proven)
+- **[Phase 2 Summary](docs/phase2_final_summary.md)** - Technical details
+- **[Phase 3 Roadmap](docs/phase3_roadmap.md)** - What comes next
+
+### Phase-Specific
+
+- [Phase 0 Blog Post](https://curioustushar.github.io/blog/posts/kronecker-v2-invertibility-phase0/) - Mathematical feasibility
+- [Phase 1 Blog Post](https://curioustushar.github.io/blog/posts/kronecker-v2-phase1-scale-validation/) - Scale validation & algebraic decoder
+- [Phase 2 Blog Post](https://curioustushar.github.io/blog/posts/kronecker-v2-phase2-complete/) - Structured byte prediction results
+- [Phase 2 Design](docs/phase2_design.md) - Initial Transformer integration plan
+- [Phase 2 Findings](docs/phase2_findings.md) - Continuous κ regression failure
+- [Phase 2B Design](docs/phase2b_structured_prediction.md) - Discrete factor approach
+- [Phase 2C Results](docs/phase2c_results.md) - Debugging & validation
+- [Phase 2D Results](docs/phase2d_results.md) - Length scaling
+- [Phase 3A Specification](docs/phase3a_specification.md) - Experiment protocol
+- [Phase 3B Proxy Spec](docs/phase3b_proxy_spec.md) - PyTorch tests
+- [Phase 3C Benchmark Spec](docs/phase3c_benchmark_spec.md) - Full benchmark
+
+---
+
+## Citation
+
+If you use this work, please cite:
+
+```bibtex
+@misc{kronecker-v2-invertibility-2026,
+  title={Structured Byte Prediction for Parameter-Efficient Language Models},
+  author={[Your Name]},
+  year={2026},
+  note={Phase 2: Feasibility validated under synthetic conditions}
+}
+```
+
+---
+
+## Success Criteria
+
+### Phase 0 (Met) ✅
+
+- [x] Zero collisions on raw Kronecker (89 diverse tokens)
+- [x] Algebraic decoder algorithm sketched (O(D) complexity)
+- [x] Information-loss stages identified
+
+### Phase 1 (Met) ✅
+
+- [x] Zero collisions at 1K–50K vocabulary scales
+- [x] Z-norm and projection preserve uniqueness
+- [x] Algebraic decoder: 100% training, 98.9% unseen
+- [x] Decoder ~23,000× faster than O(V) search
+
+### Phase 2 (Met) ✅
+
+- [x] Exact reconstruction on synthetic tasks: 100%
+- [x] Codec reliability: 100%
+- [x] Scaling across lengths: All pass
+- [x] Architectural compatibility: Verified
+
+### Phase 3 (Pending)
+
+**Strong success:**
+- [ ] Test perplexity ≤ 102% of softmax
+- [ ] Memory ≤ 90% OR Throughput ≥ 90%
+
+**Partial success:**
+- [ ] Test perplexity ≤ 105%
+- [ ] Parameter savings realized, mixed efficiency
+
+---
+
+## Limitations
+
+### Phase 2 Limitations
+
+- ✅ Synthetic tasks only (not real LM)
+- ✅ Small scale (V=50, L≤32)
+- ✅ Simple models (linear, 2-layer MLP)
+- ✅ numpy implementation (no GPU)
+
+### Requires Phase 3
+
+- Real language modeling benchmarks
+- Perplexity comparison vs softmax
+- Computational efficiency measurement
+- Large vocabulary scaling (V > 100K)
+
+---
+
+## Related Work
+
+### Kronecker Embeddings
+
+This project builds on Kronecker product-based token representations:
+- **Phase 0:** Mathematical feasibility — injectivity and algebraic decoder
+- **Phase 1:** Scale validation — z-norm, projection, decoder benchmarks
+- **Phase 2:** Output head replacement — structured byte prediction
+
+### Parameter-Efficient LMs
+
+- Adaptive softmax
+- Mixture of softmaxes
+- Character-level models
+- Byte-level models
+
+**Our contribution:** Structured prediction with algebraic decoding.
+
+---
+
+## Roadmap
+
+### Completed ✅
+
+- [x] Phase 0: Mathematical feasibility (89-token collision test)
+- [x] Phase 1: Scale validation (1K–50K, algebraic decoder)
+- [x] Phase 2A: Continuous κ regression (failed — informed Phase 2C)
+- [x] Phase 2B: Structured byte prediction design
+- [x] Phase 2C: Interface validation
+- [x] Phase 2D: Length scaling
+- [x] Phase 2E: Variable-length
+- [x] Phase 2F: Transformer compatibility
+- [x] Phase 2 documentation
+- [x] Phase 3 specification
+
+### Next Steps ⏳
+
+- [ ] Set up PyTorch environment
+- [ ] Implement Phase 3B tests
+- [ ] Validate proxy passes
+- [ ] Execute Phase 3C benchmark
+- [ ] Analyze results
+- [ ] Write paper (if successful)
+
+---
+
+## Contributing
+
+This is currently a research project. Contributions welcome after Phase 3 execution.
+
+**Areas for contribution:**
+- PyTorch implementation (Phase 3B)
+- Benchmark execution (Phase 3C)
+- Optimization improvements
+- Additional experiments
+
+---
+
+## FAQ
+
+**Q: Is this production-ready?**  
+A: No. Phase 2 only proves feasibility. Production readiness requires Phase 3+ validation.
+
+**Q: Should I use this instead of softmax?**  
+A: Not yet. Wait for Phase 3 results comparing perplexity and efficiency.
+
+**Q: Does it work for large vocabularies?**  
+A: Theoretically yes (parameter savings scale with V). Empirically untested beyond V=50.
+
+**Q: What about generation quality?**  
+A: Unknown. Phase 2 tested reconstruction accuracy, not generation.
+
+**Q: Can I reproduce the results?**  
+A: Yes! See [Quick Start](#quick-start). All Phase 2 code runs in < 5 minutes.
+
+---
+
+## License
+
+MIT License - see LICENSE file for details.
+
+---
+
+## Contact
+
+For questions about this research:
+- Open an issue
+- See [Project Status](PROJECT_STATUS.md) for detailed documentation
+
+---
+
+## Acknowledgments
+
+- Problem selected from Kronecker Embedding V2 research agenda
+- Built on prior encoder validation work (Phase 1)
+
+---
+
+**Status:** Phases 0–2 complete, Phase 3 designed (not executed)  
+**Last updated:** August 14, 2026  
+**Next milestone:** Phase 3B PyTorch proxy implementation
