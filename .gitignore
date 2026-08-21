@@ -9,6 +9,11 @@
 static/bpe/corpus/*.raw.html
 scripts/__pycache__/
 
+# Next.js (attention-evolved)
+attention-evolved/node_modules/
+attention-evolved/.next/
+attention-evolved/out/
+
 # OS
 .DS_Store
 Thumbs.db

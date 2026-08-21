@@ -333,6 +333,14 @@ html[data-nav-sticky="true"] .nav-sticky-toggle {
   box-shadow: var(--shadow);
 }
 
+.figure-card.attention-evolved-embed iframe {
+  display: block;
+  width: 100%;
+  height: min(72vh, 720px);
+  border: 0;
+  background: #fafafa;
+}
+
 .figure-card img {
   display: block;
   width: 100%;

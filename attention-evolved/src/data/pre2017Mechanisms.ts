@@ -1,0 +1,146 @@
+import type { AttentionMechanism } from "./attentionMechanisms";
+
+export const pre2017Mechanisms: AttentionMechanism[] = [
+  {
+    id: "bahdanau-attention",
+    name: "Bahdanau Attention (Additive Alignment)",
+    shortName: "Bahdanau Attention",
+    date: "2014-09-01",
+    dateType: "arxiv",
+    year: 2014,
+    category: "attention-mechanism",
+    paper: {
+      title: "Neural Machine Translation by Jointly Learning to Align and Translate",
+      authors: ["Dzmitry Bahdanau", "Kyunghyun Cho", "Yoshua Bengio"],
+      url: "https://arxiv.org/abs/1409.0473",
+    },
+    problem: "Encoder-decoder RNNs compressed an entire source sentence into a single fixed-size context vector. For long sentences, this bottleneck caused information loss — the decoder could not recover details from early tokens when generating later output words.",
+    intuition: "Instead of one summary vector, expose all encoder hidden states to the decoder. At each decoding step, compute how much each encoder position matters, then form a weighted sum. The model learns where to look rather than being forced to remember everything in one vector.",
+    technicalExplanation: "For decoder state s_{t-1} and encoder hidden states h_i, compute alignment energy e_{t,i} = score(s_{t-1}, h_i) using a small feedforward network (additive scoring). Softmax over i gives alignment weights α_{t,i}. The context vector c_t = Σ_i α_{t,i} h_i is fed to the decoder. This is cross-attention: queries from the decoder, keys/values from the encoder.",
+    equation: "e_{t,i} = v^\\top \\tanh(W_s s_{t-1} + W_h h_i), \\quad c_t = \\sum_i \\alpha_{t,i} h_i, \\quad \\alpha_{t,i} = \\frac{\\exp(e_{t,i})}{\\sum_j \\exp(e_{t,j})}",
+    equationExplanation: "s is the decoder state, h_i are encoder hidden states. The alignment MLP produces scores; softmax yields weights that sum to 1 for each decoder step.",
+    complexity: {
+      time: "O(n·m)",
+      memory: "O(n·m)",
+      description: "n = source length, m = target length. Each decoder step attends over all n encoder positions.",
+    },
+    kvCache: {
+      size: "none",
+      description: "Pre-Transformer seq2seq — no autoregressive KV cache in the modern LLM sense. Encoder states are recomputed or stored per forward pass.",
+    },
+    contextBehavior: {
+      maxLength: "Limited by RNN encoding",
+      extrapolation: "limited",
+      description: "Attention helps within one encode-decode pass but the encoder still processes sequentially. Long inputs remain costly.",
+    },
+    advantages: [
+      "First widely adopted learned alignment — model decides where to look",
+      "Directly addresses the fixed-size context bottleneck in seq2seq",
+      "Interpretable attention weights over source positions",
+      "Enabled much better neural machine translation quality",
+    ],
+    disadvantages: [
+      "Still built on sequential RNN encoders/decoders — slow to train",
+      "Cross-attention only (encoder→decoder), not self-attention",
+      "Alignment MLP is more expensive per score than a simple dot product",
+      "Does not solve long-range dependencies within the encoder itself",
+    ],
+    useCases: {
+      good: [
+        "Encoder-decoder tasks (machine translation, summarization)",
+        "When alignment visualization helps debugging",
+        "Short to medium sequences where RNN cost is acceptable",
+        "Historical baseline for understanding attention origins",
+      ],
+      poor: [
+        "Long sequences requiring parallel training",
+        "Tasks needing bidirectional or self-attention within one sequence",
+        "Modern LLM-scale inference with KV caching",
+        "When dot-product scoring speed matters",
+      ],
+    },
+    visualType: "attention-matrix",
+    sources: [
+      {
+        type: "arxiv",
+        title: "Neural Machine Translation by Jointly Learning to Align and Translate",
+        url: "https://arxiv.org/abs/1409.0473",
+        authors: ["Bahdanau et al."],
+        date: "2014-09-01",
+        notes: "arXiv submission date. Published at ICLR 2015.",
+      },
+    ],
+    transitionNote: "Bahdanau attention solved selective retrieval for seq2seq. The next step was making scoring simpler and faster.",
+  },
+  {
+    id: "luong-dot-product-attention",
+    name: "Luong Dot-Product Attention",
+    shortName: "Luong Attention",
+    date: "2015-08-17",
+    dateType: "arxiv",
+    year: 2015,
+    category: "attention-mechanism",
+    paper: {
+      title: "Effective Approaches to Attention-based Neural Machine Translation",
+      authors: ["Thang Luong", "Hien Pham", "Christopher D. Manning"],
+      url: "https://arxiv.org/abs/1508.04025",
+    },
+    problem: "Bahdanau's additive alignment requires a small neural network for every (decoder, encoder) pair score. Can attention scoring be simplified to direct vector similarity — faster to compute and closer to what would scale in the Transformer?",
+    intuition: "Treat attention as comparing vectors directly: score(query, key) = query · key. Luong also explored other score functions (general, concat), but dot-product and the global/local variants showed that simpler scoring could match or beat additive attention while being easier to implement at scale.",
+    technicalExplanation: "Luong dot-product scoring: e_{t,i} = s_t^T h_i for decoder state s_t and encoder state h_i (with optional scaling). Global attention uses all encoder positions; local attention restricts to a window around an predicted alignment point. This is the direct precursor to Q·K^T in the Transformer — query from decoder, keys from encoder, values implied by weighted h_i.",
+    equation: "score(s_t, h_i) = s_t^\\top h_i, \\quad c_t = \\sum_i \\alpha_{t,i} h_i",
+    equationExplanation: "Dot product replaces the additive MLP. The same softmax-weighted sum produces the context vector. Transformer scaled dot-product attention generalizes this to matrices Q, K, V.",
+    complexity: {
+      time: "O(n·m·d)",
+      memory: "O(n·m)",
+      description: "Dot product scoring is cheaper per pair than additive MLP — O(d) vs O(d) with fewer parameters and no tanh MLP.",
+    },
+    kvCache: {
+      size: "none",
+      description: "Same seq2seq setting as Bahdanau — no modern KV cache.",
+    },
+    contextBehavior: {
+      maxLength: "Limited by RNN encoding",
+      extrapolation: "limited",
+      description: "Local attention variant handles long inputs by restricting alignment window, foreshadowing sliding-window ideas.",
+    },
+    advantages: [
+      "Simpler and faster scoring than additive Bahdanau attention",
+      "Direct precursor to Transformer Q·K^T formulation",
+      "Local attention variant anticipates windowed attention",
+      "Multiple score functions empirically compared in one paper",
+    ],
+    disadvantages: [
+      "Still seq2seq RNN architecture — not parallelizable like Transformers",
+      "Dot product alone may need scaling for large dimensions (Transformer adds √d_k)",
+      "Cross-attention only — not self-attention over a single sequence",
+      "Local attention requires predicting alignment position",
+    ],
+    useCases: {
+      good: [
+        "When simpler attention scoring is preferred over additive MLP",
+        "Understanding the bridge from Bahdanau to Transformer",
+        "Seq2seq NMT with global or local alignment",
+        "Teaching the Q/K dot-product intuition",
+      ],
+      poor: [
+        "Large-scale parallel training (use Transformer)",
+        "Self-attention within one sequence",
+        "Very long documents without windowing",
+        "Production LLM inference stacks",
+      ],
+    },
+    visualType: "qkv-flow",
+    sources: [
+      {
+        type: "arxiv",
+        title: "Effective Approaches to Attention-based Neural Machine Translation",
+        url: "https://arxiv.org/abs/1508.04025",
+        authors: ["Luong et al."],
+        date: "2015-08-17",
+        notes: "arXiv submission date. Published at EMNLP 2015.",
+      },
+    ],
+    transitionNote: "Luong dot-product attention made Q·K scoring explicit. Two years later, Vaswani et al. removed the RNN and applied self-attention with multiple heads — the timeline continues from there.",
+  },
+];
