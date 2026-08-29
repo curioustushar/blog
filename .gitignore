@@ -14,6 +14,11 @@ attention-evolved/node_modules/
 attention-evolved/.next/
 attention-evolved/out/
 
+# Python (transformer-loss-harness)
+transformer-loss-harness/.venv/
+transformer-loss-harness/__pycache__/
+transformer-loss-harness/results.json
+
 # OS
 .DS_Store
 Thumbs.db
