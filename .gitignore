@@ -19,6 +19,11 @@ transformer-loss-harness/.venv/
 transformer-loss-harness/__pycache__/
 transformer-loss-harness/results.json
 
+# Python (training-loop-truth)
+training-loop-truth/.venv/
+training-loop-truth/__pycache__/
+training-loop-truth/results.json
+
 # OS
 .DS_Store
 Thumbs.db
