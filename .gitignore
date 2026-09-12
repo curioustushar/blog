@@ -24,6 +24,12 @@ training-loop-truth/.venv/
 training-loop-truth/__pycache__/
 training-loop-truth/results.json
 
+# Python (optimizer-truth)
+optimizer-truth/.venv/
+optimizer-truth/__pycache__/
+optimizer-truth/results.json
+optimizer-truth/outputs/
+
 # OS
 .DS_Store
 Thumbs.db
