@@ -6,7 +6,7 @@ categories: ["machine-learning"]
 tags:
   ["adam", "learning-rate", "wsd", "cosine", "warmup", "optimizer"]
 author: Tushar Gupta
-description: "Hand-verified Adam, bias correction, warmup update ratios, cosine vs WSD at step 200, and width-scaled LR sweeps — with the theory behind each measurement."
+description: "Gradients give direction, not step size — Adam, bias correction, warmup, and schedules measured and plotted so you can trust the optimizer, not the loss curve alone."
 ---
 
 <div class="post-summary">

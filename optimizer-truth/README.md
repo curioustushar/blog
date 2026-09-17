@@ -5,6 +5,14 @@ Reproduce Adam by hand, measure when bias correction and warmup stop mattering, 
 **Blog:** [Optimizers and Learning-Rate Schedules](https://curioustushar.github.io/blog/posts/optimizer-truth/)  
 **GitHub:** [`optimizer-truth/`](https://github.com/curioustushar/blog/tree/master/optimizer-truth)
 
+### One-line descriptions (for sharing)
+
+| Where | Line |
+|-------|------|
+| **Git README** (this repo) | Runnable PyTorch lab: hand-verify Adam vs PyTorch, bias correction & warmup, cosine vs WSD @ step 200, LR sweeps at widths 256–1024. |
+| **Blog** | Gradients give direction, not step size — Adam, bias correction, warmup, and schedules measured and plotted so you can trust the optimizer, not the loss curve alone. |
+| **GitHub project** | [`optimizer-truth/`](https://github.com/curioustushar/blog/tree/master/optimizer-truth) — one command regenerates Adam checks, schedule comparisons, and width LR sweeps with saved figures. |
+
 ---
 
 ## Overview

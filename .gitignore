@@ -30,6 +30,11 @@ optimizer-truth/__pycache__/
 optimizer-truth/results.json
 optimizer-truth/outputs/
 
+# Python (zero-memory-sim)
+zero-memory-sim/.venv/
+zero-memory-sim/__pycache__/
+zero-memory-sim/results.json
+
 # OS
 .DS_Store
 Thumbs.db
@@ -38,3 +43,7 @@ Thumbs.db
 # IDE
 .idea
 .vscode/
+
+# Local agent instructions (not for the repo)
+**/AGENTS.md
+**/CLAUDE.md
