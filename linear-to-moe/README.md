@@ -2,7 +2,7 @@
 
 > Train a baseline MLP on MNIST, convert its weights into a 4-expert MoE, and prove the MoE continues to reduce loss from the converted checkpoint.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/linear-to-moe/notebooks/linear_to_moe.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/blog/blob/master/linear-to-moe/notebooks/linear_to_moe.ipynb)
 
 ---
 
@@ -140,7 +140,7 @@ Loss curve: [`results/figures/loss_curve.png`](results/figures/loss_curve.png)
 
 ### Local
 ```bash
-git clone https://github.com/curioustushar/curioustushar.github.io/tree/master/linear-to-moe
+git clone https://github.com/curioustushar/blog/tree/master/linear-to-moe
 cd linear-to-moe
 pip install torch torchvision matplotlib
 jupyter notebook notebooks/linear_to_moe.ipynb

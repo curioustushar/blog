@@ -25,9 +25,9 @@ The goal of this experiment is to implement, run, and measure the memory and thr
 
 | # | Notebook | Open in Colab |
 |:--|:---------|:--------------|
-| 1 | Baseline Training — 20M LLM, 50M tokens | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/reversible-llm-training/notebooks/01_baseline.ipynb) |
-| 2 | Reversible Training — Euler & Midpoint variants | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/reversible-llm-training/notebooks/02_reversible.ipynb) |
-| 3 | Max-Batch Reversible Training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/reversible-llm-training/notebooks/03_max_batch_reversible.ipynb) |
+| 1 | Baseline Training — 20M LLM, 50M tokens | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/blog/blob/master/reversible-llm-training/notebooks/01_baseline.ipynb) |
+| 2 | Reversible Training — Euler & Midpoint variants | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/blog/blob/master/reversible-llm-training/notebooks/02_reversible.ipynb) |
+| 3 | Max-Batch Reversible Training | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/blog/blob/master/reversible-llm-training/notebooks/03_max_batch_reversible.ipynb) |
 
 ## 2. Hardware and Environment
 
