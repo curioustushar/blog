@@ -29,7 +29,7 @@ This experiment gives a concrete, measurable answer. We train a standard MLP to 
 
 ### Open in Colab
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/[your-github]/linear-to-moe/blob/main/notebooks/linear_to_moe.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/linear-to-moe/notebooks/linear_to_moe.ipynb)
 
 ---
 
@@ -221,7 +221,7 @@ The result is a model that **inherits** the baseline's solution and **improves**
 
 ```bash
 # Clone the repo
-git clone https://github.com/[your-github]/linear-to-moe
+git clone https://github.com/curioustushar/curioustushar.github.io/tree/master/linear-to-moe
 cd linear-to-moe
 
 # Install dependencies
@@ -233,7 +233,7 @@ python notebooks/run_experiment.py
 
 Or open the Colab notebook directly:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/[your-github]/linear-to-moe/blob/main/notebooks/linear_to_moe.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/curioustushar/curioustushar.github.io/blob/master/linear-to-moe/notebooks/linear_to_moe.ipynb)
 
 The notebook is self-contained and runs in under 5 minutes on a free Colab T4 or even CPU.
 
